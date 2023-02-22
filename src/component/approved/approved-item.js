@@ -1,38 +1,38 @@
 import React, { Fragment, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import "../scss/home.scss"
-import { Button, Modal, Form } from 'react-bootstrap';
-const borderStyle = {
+
+import { Button, Modal, Form, Card, Collapse } from 'react-bootstrap';
+// import Button from 'react-bootstrap/Button';
+// import Collapse from 'react-bootstrap/Collapse';
+const modalBorderStyle = {
     borderBottom: `2px dashed gray`
 }
+const tableBorderStyle = {
+    borderBottom: `2px dashed black`
+}
+function num(index) {
+    if (index % 2 === 0) {
+        return 'bg-light';
+        console.log("偶數")
+    } else {
+        return 'bg-warning';
+        console.log("基數數")
+    }
+}
 const ApprovedItem = (props) => {
-    let { item } = props
+    let { item, index } = props
+    // console.log(index,"proppsa")
     const [showModal, setShowModal] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
+
     const handleModal = () => {
         setShowModal(!showModal);
     };
-
-    // return (<section className="mb-3 approvedItem">
-    //     <aside className="">
-    //         <div className="d-flex">
-    //             <div>診所名稱</div>
-    //             <div>2022/15/16</div>
-    //             <div>拜訪人類</div>
-    //             <div>目前狀態列</div>
-    //         </div>
-    //         <div className="d-flex">
-    //             <div>紀錄紀錄紀錄紀錄紀錄紀錄紀錄</div>
-    //             <div>看更多</div>
-    //         </div>
-    //     </aside>
-    //     <button type="button" class="btn btn-outline-success border-0 ">
-    //         <FontAwesomeIcon icon="fas fa-check" /></button>
-
-    //     {/* <div className=""></div> */}
-    // </section>
-    // )
+    const [open, setOpen] = useState(false);
+    let styles = num(index, "qqq")
     return (<Fragment>
-        <tr className="align-middle">
+        <tr className={`align-middle ${styles} `} >
             <th scope="row">
                 <div>沂河診所</div>
                 <div>1115127</div>
@@ -51,9 +51,33 @@ const ApprovedItem = (props) => {
             <td className="text-center"> <div className="btn btn-secondary btn-sm fs-6"><FontAwesomeIcon icon="fas fa-cog" /></div></td>
             <td className=""> <div className="btn btn-success btn-sm fs-6 w-100"> <FontAwesomeIcon icon="fas fa-check" /></div></td>
         </tr>
-        <tr>
-            <td colSpan={7} class="table-active">紀錄紀錄紀錄紀錄紀錄紀錄</td>
+        <tr className={`align-middle ${styles} `} style={tableBorderStyle}>
+            <td colSpan={7} class="">紀錄紀錄紀錄紀錄紀錄紀錄</td>
         </tr>
+
+
+
+
+        <>
+            <Button
+                onClick={() => setOpen(!open)}
+                aria-controls="example-collapse-text"
+                aria-expanded={open}
+            >
+                click
+            </Button>
+            <Collapse in={open}>
+                <div id="example-collapse-text">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                    terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
+                    labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+            </Collapse>
+        </>
+
+
+
+
 
         <Modal show={showModal} onHide={handleModal} centered aria-labelledby="contained-modal-title-vcenter">
             <Modal.Header closeButton className="bg-secondary text-light">
@@ -61,7 +85,7 @@ const ApprovedItem = (props) => {
             </Modal.Header>
             <Modal.Body className="pt-0">
                 <section>
-                    <div className="d-flex flex-column align-items-center py-1 " style={borderStyle}>
+                    <div className="d-flex flex-column align-items-center py-1 " style={modalBorderStyle}>
                         <div className="w-100 d-flex">
                             <div>拜訪時間 :</div>
                             <div className="px-3">2020/15/25</div>
@@ -79,7 +103,7 @@ const ApprovedItem = (props) => {
                 <Button className="w-25" variant="success" onClick={handleModal}>
                     <FontAwesomeIcon icon="fas fa-check" />
                 </Button>
-                <Button className="w-25"  variant="secondary" onClick={handleModal}>
+                <Button className="w-25" variant="secondary" onClick={handleModal}>
                     離開
                 </Button>
             </Modal.Footer>

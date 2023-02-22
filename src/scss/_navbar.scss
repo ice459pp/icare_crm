@@ -1,0 +1,18 @@
+.menu{
+    display: none;
+    @media (max-width:996px) {
+        display: block
+    }
+}
+.Navbar {
+    width:20%;
+    overflow: hidden;
+    transition: all 1s;
+    @media (max-width:996px) {
+        position: absolute;
+        opacity: 1;
+        left: -100%;
+
+        width: 200px;
+    }
+}
