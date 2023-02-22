@@ -63,10 +63,11 @@ const ApprovedItem = (props) => {
                 onClick={() => setOpen(!open)}
                 aria-controls="example-collapse-text"
                 aria-expanded={open}
+                className="list_btn"
             >
                 click
             </Button>
-            <Collapse in={open}>
+            <Collapse in={open} className="list-collapse">
                 <div id="example-collapse-text">
                     Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
                     terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer
