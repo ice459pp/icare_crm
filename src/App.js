@@ -63,7 +63,7 @@ function App() {
           <Navbar></Navbar>
         </div>
 
-        <div className="bg-light h-100 d-flex align-items-center flex-wrap flex-column  RouterWidth">
+        <div className="bg-light h-100 d-flex align-items-center flex-wrap  RouterWidth">
           <Switch>
             <Route exact path="/" component={Home} >
 

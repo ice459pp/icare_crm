@@ -9,6 +9,7 @@
     overflow: hidden;
     transition: all 1s;
     @media (max-width:996px) {
+        z-index: 1000000;
         position: absolute;
         opacity: 1;
         left: -100%;

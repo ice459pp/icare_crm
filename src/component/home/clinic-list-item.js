@@ -13,20 +13,20 @@ const ClinicListItem = (props) => {
     }
     return (<Fragment>
         <tr className="align-middle">
-            <th scope="row">
+            <th data-th="診所名(機構代碼):" scope="row">
                 <div>沂河診所</div>
                 <div>1115127</div>
             </th>
-            <td>
-                <div>
+            <td className="td-address" data-th="地址:">
+                <section>
                     <div>台北市/大安區</div>
                     <div>瑞光路4段18號5-5</div>
-                </div>
+                </section>
             </td>
-            <td>(02)5566-8844</td>
-            <td>嗚嗚嗚</td>
-            <td>2022/09/25</td>
-            <td>  <button onClick={pushClinicDetail} className="btn btn-dark rounded-circle"><FontAwesomeIcon icon="fas fa-plus" /></button></td>
+            <td data-th="電話:">(02)5566-8844</td>
+            <td data-th="拜訪人:">嗚嗚嗚</td>
+            <td data-th="日期:">2022/09/25</td>
+            <td className="buttonIcon">  <button onClick={pushClinicDetail} className="btn w-100 btn-dark">查看更多 <FontAwesomeIcon icon="fas fa-plus" /></button></td>
         </tr>
     </Fragment>)
 

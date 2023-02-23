@@ -37,10 +37,10 @@ let arrayLog = [
 const Approved = () => {
 
     return (
-        <div className="w-100 px-4 mt-3">
+        <div className="w-100 approved-page mt-3">
             <h4 className="text-center fw-bolder text-dark">待核可列表</h4>
             {/* map */}
-            <table className="table table-striped table-hover border-dark">
+            {/* <table className="table table-striped table-hover border-dark">
                 <thead className="table-dark text-white">
                     <tr >
                         <th scope="col">診所名(機構代碼)</th>
@@ -55,7 +55,9 @@ const Approved = () => {
                 <tbody>
                     {arrayLog.map((item, index) => <ApprovedItem item={item} key={item.id} index={index}></ApprovedItem>)}
                 </tbody>
-            </table>
+            </table> */}
+            {arrayLog.map((item, index) => <ApprovedItem item={item} key={item.id} index={index}></ApprovedItem>)}
+
             {/* <>
                 <Button
                     onClick={() => setOpen(!open)}

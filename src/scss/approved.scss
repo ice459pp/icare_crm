@@ -1,13 +1,9 @@
-// section{
-//     &.approvedItem{
-//         border-radius: 10px;
-//         border: 2px solid goldenrod;
-//         background-color: rgb(250 251 255 / 37%);
-//         display: flex;
-//         justify-content:space-between
-//         // align-items: center;
-//     }
-// }
+.approved-page{
+    padding: 0 1.25rem;
+    @media (max-width:996px) {
+        padding: 0 1rem;
+    }
+}
 table {
     thead {
         &.wwqwqe {
@@ -20,7 +16,12 @@ table {
         // border-radius: 30px;
     }
 }
-
+// @media (max-width:996px) {
+//     width: 100%;
+// }
+// @media (max-width:576px) {
+//     width: 100%;
+// }
 .list_btn {
     width: 100%;
 }
@@ -30,4 +31,24 @@ table {
     padding: 15px;
     border: 2px solid gray;
     border-radius: 15px;
+}
+.accordionItem{
+    font-size: 1.25rem;
+    @media (max-width:576px) {
+        font-size: 1rem;
+    }
+    .accordion-button{
+        padding: 15px;
+    }
+    .check-lg{
+        @media (max-width:576px) {
+            display: none;
+        }
+    }
+    .check-sm{
+        display: none;
+        @media (max-width:576px) {
+            display: block;
+        }
+    }
 }
