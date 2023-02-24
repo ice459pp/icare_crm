@@ -26,9 +26,9 @@ const Search = () => {
                         <option value="3">萬華區</option>
                     </select>
                 </div>
-                <div className="">
+                
                     <FontAwesomeIcon className="fs-4 text-danger" icon="fas fa-times-circle" />
-                </div>
+                
             </div>
 
 
@@ -54,7 +54,7 @@ const Search = () => {
 
 
 
-            <InputGroup className="mb-3" size="sm">
+            <InputGroup className="" size="sm">
                 <DropdownButton
                     variant="outline-secondary"
                     title="地區"
@@ -68,7 +68,8 @@ const Search = () => {
                 </DropdownButton>
                 <Form.Control aria-label="Text input with dropdown button" />
                 {/* <FontAwesomeIcon icon="fas fa-search" /> */}
-                
+                <button className="btn btn-secondary" type="button" id="button-addon2"><FontAwesomeIcon icon="fas fa-search" /></button>
+
             </InputGroup>
         </form>
     </Fragment>)

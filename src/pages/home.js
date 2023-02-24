@@ -29,6 +29,15 @@ const qqq = [
     //     name: "ereede"
     // },
 ]
+const w25={
+    width:"25%"
+}
+const w10={
+    width:"10%"
+}
+const w5={
+    width:"5%"
+}
 const Home = () => {
     // search13
     return (<Fragment>
@@ -41,12 +50,12 @@ const Home = () => {
                 
                 <thead>
                     <tr className="bg-secondary text-white tr-only-hide">
-                        <th scope="col">診所名(機構代碼)</th>
-                        <th scope="col">地址</th>
-                        <th scope="col">電話</th>
-                        <th scope="col">拜訪人</th>
+                        <th  scope="col">診所名(機構代碼)</th>
+                        <th  scope="col">地址</th>
+                        <th scope="col"  >電話</th>
+                        <th scope="col" >拜訪人</th>
                         <th scope="col">日期</th>
-                        <th></th>
+                        <th style={{}}></th>
                     </tr>
                 </thead>
                 <tbody>

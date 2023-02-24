@@ -28,7 +28,7 @@ function App() {
   }
   const menuHandler = () => {
     setMenuIsShow(!menuIsShow)
-    console.log(menuIsShow, "menu")
+    // console.log(menuIsShow, "menu")
   }
 
   useEffect(() => {
@@ -56,11 +56,13 @@ function App() {
     <Fragment>
       <div ref={headNavbarRef} className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center">
         <div className="h4 m-0">iCare_CRM</div>
-        <div onClick={menuHandler} className="m-0 menu"><FontAwesomeIcon icon="fas fa-bars" /></div>
+        {!menuIsShow &&<div onClick={menuHandler} className="m-0 menu"><FontAwesomeIcon icon="fas fa-bars" /></div>}
+        {menuIsShow &&<div onClick={menuHandler} className="m-0 menu"><FontAwesomeIcon icon="fas fa-times" /></div>}
+        
       </div>
       <div className="w-100 d-flex " style={style}>
         <div className="bg-dark h-100 Navbar"   style={menuIsShow?NavbarWidth :{}}>
-          <Navbar></Navbar>
+          <Navbar showMenu={(e)=>menuHandler()}></Navbar>
         </div>
 
         <div className="bg-light h-100 d-flex flex-wrap  RouterWidth">

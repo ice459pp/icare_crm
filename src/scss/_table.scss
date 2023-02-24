@@ -40,6 +40,10 @@ tr.tr-only-hide {
         font-weight: bolder;
         margin-right: 10px;
         color: #595a37;
+        // @media (max-width: 996px) {
+        //     display: flex;
+        //     flex-wrap: wrap;
+        // }
     }
 
     .table-rwd td:before {
@@ -51,6 +55,7 @@ tr.tr-only-hide {
         font-weight: bolder;
         margin-right: 10px;
         color: #595a37;
+        
     }
 
     /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/
@@ -58,6 +63,12 @@ tr.tr-only-hide {
     .table-rwd.table-bordered th,
     .table-rwd.table-bordered {
         border: 0;
+
+    }
+    .table-rwd.table-bordered td,
+    .table-rwd.table-bordered th{
+        display: flex;
+        flex-wrap: wrap;
     }
 
     td {
@@ -67,6 +78,7 @@ tr.tr-only-hide {
             section {
                 display: flex;
                 align-items: center;
+                flex-wrap: wrap;
             }
         }
         &.buttonIcon{
