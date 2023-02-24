@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/leeyang19970916/icare_crm.git/static/css/main.9ed89f14.css",
+    "main.js": "/leeyang19970916/icare_crm.git/static/js/main.908368f5.js",
+    "index.html": "/leeyang19970916/icare_crm.git/index.html",
+    "main.9ed89f14.css.map": "/leeyang19970916/icare_crm.git/static/css/main.9ed89f14.css.map",
+    "main.908368f5.js.map": "/leeyang19970916/icare_crm.git/static/js/main.908368f5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9ed89f14.css",
+    "static/js/main.908368f5.js"
+  ]
+}
