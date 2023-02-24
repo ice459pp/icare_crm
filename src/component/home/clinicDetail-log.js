@@ -26,9 +26,9 @@ const ClinicDetailLog = () => {
     // };
     return (<Fragment>
         <div className="d-flex w-100 log mb-1">
-            <div className="d-flex  flex-column w-100 fs-4">
-                <div className="d-flex">
-                    <div className="input-group fs-4 w-50 px-2 ps-3 py-1 radio-custom">
+            <div className="d-flex  flex-column w-100 ">
+                <div className="d-flex radio-block">
+                    <div className="input-group  px-2 ps-3 py-1 radio-custom">
                         <div className="form-check form-check-inline">
                             <input className="form-check-input custom-control-input" type="radio" name="radio" id="radio1" />
                             <label className="form-check-label custom-control-label" for="radio1">初訪</label>
@@ -55,21 +55,21 @@ const ClinicDetailLog = () => {
             </Modal.Header>
             <Modal.Body>
                 <section>
-                    <div className="d-flex justify-content-center align-items-center border-bottom py-1 ">
-                        <div className="w-50 d-flex">
+                    <div className="d-flex border-bottom py-1 modal-body-head ">
+                        <div className="w-100 d-flex">
                             <div>拜訪時間 :</div>
                             <div className="px-3">2020/15/25</div>
                         </div>
-                        <div className="w-50 d-flex">
+                        <div className="w-100 d-flex">
                             <div>拜訪人 :</div>
                             <div className="px-3">齣齣齣</div>
                         </div>
                     </div>
-                    <div className="border-bottom py-2 d-flex align-items-center radio-custom">
-                        <div>拜訪類別 :</div>
-                        <div className="input-group fs-4 w-75 px-3">
+                    <div className="border-bottom py-2 d-flex radio-custom">
+                        <div >拜訪類別 :</div>
+                        <div className="input-group" >
                             <div className="form-check form-check-inline custom-radio">
-                                <input className="form-check-input custom-control-input" type="radio" name="radio" id="radio1" />
+                                <input className="form-check-input custom-control-input"  type="radio" name="radio" id="radio1" />
                                 <label className="form-check-label custom-control-label" for="radio1">初訪</label>
                             </div>
                             <div className="form-check form-check-inline">

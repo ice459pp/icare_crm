@@ -36,8 +36,8 @@ const ClinicDetail = () => {
 
 
     return (<Fragment>
-        <div className="w-100 px-5">
-            <div className="py-2 -100">
+        <div className="w-100 padding-RWD">
+            <div className="py-2 w-100">
                 <div className="h5 text-dark fw-bolder">基本資料:</div>
                 <ClinicInformation></ClinicInformation>
             </div>

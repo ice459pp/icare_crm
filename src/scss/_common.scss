@@ -8,3 +8,9 @@
         flex-direction: row;
     }
 }
+.padding-RWD{
+    padding: 0 1.25rem;
+    @media (max-width:996px) {
+        padding: 0 0.75rem;
+    }
+}

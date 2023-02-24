@@ -26,7 +26,8 @@ const ClinicListItem = (props) => {
             <td data-th="電話:">(02)5566-8844</td>
             <td data-th="拜訪人:">嗚嗚嗚</td>
             <td data-th="日期:">2022/09/25</td>
-            <td className="buttonIcon">  <button onClick={pushClinicDetail} className="btn w-100 btn-dark">查看更多 <FontAwesomeIcon icon="fas fa-plus" /></button></td>
+            <td className="buttonIcon">
+                  <button onClick={pushClinicDetail} className="btn w-100 btn-dark">查看更多 <FontAwesomeIcon icon="fas fa-plus" /></button></td>
         </tr>
     </Fragment>)
 

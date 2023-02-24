@@ -1,18 +1,18 @@
 import React, { Fragment } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Dropdown from 'react-bootstrap/Dropdown';
-
+// import Dropdown from 'react-bootstrap/Dropdown';
+import { InputGroup, Dropdown, DropdownButton, Form } from "react-bootstrap"
 // import Search from "../component/home/search";
 // import ClinicList from "../component/home/clinic-list"
-const styles={
+const styles = {
     borderRadius: `10px 0 0 10px`
 }
 const Search = () => {
     return (<Fragment>
 
-        <form className="mt-4 p-3 search">
+        <form className="p-3 search">
             <div className="d-flex align-items-center pb-2 ">
-                <div className=" d-flex align-items-center w-50 ">
+                <div className=" d-flex align-items-center widthRWD ">
                     <select className="form-select me-3" aria-label="Default select example">
                         <option selected>--城市--</option>
                         <option value="1">台北市</option>
@@ -32,7 +32,7 @@ const Search = () => {
             </div>
 
 
-            <div className="input-group w-50">
+            {/* <div className="input-group w-50">
                 <Dropdown>
                     <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary" style={styles}>
                         地區
@@ -50,7 +50,26 @@ const Search = () => {
                 </Dropdown>
                 <input type="text" className="form-control" aria-label="Text input with dropdown button" />
                 <button className="btn btn-warning" type="button" id="button-addon2"><FontAwesomeIcon icon="fas fa-search" /></button>
-            </div>
+            </div> */}
+
+
+
+            <InputGroup className="mb-3" size="sm">
+                <DropdownButton
+                    variant="outline-secondary"
+                    title="地區"
+                    id="input-group-dropdown-1"
+                >
+                    <Dropdown.Item href="#">Action</Dropdown.Item>
+                    <Dropdown.Item href="#">Another action</Dropdown.Item>
+                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item href="#">Separated link</Dropdown.Item>
+                </DropdownButton>
+                <Form.Control aria-label="Text input with dropdown button" />
+                {/* <FontAwesomeIcon icon="fas fa-search" /> */}
+                
+            </InputGroup>
         </form>
     </Fragment>)
 
