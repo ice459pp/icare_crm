@@ -30,30 +30,6 @@ const Search = () => {
                     <FontAwesomeIcon className="fs-4 text-danger" icon="fas fa-times-circle" />
                 
             </div>
-
-
-            {/* <div className="input-group w-50">
-                <Dropdown>
-                    <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary" style={styles}>
-                        地區
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu variant="dark">
-                        <Dropdown.Item href="#/action-1" active>
-                            Action
-                        </Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                        <Dropdown.Divider />
-                        <Dropdown.Item href="#/action-4">Separated link</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <input type="text" className="form-control" aria-label="Text input with dropdown button" />
-                <button className="btn btn-warning" type="button" id="button-addon2"><FontAwesomeIcon icon="fas fa-search" /></button>
-            </div> */}
-
-
-
             <InputGroup className="" size="sm">
                 <DropdownButton
                     variant="outline-secondary"
@@ -67,9 +43,7 @@ const Search = () => {
                     <Dropdown.Item href="#">Separated link</Dropdown.Item>
                 </DropdownButton>
                 <Form.Control aria-label="Text input with dropdown button" />
-                {/* <FontAwesomeIcon icon="fas fa-search" /> */}
                 <button className="btn btn-secondary" type="button" id="button-addon2"><FontAwesomeIcon icon="fas fa-search" /></button>
-
             </InputGroup>
         </form>
     </Fragment>)

@@ -2,14 +2,18 @@
     border: 2px solid gray;
     background-color: whitesmoke;
     border-radius: 10px;
-    .widthRWD{
+
+    .widthRWD {
         width: 50%;
+
         @media (max-width:996px) {
             width: 100%;
         }
     }
-    .input-group-sm{
+
+    .input-group-sm {
         width: 50%;
+
         @media (max-width:996px) {
             width: 100%;
         }
@@ -118,6 +122,20 @@
                     padding-right: 0;
                 }
             }
+
+            // div {
+            //     padding-right: 1.5rem;
+
+            //     @media (max-width:996px) {
+            //         // padding-right: 0;
+            //         margin-bottom: 0.5rem;
+            //     }
+
+            //     @media (max-width:576px) {
+            //         // padding-right: 0;
+            //         margin-bottom: 0.5rem;
+            //     }
+            // }
         }
 
         &.inform-his {
@@ -138,8 +156,14 @@
                 div {
                     padding-right: 1.5rem;
 
+                    @media (max-width:996px) {
+                        // padding-right: 0;
+                        margin-bottom: 0.5rem;
+                    }
+
                     @media (max-width:576px) {
                         padding-right: 0;
+                        margin-bottom: 0.5rem;
                     }
                 }
             }
@@ -160,7 +184,7 @@
             .w-100 {
                 padding-right: 1.5rem;
 
-                @media (max-width:996px) {
+                @media (max-width:576px) {
                     padding: 0;
                 }
             }
