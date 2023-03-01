@@ -55,7 +55,7 @@ const ClinicDetailLog = () => {
             </Modal.Header>
             <Modal.Body>
                 <section>
-                    <div className="d-flex border-bottom py-1 modal-body-head ">
+                    <div className="d-flex border-bottom py-2 modal-body-head ">
                         <div className="w-100 d-flex">
                             <div>拜訪時間 :</div>
                             <div className="px-3">2020/15/25</div>

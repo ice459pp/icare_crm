@@ -2,7 +2,8 @@
     width: 80%;
     overflow-y: scroll;
     overflow-x: hidden;
-    flex-direction: column;
+    flex-direction: row;
+    // 這邊怪怪的 table時好時壞
     @media (max-width:996px) {
         width: 100%;
         // flex-direction: row;
