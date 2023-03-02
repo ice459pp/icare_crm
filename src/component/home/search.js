@@ -1,73 +1,74 @@
-import React, { Fragment } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import Dropdown from 'react-bootstrap/Dropdown';
-import { InputGroup, Dropdown, DropdownButton, Form } from "react-bootstrap"
-// import Search from "../component/home/search";
-// import ClinicList from "../component/home/clinic-list"
-import TWzipcode from 'react-twzipcode';
+import React, { Fragment, useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { InputGroup, Dropdown, DropdownButton, Form } from "react-bootstrap";
+import TWzipcode from "react-twzipcode";
+import data from "../../twzipcode.json"
 const styles = {
-    borderRadius: `10px 0 0 10px`
-}
-
+  borderRadius: `10px 0 0 10px`,
+};
 
 const Search = () => {
-    const handleChange = (data) => {
-        console.log(data);
-    };
-    return (<Fragment>
+    console.log(data,"datadatadata")
+  const [county, setCounty] = useState("台北市");
+  const [district, setDistrict] = useState("請選擇");
+  //   const twzipcodeRef = useRef(null);
 
-        <form className="p-3 search">
-            <div className="d-flex align-items-center pb-2 ">
-                <div className=" d-flex align-items-center widthRWD ">
-                    {/* <select className="form-select me-3" aria-label="Default select example">
-                        <option selected>--城市--</option>
-                        <option value="1">台北市</option>
-                        <option value="2">新北市</option>
-                        <option value="3">基隆市</option>
-                    </select>
-                    <select className="form-select me-3" aria-label="Default select example">
-                        <option selected>--區域--</option>
-                        <option value="1">大安區</option>
-                        <option value="2">松山區</option>
-                        <option value="3">萬華區</option>
-                    </select> */}
-                    <TWzipcode css={['county-sel', 'district-sel', 'zipcode']}
-                        districtValue="內湖區"
-                        countyValue="台北市"
-                        // districtFieldName="qwqqq"
-                        // countyFieldName="sdfasdfasd"
-                        // countyFieldName=""
-                        // districtFieldName=""
-                        handleChangeCounty={handleChange}
-                        handleChangeDistrict={handleChange}
-                    />
-                </div>
+  //   useEffect(() => {
+  //     if (twzipcodeRef.current) {
+  //       const countySelect = twzipcodeRef.current.querySelector(".county-sel");
+  //       const newOption = document.createElement("option");
+  //       newOption.value = "不分區";
+  //       newOption.text = "不分區";
+  //       countySelect.add(newOption);
+  //     }
+  //   }, [twzipcodeRef]);
 
-                <FontAwesomeIcon className="fs-4 text-danger" icon="fas fa-times-circle" />
+  const handleChangeCounty = (data) => {
+    setCounty(data.county);
+  };
 
-            </div>
-            <InputGroup className="" size="sm">
-                <Form.Control
-                    placeholder="搜尋診所名稱..."
-                    aria-label="Recipient's username"
-                    aria-describedby="basic-addon2"
-                />
-                <button className="btn btn-secondary" type="button" id="button-addon2"><FontAwesomeIcon icon="fas fa-search" /></button>
-            </InputGroup>
-            {/* <InputGroup className="mb-3">
-                <Form.Control
-                    placeholder="Recipient's username"
-                    aria-label="Recipient's username"
-                    aria-describedby="basic-addon2"
-                />
-                <Button variant="outline-secondary" id="button-addon2">
-                    Button
-                </Button>
-            </InputGroup> */}
-        </form>
-    </Fragment>)
+  const handleChangeDistrict = (data) => {
+    setDistrict(data.district);
+  };
 
+  return (
+    <Fragment>
+      <form className="p-3 search">
+        <div className="d-flex align-items-center pb-2 ">
+          <div
+            className="d-flex align-items-center widthRWD"
+            // ref={twzipcodeRef}
+          >
+            <TWzipcode
+              css={["county-sel", "district-sel", "zipcode"]}
+              handleChangeCounty={handleChangeCounty}
+              handleChangeDistrict={handleChangeDistrict}
+              countyDefaultValue={county} // 設定預設的縣市
+              districtDefaultValue={district} // 設定預設的區域
+            />
+          </div>
+          <FontAwesomeIcon
+            className="fs-4 text-danger"
+            icon="fas fa-times-circle"
+          />
+        </div>
+        <InputGroup className="" size="sm">
+          <Form.Control
+            placeholder="搜尋診所名稱..."
+            aria-label="Recipient's username"
+            aria-describedby="basic-addon2"
+          />
+          <button
+            className="btn btn-secondary"
+            type="button"
+            id="button-addon2"
+          >
+            <FontAwesomeIcon icon="fas fa-search" />
+          </button>
+        </InputGroup>
+      </form>
+    </Fragment>
+  );
+};
 
-    // list listItem
-}
-export default Search
+export default Search;
