@@ -1,51 +1,56 @@
 import React, { Fragment, useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InputGroup, Dropdown, DropdownButton, Form } from "react-bootstrap";
-import TWzipcode from "react-twzipcode";
-import data from "../../twzipcode.json"
+// import TWzipcode from "react-twzipcode";
+import jsonData from "../../twzipcode.json";
 const styles = {
   borderRadius: `10px 0 0 10px`,
 };
 
 const Search = () => {
-    console.log(data,"datadatadata")
-  const [county, setCounty] = useState("台北市");
-  const [district, setDistrict] = useState("請選擇");
-  //   const twzipcodeRef = useRef(null);
+  console.log(jsonData, "datadatadata");
+  const [selectedCity, setSelectedCity] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [districts, setDistricts] = useState([]);
 
-  //   useEffect(() => {
-  //     if (twzipcodeRef.current) {
-  //       const countySelect = twzipcodeRef.current.querySelector(".county-sel");
-  //       const newOption = document.createElement("option");
-  //       newOption.value = "不分區";
-  //       newOption.text = "不分區";
-  //       countySelect.add(newOption);
-  //     }
-  //   }, [twzipcodeRef]);
-
-  const handleChangeCounty = (data) => {
-    setCounty(data.county);
-  };
-
-  const handleChangeDistrict = (data) => {
-    setDistrict(data.district);
-  };
+  useEffect(() => {
+    if (selectedCity) {
+      setDistricts(Object.keys(jsonData[selectedCity]));
+    }
+  }, [selectedCity]);
 
   return (
     <Fragment>
       <form className="p-3 search">
         <div className="d-flex align-items-center pb-2 ">
-          <div
-            className="d-flex align-items-center widthRWD"
-            // ref={twzipcodeRef}
-          >
-            <TWzipcode
-              css={["county-sel", "district-sel", "zipcode"]}
-              handleChangeCounty={handleChangeCounty}
-              handleChangeDistrict={handleChangeDistrict}
-              countyDefaultValue={county} // 設定預設的縣市
-              districtDefaultValue={district} // 設定預設的區域
-            />
+          <div className="d-flex align-items-center widthRWD">
+            <div>
+              <select
+                className="county-sel"
+                value={selectedCity}
+                onChange={(event) => setSelectedCity(event.target.value)}
+              >
+                {/* <option value="">不分城市</option> */}
+                {Object.keys(jsonData).map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+              </select>
+              <select
+                className="district-sel"
+                value={selectedDistrict}
+                onChange={(event) => setSelectedDistrict(event.target.value)}
+                disabled={!districts.length}
+              >
+                {/* <option value="">不分區</option> */}
+                {districts.map((district) => (
+                  <option key={district} value={district}>
+                    {district}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <FontAwesomeIcon
             className="fs-4 text-danger"
