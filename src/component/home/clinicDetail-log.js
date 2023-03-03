@@ -125,7 +125,7 @@ const ClinicDetailLog = () => {
           </section>
           {/* <p>Modal Content Here</p> */}
           <Form.Label className="py-1 m-0">拜訪紀錄 :</Form.Label>
-          <Form.Control as="textarea" rows={6} />
+          <Form.Control as="textarea" readOnly rows={6} placeholder="文字紀錄紀錄紀錄紀錄....不可編輯" />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleModal}>

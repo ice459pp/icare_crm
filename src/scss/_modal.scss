@@ -39,18 +39,19 @@
           font-size: 1rem;
         }
       }
-    //   &.modalReadOnly {
-    //     display: flex;
-    //     flex-wrap: wrap;
-    //     justify-content: flex-start;
-    //     align-items: center;
-    //     @media (max-width: 996px) {
-    //       display: flex;
-    //       flex-wrap: wrap;
-    //       justify-content: flex-start;
-    //       align-items: center;
-    //     }
-    //   }
+      &.modalReadOnly {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        @media (max-width: 996px) {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: flex-start;
+          align-items: center;
+        }
+      }
     }
   }
   .modal-footer {
