@@ -8,13 +8,13 @@
   width: 20%;
   overflow: hidden;
   transition: all 1s;
-  background-color: hsl(210, 10%, 23%,0.8);
+  background-color: hsl(210, 10%, 23%);
   @media (max-width: 996px) {
     z-index: 1000000;
     position: absolute;
     opacity: 1;
     left: -100%;
-
+    background-color: hsl(210, 10%, 23%,0.8);
     width: calc(100% / 4 * 3 );
     // opacity: 0.8;
     min-width: 200px;
