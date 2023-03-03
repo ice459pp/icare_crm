@@ -257,7 +257,31 @@
       align-items: flex-start;
       font-size: 1rem;
     }
-
+    .log-status {
+      @media (max-width: 576px) {
+        width: 75%;
+        // margin: 0 auto;
+      }
+    }
+    .log-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 25%;
+      @media (max-width: 576px) {
+        width: auto;
+        padding: 5px 0;
+      }
+    }
+    .log-date {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 25%;
+      @media (max-width: 576px) {
+        width: auto;
+      }
+    }
     .radio-custom {
       width: 50%;
 
@@ -267,21 +291,20 @@
         // font-size: 1rem;
       }
     }
-
-    .w-25 {
-      @media (max-width: 996px) {
-        width: auto !important;
-        // padding: 0;
-        // padding-top: 10px;
-        padding-left: 1rem;
-      }
-      @media (max-width: 576px) {
-        width: auto !important;
-        padding: 0;
-        padding-top: 10px;
-        padding-left: 1rem;
-      }
-    }
+    // .w-25 {
+    //   @media (max-width: 996px) {
+    //     width: auto !important;
+    //     // padding: 0;
+    //     // padding-top: 10px;
+    //     padding-left: 1rem;
+    //   }
+    //   @media (max-width: 576px) {
+    //     width: auto !important;
+    //     padding: 0;
+    //     padding-top: 10px;
+    //     padding-left: 1rem;
+    //   }
+    // }
   }
 }
 .radio-custom {

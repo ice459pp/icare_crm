@@ -29,14 +29,14 @@ const ClinicDetailLog = () => {
     <Fragment>
       <div className="d-flex w-100 log mb-1">
         <div className="d-flex  flex-column w-100 ">
-          <div className="d-flex radio-block">
-            <Button size="sm" className="px-5 " variant="dark">
+          <div className="d-flex radio-block ">
+            <Button size="sm" className="px-5 log-status" variant="dark">
               初訪
             </Button>{" "}
-            <div className=" w-25 d-flex justify-content-center align-items-center">
+            <div className="log-name">
               哭哭哭
             </div>
-            <div className=" w-25 d-flex  justify-content-center align-items-center">
+            <div className="log-date">
               2022/12/30
             </div>
           </div>
