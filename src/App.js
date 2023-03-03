@@ -82,10 +82,10 @@ function App() {
 
         <div className="bg-light h-100 d-flex flex-wrap  RouterWidth">
           <Switch>
-            <Route exact path="/icare_crm/" component={Home}></Route>
-            <Route path="/icare_crm/clinic/:id" component={ClinicDetail} />
-            <Route path="/icare_crm/approved" component={Approved} />
-            <Route path="/icare_crm/approved/:id" component={Approved} />
+            <Route exact path="/" component={Home}></Route>
+            <Route path="/clinic/:id" component={ClinicDetail} />
+            <Route path="/approved" component={Approved} />
+            <Route path="/approved/:id" component={Approved} />
             {/* 核可 */}
             {/* 核可細節 */}
             {/* 搜尋細節 */}

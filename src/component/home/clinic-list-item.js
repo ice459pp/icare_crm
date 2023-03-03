@@ -9,7 +9,7 @@ const ClinicListItem = (props) => {
     const goPath = useHistory();//設常數接收useHistory()回傳的物件
     const pushClinicDetail = () => {
         console.log("qwqwedqed")
-        goPath.push(`/icare_crm/clinic/${item.id}`)
+        goPath.push(`/clinic/${item.id}`)
     }
     return (<Fragment>
         <tr className="align-middle">
