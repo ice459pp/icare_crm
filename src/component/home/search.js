@@ -8,7 +8,6 @@ const styles = {
 };
 
 const Search = () => {
-  console.log(jsonData, "datadatadata");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [districts, setDistricts] = useState([]);

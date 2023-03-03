@@ -1,51 +1,63 @@
 .modal {
-    .h4 {
-        @media (max-width:576px) {
-            font-size: 1rem;
-        }
+  .h4 {
+    @media (max-width: 576px) {
+      font-size: 1rem;
     }
-    .modal-content{
-        @media (max-width:576px) {
-            width: 100%;
-            margin: 0 15px
-        }
+  }
+  .modal-content {
+    @media (max-width: 576px) {
+      width: 100%;
+      margin: 0 15px;
     }
-    .modal-body{
-        font-size: medium;
-        .modal-body-head{
-            justify-content: center;
-            align-items: center;
-            @media (max-width:576px) {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            // .d-flex{
-            //     width: 100%;
-            // }
-        }
-        .radio-custom{
-            align-items: center;
-            @media (max-width:996px) {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .input-group{
-                width: 75%;
-                padding: 0 1rem;
-                font-size: 1.5rem;
-                @media (max-width:996px) {
-                    width: 100%;
-                    padding: 0;
-                    font-size: 1rem;
-                }
-            }
-        }
+  }
+  .modal-body {
+    font-size: medium;
+    .modal-body-head {
+      justify-content: center;
+      align-items: center;
+      @media (max-width: 576px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      // .d-flex{
+      //     width: 100%;
+      // }
     }
-    .modal-footer{
-        .btn{
-            @media (max-width:576px) {
-                font-size: 0.75rem;
-            }
+    .radio-custom {
+      align-items: center;
+      @media (max-width: 996px) {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .input-group {
+        width: 75%;
+        padding: 0 1rem;
+        font-size: 1.5rem;
+        @media (max-width: 996px) {
+          width: 100%;
+          padding: 0;
+          font-size: 1rem;
         }
+      }
+    //   &.modalReadOnly {
+    //     display: flex;
+    //     flex-wrap: wrap;
+    //     justify-content: flex-start;
+    //     align-items: center;
+    //     @media (max-width: 996px) {
+    //       display: flex;
+    //       flex-wrap: wrap;
+    //       justify-content: flex-start;
+    //       align-items: center;
+    //     }
+    //   }
     }
+  }
+  .modal-footer {
+    .btn {
+      @media (max-width: 576px) {
+        font-size: 0.75rem;
+      }
+    }
+  }
 }
