@@ -9,9 +9,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 //     height: `300px`
 // }
 const ClinicDetailLog = () => {
-  // ClinicDetailLog13
   let params = useParams();
-  // const [showModal, setShowModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => {
     setShowModal(!showModal);
