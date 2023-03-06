@@ -1,37 +1,55 @@
 import React, { Fragment,useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Search from "../component/home/search";
+import Search from "../component/home/Search";
 import "../scss/home.scss"
-import ClinicListItem from "../component/home/clinic-list-item";
+import ClinicListItem from "../component/home/ClinicListItem";
 import PaginationUI from "../component/home/Pagination";
 import { Button } from "react-bootstrap";
-const qqq = [
+const DUMMY_DATA = [
     {
-        id: "qqqq",
-        name: "沂河診所",
-        adress:"瑞光路4段18號5-5"
-
+        id: "c1",
+        clinic: "沂河診所1",
+        phone: "0912345678",
+        address:"台北市內湖區瑞光路4段18號5-5", 
+        code: "350030303",
+        visit: {
+            name: "許瑋芯", 
+            datetime: "2022/11/23 10:30"
+        }, 
+        extra: {
+            his: '1', 
+            use_video: false,
+            is_visit: false,
+            is_join_care: false,
+            is_dr_decide: false, 
+            queue: '',
+            license: '',
+            group: '',
+            people: 0
+        }
     },
     {
-        id: "qqqggeq",
-        name: "ereede"
-    },
-    {
-        id: "qqqweqq",
-        name: "ereede"
-    },
-    {
-        id: "qqtgqweqq",
-        name: "ereede"
-    },
-    {
-        id: "qqqwqewqeweqweqq",
-        name: "ereede"
-    },
-    {
-        id: "qqqqfffffffffqwqwe",
-        name: "ereede"
-    },
+        id: "c2",
+        clinic: "沂河診所2",
+        phone: "0912345678",
+        address:"台北市內湖區瑞光路4段18號5-5", 
+        code: "350030303",
+        visit: {
+            name: "許瑋芯", 
+            datetime: "2022/11/21 09:30"
+        }, 
+        extra: {
+            his: '1', 
+            use_video: false,
+            is_visit: true,
+            is_join_care: false,
+            is_dr_decide: false, 
+            queue: '',
+            license: '',
+            group: '',
+            people: 0
+        }
+    }
 ]
 const w25 = {
     width: "25%"
@@ -49,8 +67,8 @@ const Home = () => {
         // true 逆
         setDateSort(!dateSort)
     }
-    // search13
-    return (<Fragment>
+    return (
+    <Fragment>
         <div className="w-100 mt-3 padding-RWD">
             <Search></Search>
         </div>
@@ -64,16 +82,18 @@ const Home = () => {
 
                 <thead>
                     <tr className="bg-secondary text-white tr-only-hide">
-                        <th scope="col">診所名(機構代碼)</th>
-                        <th scope="col">地址</th>
-                        <th scope="col"  >電話</th>
-                        <th scope="col" >拜訪人</th>
-                        <th scope="col">日期</th>
+                        <th scope="col">名稱</th>
+                        <th scope="col">資訊</th>
+                        <th scope="col">使用系統</th>
+                        <th scope="col">預約拜訪</th>
+                        <th scope="col">視訊</th>
+                        <th scope="col">其他</th>
+                        <th scope="col">最新拜訪</th>
                         <th style={{}}></th>
                     </tr>
                 </thead>
                 <tbody>
-                    {qqq.map(item => <ClinicListItem key={item.id} item={item}></ClinicListItem>)}
+                    {DUMMY_DATA.map(item => <ClinicListItem key={item.id} item={item}></ClinicListItem>)}
                 </tbody>
             </table>
         </div>

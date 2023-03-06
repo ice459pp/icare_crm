@@ -32,7 +32,7 @@ let arrayLog = [
 const style = {
   height: `300px`,
 };
-const ClinicDetail = () => {
+const ClinicLog = () => {
   // ClinicDetail13
   let params = useParams();
 
@@ -134,4 +134,4 @@ const ClinicDetail = () => {
 
   // list listItem
 };
-export default ClinicDetail;
+export default ClinicLog;

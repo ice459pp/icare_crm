@@ -2,7 +2,7 @@ import React, { Fragment, useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InputGroup, Dropdown, DropdownButton, Form } from "react-bootstrap";
 // import TWzipcode from "react-twzipcode";
-import jsonData from "../../twzipcode.json";
+import zipCodeData from "../../twzipcode.json";
 const styles = {
   borderRadius: `10px 0 0 10px`,
 };
@@ -14,7 +14,7 @@ const Search = () => {
 
   useEffect(() => {
     if (selectedCity) {
-      setDistricts(Object.keys(jsonData[selectedCity]));
+      setDistricts(Object.keys(zipCodeData[selectedCity]));
     }
   }, [selectedCity]);
 
@@ -30,7 +30,7 @@ const Search = () => {
                 onChange={(event) => setSelectedCity(event.target.value)}
               >
                 {/* <option value="">不分城市</option> */}
-                {Object.keys(jsonData).map((city) => (
+                {Object.keys(zipCodeData).map((city) => (
                   <option key={city} value={city}>
                     {city}
                   </option>
