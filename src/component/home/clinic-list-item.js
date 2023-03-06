@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import Search from "../component/home/search";
 // import ClinicList from "../component/home/clinic-list"
-import { useHistory, Link } from "react-router-dom";
+import { useHistory, Link, } from "react-router-dom";
 const ClinicListItem = (props) => {
     // ClinicListItem13
     let { item } = props

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Search from "../component/home/search";
 import { useParams } from "react-router-dom";
@@ -6,7 +6,12 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 // import ClinicDetail from "../component/home/clinic-list"
 import ClinicDetailLog from "./clinicDetail-log";
-import ClinicInformation from "./clinicInformation";
+import Modal_ClinicInformation from "./inform/Modal_ClinicInformation";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import HomeIcon from "../icon/Home_icon";
+import PhoneIcon from "../icon/Phone_icon";
+import Modal_AddLog from "./log/modal_addLog";
 let arrayLog = [
   {
     id: "qwdqwqwde",
@@ -29,106 +34,161 @@ let arrayLog = [
     name: "sdssaf",
   },
 ];
-const style = {
-  height: `300px`,
-};
+
 const ClinicDetail = () => {
   // ClinicDetail13
   let params = useParams();
+  const [informModalShow, setInformModalShow] = useState(false);
 
+  const handleInformModaClose = () => setInformModalShow(false);
+  const handleInformModaShow = () => setInformModalShow(true);
+  const [logModalShow, setLogModalShow] = useState(false);
+
+  const handleLOGModalClose = () => setLogModalShow(false);
+  const handleLOGModalShow = () => setLogModalShow(true);
   return (
     <Fragment>
       <div className="w-100 padding-RWD">
-        <Tabs
-          defaultActiveKey="profile"
-          id="fill-tab-example"
-          className="mb-3"
-          fill
-        >
-          <Tab eventKey="log" title="Log">
-            <div className="py-2 w-100">
-              <div className="h5 text-dark fw-bolder">Log:</div>
-              {arrayLog.map((item) => (
-                <ClinicDetailLog key={item.id}></ClinicDetailLog>
-              ))}
-            </div>
-          </Tab>
-          <Tab eventKey="home" title="基本資料">
-            <div className="py-2 w-100">
-              <div className="h5 text-dark fw-bolder">基本資料:</div>
-              <ClinicInformation></ClinicInformation>
-            </div>
-          </Tab>
-          <Tab eventKey="profile" title="編輯">
-            <div className="py-2 w-100">
-              <div className="h5 text-dark fw-bolder">基本資料:</div>
-              <ClinicInformation></ClinicInformation>
-            </div>
-
-            <div className="py-2">
-              <div className="form-floating">
-                <div className="h5 text-dark fw-bolder">新增內容:</div>
-                <div className="input-group  px-2 ps-3 py-2 radio-custom inputRadio">
-                  <div className="pe-3">狀態類別:</div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input custom-control-input"
-                      type="radio"
-                      name="radio"
-                      id="radio1"
-                    />
-                    <label
-                      className="form-check-label custom-control-label"
-                      for="radio1"
-                    >
-                      初訪
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input custom-control-input"
-                      type="radio"
-                      name="radio"
-                      id="radio2"
-                    />
-                    <label
-                      className="form-check-label custom-control-label"
-                      for="radio2"
-                    >
-                      回訪
-                    </label>
-                  </div>
-                  <div className="form-check form-check-inline">
-                    <input
-                      className="form-check-input custom-control-input"
-                      type="radio"
-                      name="radio"
-                      id="radio2"
-                    />
-                    <label
-                      className="form-check-label custom-control-label"
-                      for="radio2"
-                    >
-                      教育訓練
-                    </label>
-                  </div>
-                </div>
-                <textarea
-                  style={style}
-                  className="form-control inputTextarea"
-                  placeholder="Leave a comment here"
-                  id="floatingTextarea2"
-                ></textarea>
+        <div className="py-2 w-100">
+          {/* <div className="h5 text-dark fw-bolder">基本資料:</div> */}
+          <div className="w-100 bg-white  inform">
+            <section className="clinicName">
+              <div className="h3 fw-bolder  text-primary">愛管家診所</div>
+              <div className="h3 fw-bolder code">19293848</div>
+            </section>
+            <section className="d-flex align-items-center mt-1">
+              <div className="h5   text-dark">
+                <HomeIcon></HomeIcon>
               </div>
-            </div>
-            <div className="d-flex justify-content-center w-100 py-2">
-              <button type="button" className="btn btn-primary w-25">
-                送出
-              </button>
-            </div>
-          </Tab>
-        </Tabs>
+              <div className="h5  ps-3 code">台北市內湖區陽光街321巷</div>
+            </section>
+            <section className="d-flex align-items-center mt-1 mb-2 ">
+              <div className="h5   text-dark">
+                <PhoneIcon></PhoneIcon>
+              </div>
+              <div className="h5  ps-3 text-info">0912345678</div>
+            </section>
+            <div className="line"></div>
+            <section className=" card">
+              <div className="card-item">
+                <div className="card-item-title">HIS系統</div>
+                <div className="card-item-content">耀聖</div>
+              </div>
+              <div className="card-item">
+                <div className="card-item-title">有無視訊</div>
+                <div className="card-item-content text-success">有</div>
+              </div>
+              <div className="card-item">
+                <div className="card-item-title">醫師能否做主</div>
+                <div className="card-item-content text-danger">不能</div>
+              </div>
+              <div className="card-item">
+                <div className="card-item-title">醫師人數</div>
+                <div className="card-item-content">3</div>
+              </div>
+              <div className="card-item">
+                <div className="card-item-title">叫號方式</div>
+                <div className="card-item-content">線上叫號</div>
+              </div>
+              <div className="card-item">
+                <div className="card-item-title">其他醫院執業</div>
+                <div className="card-item-content">XX診所</div>
+              </div>
+            </section>
+            <section className="mt-1 table">
+              <div className="table-item">
+                <div className="table-item-title">有無加入照護網:</div>
+                <div className="table-item-content">有 dfgdsgsdfghdfgh</div>
+              </div>
+              <div className="table-item">
+                <div className="table-item-title">可否預約拜訪時間:</div>
+                <div className="table-item-content">有 dfgdsgsdfghdfgh</div>
+              </div>
+              <div className="table-item">
+                <div className="table-item-title">醫療群:</div>
+                <div className="table-item-content">有 dfgdsgsdfghdfgh</div>
+              </div>
+            </section>
+            <section className="w-100 text-center  mt-4 mb-1">
+              <Button
+                variant="success"
+                className="text-white edit_button"
+                onClick={handleInformModaShow}
+              >
+                編輯
+              </Button>
+            </section>
+          </div>
+        </div>
+        <div className="py-2 w-100">
+          <div className="h5 text-dark fw-bolder">Log:</div>
+          {arrayLog.map((item) => (
+            <ClinicDetailLog key={item.id}></ClinicDetailLog>
+          ))}
+        </div>
       </div>
+      <Modal
+        show={informModalShow}
+        onHide={handleInformModaClose}
+        backdrop="static"
+        keyboard={false}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        size="lg"
+      >
+        <Modal.Header className="bg-secondary text-white" closeButton>
+          <Modal.Title>編輯基本資料</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Modal_ClinicInformation></Modal_ClinicInformation>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="success"
+            className="text-white w-25"
+            onClick={handleInformModaClose}
+          >
+            送出
+          </Button>
+          <Button variant="secondary" onClick={handleInformModaClose}>
+            取消
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <div className="log_button">
+        <Button variant="primary" size="lg" onClick={handleLOGModalShow}>
+          <FontAwesomeIcon icon="fa-solid fa-plus" /> 新增Log
+        </Button>{" "}
+      </div>
+      <Modal
+        className="radio-custom"
+        show={logModalShow}
+        onHide={handleLOGModalClose}
+        centered
+        backdrop="static"
+        keyboard={false}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+      >
+        <Modal.Header className="bg-secondary text-white" closeButton>
+          <Modal.Title>新增log</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Modal_AddLog></Modal_AddLog>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="success"
+            className="text-white w-25"
+            onClick={handleLOGModalClose}
+          >
+            送出
+          </Button>
+          <Button variant="secondary" onClick={handleLOGModalClose}>
+            取消
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Fragment>
   );
 
