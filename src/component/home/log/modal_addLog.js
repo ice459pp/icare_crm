@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory, Link } from "react-router-dom";
-import { Button, Modal, Form } from "react-bootstrap";
+import { Button, Modal, Form, InputGroup } from "react-bootstrap";
 const modalAddLog = (props) => {
   const style = {
     height: `300px`,
@@ -21,7 +21,8 @@ const modalAddLog = (props) => {
               />
               <label
                 className="form-check-label custom-control-label"
-                for="radio1"
+                // for="radio1"
+                htmlFor="radio1"
               >
                 初訪
               </label>
@@ -35,7 +36,7 @@ const modalAddLog = (props) => {
               />
               <label
                 className="form-check-label custom-control-label"
-                for="radio2"
+                htmlFor="radio2"
               >
                 回訪
               </label>
@@ -45,16 +46,24 @@ const modalAddLog = (props) => {
                 className="form-check-input custom-control-input"
                 type="radio"
                 name="radio"
-                id="radio2"
+                id="radio3"
               />
               <label
                 className="form-check-label custom-control-label"
-                for="radio2"
+                htmlFor="radio3"
               >
                 教育訓練
               </label>
             </div>
           </div>
+          <InputGroup className="mb-3">
+            <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
+            <Form.Control
+              placeholder="20:00~07:00"
+              aria-label="拜訪時間"
+              aria-describedby="basic-addon1"
+            />
+          </InputGroup>
           <textarea
             style={style}
             className="form-control inputTextarea"

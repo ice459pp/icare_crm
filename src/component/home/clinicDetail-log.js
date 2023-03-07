@@ -18,11 +18,19 @@ const ClinicDetailLog = () => {
     <section className="bg-white text-dark logCard">
       <div className="logCard_title">
         <div>阿民</div>
-        <div className="logCard_title_dateStatus">
+        <div className="logCard_title_dateStatus_PC">
           <div className="date">2023/03/06 9:30</div>
-          <button className="btn btn-success text-white status">教育訓練</button>
+          <button className="btn btn-success text-white status">
+            教育訓練
+          </button>
+        </div>
+        <div className="logCard_title_dateStatus_PD">
+          <button className="btn btn-success text-white status">
+            教育訓練
+          </button>
         </div>
       </div>
+      <div className="date_PD">2023/03/06 9:30</div>
       <div className="logCard_content">
         經過與醫師討論後，決定先初次使用看看叫號功能，後續再與我們聯絡。
       </div>

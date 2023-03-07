@@ -90,34 +90,38 @@ const ClinicDetail = () => {
                 <div className="card-item-title">叫號方式</div>
                 <div className="card-item-content">線上叫號</div>
               </div>
-              <div className="card-item">
+              {/* <div className="card-item">
                 <div className="card-item-title">其他醫院執業</div>
                 <div className="card-item-content">XX診所</div>
-              </div>
+              </div> */}
             </section>
             <section className="mt-1 table">
               <div className="table-item">
+                <div className="table-item-title">可否預約拜訪時間:</div>
+                <div className="table-item-content">
+                  <span className="text-success p-0">有</span>{" "}
+                  <div className="p-0 px-2">15:00~18:00</div>
+                </div>
+              </div>
+              <div className="table-item">
+                <div className="table-item-title">醫療群:</div>
+                <div className="table-item-content text-danger">無</div>
+              </div>
+              <div className="table-item">
+                <div className="table-item-title">其他醫院執業:</div>
+                <div className="table-item-content text-danger">XX診所</div>
+              </div>
+              <div className="table-item">
                 <div className="table-item-title">有無加入照護網:</div>
                 <div className="table-item-content ">
-                  <div className="text-success p-0">有</div>{" "}
-                  <div className="d-flex flex-wrap">
-                    {" "}
+                  <div className="text-success p-0">有</div>
+                  <div className="d-flex flex-wrap py-0">
                     <div className="sick_btn">慢性病</div>
                     <div className="sick_btn">慢性腎臟病</div>
                     <div className="sick_btn">BC肝</div>
                     <div className="sick_btn">慢性阻塞性肺病</div>
                   </div>
                 </div>
-              </div>
-              <div className="table-item">
-                <div className="table-item-title">可否預約拜訪時間:</div>
-                <div className="table-item-content">
-                  <span className="text-success p-0">有</span> <div className="p-0 px-2">15:00~18:00</div> 
-                </div>
-              </div>
-              <div className="table-item">
-                <div className="table-item-title">醫療群:</div>
-                <div className="table-item-content text-danger">無</div>
               </div>
             </section>
             <section className="w-100 text-center  mt-4 mb-1">
