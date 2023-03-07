@@ -14,126 +14,20 @@ const ClinicDetailLog = () => {
   const handleModal = () => {
     setShowModal(!showModal);
   };
-
-  // const ModalHandler = () => {
-  //     console.log("qqqwwweeerrrtttad")
-  // }
-  // const toggleModal = () => {
-  //     console.log("qqwdqwdwa")
-  //     setShowModal(!showModal);
-  // };
-  //   style={{'background':"red"}}
   return (
-    <Fragment>
-      <div className="d-flex w-100 log mb-1">
-        <div className="d-flex  flex-column w-100 ">
-          <div className="d-flex radio-block ">
-            <Button size="sm" className="px-5 log-status" variant="dark">
-              初訪
-            </Button>{" "}
-            <div className="log-name">
-              哭哭哭
-            </div>
-            <div className="log-date">
-              2022/12/30
-            </div>
-          </div>
-          <div className=" fs-6 px-1 ps-3 py-1">
-            紀錄紀錄紀錄紀錄紀錄紀錄紀錄
-          </div>
+    <section className="bg-white text-dark logCard">
+      <div className="logCard_title">
+        <div>阿民</div>
+        <div className="logCard_title_dateStatus">
+          <div className="date">2023/03/06 9:30</div>
+          <button className="btn btn-success text-white status">教育訓練</button>
         </div>
-        <button onClick={handleModal} className="btn openModalIcon">
-          {" "}
-          <FontAwesomeIcon icon="far fa-eye" />
-        </button>
       </div>
-      <Modal
-        className="radio-custom"
-        show={showModal}
-        onHide={handleModal}
-        centered
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-      >
-        <Modal.Header className="bg-secondary text-white" closeButton>
-          <Modal.Title>沂河診所-詳細資料</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <section>
-            <div className="d-flex border-bottom py-2 modal-body-head ">
-              <div className="w-100 d-flex">
-                <div>拜訪時間 :</div>
-                <div className="px-3">2020/15/25</div>
-              </div>
-              <div className="w-100 d-flex">
-                <div>拜訪人 :</div>
-                <div className="px-3">齣齣齣</div>
-              </div>
-            </div>
-            <div className="border-bottom py-2 d-flex radio-custom modalReadOnly ">
-              <div>拜訪類別 :</div>
-              <Button size="sm" className="px-5 ms-3 " variant="dark">
-                初訪
-              </Button>{" "}
-              {/* <div className="input-group">
-                <div className="form-check form-check-inline custom-radio">
-                  <input
-                    className="form-check-input custom-control-input"
-                    type="radio"
-                    name="radio"
-                    id="radio1"
-                  />
-                  <label
-                    className="form-check-label custom-control-label"
-                    for="radio1"
-                  >
-                    初訪
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input custom-control-input"
-                    type="radio"
-                    name="radio"
-                    id="radio2"
-                  />
-                  <label
-                    className="form-check-label custom-control-label"
-                    for="radio2"
-                  >
-                    回訪
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <input
-                    className="form-check-input custom-control-input"
-                    type="radio"
-                    name="radio"
-                    id="radio2"
-                  />
-                  <label
-                    className="form-check-label custom-control-label"
-                    for="radio2"
-                  >
-                    教育訓練
-                  </label>
-                </div>
-              </div> */}
-            </div>
-          </section>
-          {/* <p>Modal Content Here</p> */}
-          <Form.Label className="py-1 m-0">拜訪紀錄 :</Form.Label>
-          <Form.Control as="textarea" readOnly rows={6} placeholder="文字紀錄紀錄紀錄紀錄....不可編輯" />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModal}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Fragment>
+      <div className="logCard_content">
+        經過與醫師討論後，決定先初次使用看看叫號功能，後續再與我們聯絡。
+      </div>
+      <div className="logCard_footer">2023/03/06 09:30 新增</div>
+    </section>
   );
-
-  // list listItem
 };
 export default ClinicDetailLog;

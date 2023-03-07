@@ -408,10 +408,20 @@ textarea {
         .table-item-content {
           font-size: medium;
           padding-left: 1rem;
+          display: flex;
+          align-items: center;
           @media (max-width: 576px) {
             flex-direction: column;
             align-items: flex-start;
             padding: 7.5px 0;
+          }
+          .sick_btn {
+            border-radius: 30px;
+            background-color: dodgerblue;
+            color: white;
+            min-width: 50px;
+            padding: 2.5px 20px;
+            margin: 5px 5px;
           }
         }
       }
@@ -445,5 +455,64 @@ textarea {
     border-radius: 50%;
     color: white;
     background: #00bfff;
+  }
+}
+section {
+  &.logCard {
+    padding: 10px 30px;
+    margin: 15px 0;
+    border-radius: 30px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    @media (max-width: 576px) {
+      padding: 10px 15px;
+    }
+    .logCard_title {
+      font-size: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 900;
+      @media (max-width: 576px) {
+        font-size: medium;
+      }
+      .logCard_title_dateStatus {
+        display: flex;
+        align-items: center;
+        // width: %;
+        .date {
+          padding: 0 15px;
+          // min-width: 50%;
+          // width: 100%;
+          @media (max-width: 576px) {
+            // min-width:auto;
+            padding: 0 5px;
+          }
+        }
+        .status {
+          // padding-left: 35px;
+          // padding-right: 35px;
+          max-width:200px ;
+          min-width: 120px;
+          @media (max-width: 576px) {
+            min-width:auto;
+            padding: 5px 5px;
+          }
+        }
+      }
+    }
+    .logCard_content {
+      color: #343a40;
+      font-size: medium;
+      padding: 7.5px 0;
+      @media (max-width: 576px) {
+        padding: 5px 0;
+        font-size: smaller;
+      }
+    }
+    .logCard_footer {
+      color: #b9b9b9;
+      font-size: medium;
+      text-align: right;
+    }
   }
 }
