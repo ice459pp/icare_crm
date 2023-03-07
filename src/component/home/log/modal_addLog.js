@@ -56,7 +56,6 @@ const modalAddLog = (props) => {
               </label>
             </div>
           </div>
-          {/* <input type={"datetime-local"}></input> */}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
             <Form.Control
