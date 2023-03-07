@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/icare_crm/static/css/main.caa08084.css",
-    "main.js": "/icare_crm/static/js/main.fe764e78.js",
+    "main.js": "/icare_crm/static/js/main.a8cd2152.js",
     "index.html": "/icare_crm/index.html",
     "main.caa08084.css.map": "/icare_crm/static/css/main.caa08084.css.map",
-    "main.fe764e78.js.map": "/icare_crm/static/js/main.fe764e78.js.map"
+    "main.a8cd2152.js.map": "/icare_crm/static/js/main.a8cd2152.js.map"
   },
   "entrypoints": [
     "static/css/main.caa08084.css",
-    "static/js/main.fe764e78.js"
+    "static/js/main.a8cd2152.js"
   ]
 }
