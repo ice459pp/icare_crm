@@ -56,12 +56,14 @@ const modalAddLog = (props) => {
               </label>
             </div>
           </div>
+          {/* <input type={"datetime-local"}></input> */}
           <InputGroup className="mb-3">
             <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
             <Form.Control
               placeholder="20:00~07:00"
               aria-label="拜訪時間"
               aria-describedby="basic-addon1"
+              type="datetime-local"
             />
           </InputGroup>
           <textarea
