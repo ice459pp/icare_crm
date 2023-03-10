@@ -200,7 +200,7 @@
           right: 0%;
           transform: translate(-100%, 50%);
           color: #b9b9b9;
-          &:hover{
+          &:hover {
             color: #666565;
           }
         }
@@ -449,8 +449,15 @@ textarea {
   position: absolute;
   bottom: 1%;
   right: 1%;
-
-  .log_button-addLogModal {
+  .btn-lg{
+    @media (max-width: 996px) {
+      font-size: 1rem;
+    }
+    @media (max-width: 576px) {
+      font-size: 0.75rem;
+    }
+  }
+   .log_button-addLogModal {
     width: 500px;
     height: 500px;
     text-align: center;
@@ -540,11 +547,11 @@ section {
     }
   }
 }
-.log_title{
+.log_title {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .input-group{
+  .input-group {
     display: flex;
     align-items: center;
     width: 25%;
@@ -556,8 +563,8 @@ section {
     @media (max-width: 576px) {
       width: 75%;
     }
-    .form-control{
-      margin:0 1rem;
+    .form-control {
+      margin: 0 1rem;
     }
   }
 }
