@@ -41,7 +41,16 @@ const ClinicDetail = () => {
   // ClinicDetail13
   let params = useParams();
   const [informModalShow, setInformModalShow] = useState(false);
-
+  const [logSearch, setLogSearch] = useState("");
+  const logSearchHandler = (value) => {
+    // if (!value.trim()) {
+    //   return;
+    // }
+    let valueTrim=value.trim()
+    setLogSearch(valueTrim);
+    console.log(logSearch, "logSearch", value, "value");
+  };
+  // const ref = useRef(initialValue)
   const handleInformModaClose = () => setInformModalShow(false);
   const handleInformModaShow = () => setInformModalShow(true);
   const [logModalShow, setLogModalShow] = useState(false);
@@ -139,10 +148,18 @@ const ClinicDetail = () => {
             <InputGroup size="sm" className="">
               查詢:
               <Form.Control
+                onChange={(e) => logSearchHandler(e.target.value)}
+                value={logSearch}
                 aria-label="Small"
                 aria-describedby="inputGroup-sizing-sm"
               />
-              <FontAwesomeIcon className="text-danger" icon="fa-solid fa-circle-xmark" />
+              {logSearch && (
+                <FontAwesomeIcon
+                onClick={()=>logSearchHandler("")}
+                  className="text-danger cursor-pointer fs-5"
+                  icon="fa-solid fa-circle-xmark"
+                />
+              )}
             </InputGroup>
           </div>
           {arrayLog.map((item) => (
