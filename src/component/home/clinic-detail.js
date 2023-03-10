@@ -12,6 +12,8 @@ import Modal from "react-bootstrap/Modal";
 import HomeIcon from "../icon/Home_icon";
 import PhoneIcon from "../icon/Phone_icon";
 import Modal_AddLog from "./log/modal_addLog";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 let arrayLog = [
   {
     id: "qwdqwqwde",
@@ -90,10 +92,6 @@ const ClinicDetail = () => {
                 <div className="card-item-title">叫號方式</div>
                 <div className="card-item-content">線上叫號</div>
               </div>
-              {/* <div className="card-item">
-                <div className="card-item-title">其他醫院執業</div>
-                <div className="card-item-content">XX診所</div>
-              </div> */}
             </section>
             <section className="mt-1 table">
               <div className="table-item">
@@ -136,7 +134,17 @@ const ClinicDetail = () => {
           </div>
         </div>
         <div className="py-2 w-100">
-          <div className="h5 text-dark fw-bolder">Log:</div>
+          <div className="h5 text-dark fw-bolder log_title">
+            <div>Log:</div>
+            <InputGroup size="sm" className="">
+              查詢:
+              <Form.Control
+                aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm"
+              />
+              <FontAwesomeIcon className="text-danger" icon="fa-solid fa-circle-xmark" />
+            </InputGroup>
+          </div>
           {arrayLog.map((item) => (
             <ClinicDetailLog key={item.id}></ClinicDetailLog>
           ))}
