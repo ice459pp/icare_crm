@@ -90,8 +90,8 @@ const ClinicDetail = () => {
                 <div className="card-item-content text-success">有</div>
               </div>
               <div className="card-item">
-                <div className="card-item-title">醫師能否做主</div>
-                <div className="card-item-content text-danger">不能</div>
+                <div className="card-item-title">診所狀態</div>
+                <div className="card-item-content text-danger">可回訪</div>
               </div>
               <div className="card-item">
                 <div className="card-item-title">醫師人數</div>
@@ -109,6 +109,10 @@ const ClinicDetail = () => {
                   <span className="text-success p-0">有</span>{" "}
                   <div className="p-0 px-2">15:00~18:00</div>
                 </div>
+              </div>
+              <div className="table-item">
+                <div className="table-item-title">醫師能否作主:</div>
+                <div className="table-item-content text-danger">不能</div>
               </div>
               <div className="table-item">
                 <div className="table-item-title">醫療群:</div>

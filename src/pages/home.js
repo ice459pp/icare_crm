@@ -68,8 +68,10 @@ const Home = () => {
                         <th scope="col">地址</th>
                         <th scope="col"  >電話</th>
                         <th scope="col" >拜訪人</th>
+                        <th scope="col">狀態</th>
                         <th scope="col">日期</th>
-                        <th style={{}}></th>
+                        <th  style={{width:"10%"}}></th>
+                        <th  style={{width:"10%"}}></th>
                     </tr>
                 </thead>
                 <tbody>

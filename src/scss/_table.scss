@@ -1,104 +1,110 @@
-.table-rwd {}
+.table-rwd {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
 
 /*這是額外做顏色，沒有什麼意義*/
 tr.tr-only-hide {
-    color: #D20B2A;
+  color: #d20b2a;
 }
 
 @media (max-width: 996px) {
-    .table-rwd {
-        min-width: 100%;
+  .table-rwd {
+    min-width: 100%;
+  }
+
+  /*針對tr去做隱藏*/
+  tr.tr-only-hide {
+    display: none !important;
+  }
+
+  /*讓tr變成區塊主要讓他有個區塊*/
+  .table-rwd tr {
+    display: block;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+  }
+
+  .table-rwd td {
+    text-align: left;
+    font-size: 15px;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+    &.table-log{
+        padding-top: 0;
+        padding-bottom: 0;
     }
-
-    /*針對tr去做隱藏*/
-    tr.tr-only-hide {
-        display: none !important;
+    &.table-more{
+        padding-top:0.25rem;
+        padding-bottom: 0.25rem;
     }
+  }
 
-    /*讓tr變成區塊主要讓他有個區塊*/
-    .table-rwd tr {
-        display: block;
-        border: 1px solid #ddd;
-        margin-top: 5px;
-    }
+  .table-rwd th:before {
+    /*最重要的就是這串*/
+    content: attr(data-th);
+    /*最重要的就是這串*/
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin-right: 10px;
+    color: #595a37;
+    // @media (max-width: 996px) {
+    //     display: flex;
+    //     flex-wrap: wrap;
+    // }
+  }
 
-    .table-rwd td {
-        text-align: left;
-        font-size: 15px;
-        overflow: hidden;
-        width: 100%;
-        display: block;
+  .table-rwd td:before {
+    /*最重要的就是這串*/
+    content: attr(data-th);
+    /*最重要的就是這串*/
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin-right: 10px;
+    color: #595a37;
+  }
 
-    }
+  /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/
+  .table-rwd.table-bordered td,
+  .table-rwd.table-bordered th,
+  .table-rwd.table-bordered {
+    border: 0;
+  }
+  .table-rwd.table-bordered td,
+  .table-rwd.table-bordered th {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-    .table-rwd th:before {
-        /*最重要的就是這串*/
-        content: attr(data-th);
-        /*最重要的就是這串*/
-        display: inline-block;
-        text-transform: uppercase;
-        font-weight: bolder;
-        margin-right: 10px;
-        color: #595a37;
-        // @media (max-width: 996px) {
-        //     display: flex;
-        //     flex-wrap: wrap;
-        // }
-    }
+  td {
+    &.td-address {
+      display: flex;
 
-    .table-rwd td:before {
-        /*最重要的就是這串*/
-        content: attr(data-th);
-        /*最重要的就是這串*/
-        display: inline-block;
-        text-transform: uppercase;
-        font-weight: bolder;
-        margin-right: 10px;
-        color: #595a37;
-        
-    }
-
-    /*當RWD縮小的時候.table-bordered 會有兩條線，所以針對.table-bordered去做修正*/
-    .table-rwd.table-bordered td,
-    .table-rwd.table-bordered th,
-    .table-rwd.table-bordered {
-        border: 0;
-
-    }
-    .table-rwd.table-bordered td,
-    .table-rwd.table-bordered th{
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    td {
-        &.td-address {
-            display: flex;
-
-            section {
-                display: flex;
-                align-items: center;
-                flex-wrap: wrap;
-            }
-        }
-        &.buttonIcon{
-            display: flex;
-            &::before{
-                margin: 0;
-            }
-        }
-    }
-
-    th {
+      section {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
+      }
     }
-    .table-rwd {
-        tr{
-            // border-radius: 10px;
-            // border:1px solid black;
-            // border-width: medium;
-        }
+    &.buttonIcon {
+      display: flex;
+      &::before {
+        margin: 0;
+      }
     }
+  }
 
+  th {
+    display: flex;
+    align-items: center;
+  }
+  .table-rwd {
+    tr {
+      // border-radius: 10px;
+      // border:1px solid black;
+      // border-width: medium;
+    }
+  }
 }

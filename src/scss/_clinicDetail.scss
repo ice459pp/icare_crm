@@ -301,6 +301,11 @@
     @media (max-width: 996px) {
       font-size: medium;
     }
+    &.inputRadio-ClinicStatus {
+      background-color: aliceblue;
+      box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+        rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    }
   }
 }
 textarea {
@@ -449,7 +454,7 @@ textarea {
   position: absolute;
   bottom: 1%;
   right: 1%;
-  .btn-lg{
+  .btn-lg {
     @media (max-width: 996px) {
       font-size: 1rem;
     }
@@ -457,7 +462,7 @@ textarea {
       font-size: 0.75rem;
     }
   }
-   .log_button-addLogModal {
+  .log_button-addLogModal {
     width: 500px;
     height: 500px;
     text-align: center;
