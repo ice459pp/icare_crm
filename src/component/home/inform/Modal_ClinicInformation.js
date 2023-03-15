@@ -222,7 +222,7 @@ const ClinicInformation = (props) => {
                 </div>
               </div>
             </div>
-            <div className="w-50  pe-4 ">
+            <div className="  pe-4 ">
               <label className="form-label">醫生能不能做主:</label>
               <div className="d-flex">
                 <div className="form-check pe-5">
@@ -259,6 +259,18 @@ const ClinicInformation = (props) => {
                 id="doctorGroup"
                 placeholder="??"
               />
+            </div>
+          </div>
+        </section>
+        <section className="d-flex  pt-2">
+          <div className="w-100 d-flex inform-radio1">
+            <div className="w-100 pe-4  ">
+              <label className="form-label">
+                診所狀態: <span className="px-3">已回訪</span>
+              </label>
+              {/* <div className="d-flex">
+                已回訪
+              </div> */}
             </div>
           </div>
         </section>

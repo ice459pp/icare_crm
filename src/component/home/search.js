@@ -21,6 +21,13 @@ const Search = () => {
   return (
     <Fragment>
       <form className="p-3 search">
+        <Form.Select aria-label="Default select example" className="widthRWD mb-2">
+          <option  disabled selected>診所狀態</option>
+          <option value="">無</option>
+          <option value="1">可回訪</option>
+          <option value="2">可電訪</option>
+          <option value="3">結案</option>
+        </Form.Select>
         <div className="d-flex align-items-center pb-2 ">
           <div className="d-flex align-items-center widthRWD">
             <div>

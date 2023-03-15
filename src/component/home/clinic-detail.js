@@ -14,6 +14,7 @@ import PhoneIcon from "../icon/Phone_icon";
 import Modal_AddLog from "./log/modal_addLog";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
+import PaginationUI from "./Pagination";
 let arrayLog = [
   {
     id: "qwdqwqwde",
@@ -169,6 +170,10 @@ const ClinicDetail = () => {
           {arrayLog.map((item) => (
             <ClinicDetailLog key={item.id}></ClinicDetailLog>
           ))}
+          <div className="d-flex justify-content-center mt-4">
+          <PaginationUI></PaginationUI>
+          </div>
+
         </div>
       </div>
       <Modal
