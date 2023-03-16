@@ -8,42 +8,47 @@ import Modal_AddLog from "./log/modal_addLog";
 // const style = {
 //     height: `300px`
 // }
-const ClinicDetailLog = () => {
+const ClinicDetailLog = (props) => {
+  let { item } = props;
+  console.log(item, "LOG區");
   let params = useParams();
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => {
+    // TODOＡＰＩ　ＰＯＳＴ　ｅｄｉｔＬＯＧ
     // console.log("ppapa");
     setShowModal(!showModal);
   };
   return (
     <Fragment>
-      <section className="bg-white text-dark logCard">
+      <section data-id={item.id} className="bg-white text-dark logCard">
         <div className="logCard_title">
-          <div>阿民</div>
+          <div data-id={item.visitor_id}>{item.visitor_name}</div>
           <div className="logCard_title_dateStatus_PC">
-            <div className="date">2023/03/06 9:30</div>
+            <div className="date">{item.visit_datetime}</div>
             <button className="btn btn-success text-white status">
-              教育訓練
+              {item.visit_category}
             </button>
           </div>
           <div className="logCard_title_dateStatus_PD">
             <button className="btn btn-success text-white status">
-              教育訓練
+              {item.visit_category}
             </button>
           </div>
         </div>
-        <div className="date_PD">2023/03/06 9:30</div>
-        <div className="logCard_content">
-          經過與醫師討論後，決定先初次使用看看叫號功能，後續再與我們聯絡。
-        </div>
+        <div className="date_PD">{item.visit_datetime}</div>
+        <div className="logCard_content">{item.content}</div>
         <div className="logCard_footer">
-          2023/03/06 09:30 新增{" "}
-          <FontAwesomeIcon
-          className="fs-4"
-            style={{"cursor":"pointer"}}
-            onClick={handleModal}
-            icon="fa-solid fa-pen-to-square"
-          />
+          {item.now_datetime} 新增{" "}
+          {item.isApproval ? (
+            ""
+          ) : (
+            <FontAwesomeIcon
+              className="fs-4"
+              style={{ cursor: "pointer" }}
+              onClick={handleModal}
+              icon="fa-solid fa-pen-to-square"
+            />
+          )}
         </div>
       </section>
 
@@ -61,7 +66,7 @@ const ClinicDetailLog = () => {
           <Modal.Title>編輯log</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Modal_AddLog></Modal_AddLog>
+          <Modal_AddLog item={item}></Modal_AddLog>
         </Modal.Body>
         <Modal.Footer>
           <Button

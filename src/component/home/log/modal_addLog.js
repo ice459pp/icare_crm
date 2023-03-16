@@ -3,9 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory, Link } from "react-router-dom";
 import { Button, Modal, Form, InputGroup } from "react-bootstrap";
 const modalAddLog = (props) => {
+  let { item, action } = props;
+  console.log(item, "in modalAddLog", action, "action");
   const style = {
     height: `300px`,
   };
+  // if (action==="new") {
+
+  // }
   return (
     <Fragment>
       <div className="py-2">
@@ -70,15 +75,30 @@ const modalAddLog = (props) => {
               </label>
             </div>
           </div>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
-            <Form.Control
-              placeholder="20:00~07:00"
-              aria-label="拜訪時間"
-              aria-describedby="basic-addon1"
-              type="datetime-local"
-            />
-          </InputGroup>
+          {action === "new" && (
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
+              <Form.Control
+                placeholder="20:00~07:00"
+                aria-label="拜訪時間"
+                aria-describedby="basic-addon1"
+                type="datetime-local"
+                defaultValue={new Date().toISOString().slice(0, -8)}
+              />
+            </InputGroup>
+          )}
+          {action === "edit" && (
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
+              <Form.Control
+                placeholder="20:00~07:00"
+                aria-label="拜訪時間"
+                aria-describedby="basic-addon1"
+                type="datetime-local"
+              />
+            </InputGroup>
+          )}
+
           <textarea
             style={style}
             className="form-control inputTextarea"
