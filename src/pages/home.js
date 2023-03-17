@@ -5,13 +5,17 @@ import "../scss/home.scss";
 import ClinicListItem from "../component/home/clinic-list-item";
 import PaginationUI from "../component/home/Pagination";
 import { Button } from "react-bootstrap";
+import { onCityChange,onClinicNameChange,onClinicStatusChange,onDateSortChange,onDistrictChange } from "../store/filterClinicListSlice";
+import { useDispatch,useSelector } from "react-redux";
 let qqq = [];
 const Home = () => {
   const [dateSort, setDateSort] = useState(false);
+  let dispatch=useDispatch()
   const dateSortHandler = () => {
     // false 順
     // true 逆
     setDateSort(!dateSort);
+    dispatch(onDateSortChange(!dateSort))
   };
   useEffect(() => {
     // todo API GET clinic_List

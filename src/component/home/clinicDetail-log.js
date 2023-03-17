@@ -9,13 +9,16 @@ import Modal_AddLog from "./log/modal_addLog";
 //     height: `300px`
 // }
 const ClinicDetailLog = (props) => {
-  let { item } = props;
-  console.log(item, "LOG區");
+  let { item,readonly } = props;
+  if (readonly) {
+    // 不能編輯只能看
+    item.isApproval=false
+    console.log(item,"item")
+  }
   let params = useParams();
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => {
     // TODOＡＰＩ　ＰＯＳＴ　ｅｄｉｔＬＯＧ
-    // console.log("ppapa");
     setShowModal(!showModal);
   };
   return (
@@ -39,7 +42,7 @@ const ClinicDetailLog = (props) => {
         <div className="logCard_content">{item.content}</div>
         <div className="logCard_footer">
           {item.now_datetime} 新增{" "}
-          {item.isApproval ? (
+          {!item.isApproval ? (
             ""
           ) : (
             <FontAwesomeIcon

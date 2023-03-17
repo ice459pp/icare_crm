@@ -2,16 +2,20 @@
   border: 2px solid gray;
   background-color: whitesmoke;
   border-radius: 10px;
-
+  .search-clinicStatus {
+    label {
+      min-width: 80px;
+    }
+    .widthRWD-40 {
+      width: 40%;
+      @media (max-width: 996px) {
+        width: 100%;
+      }
+    }
+  }
   .widthRWD {
     width: 50%;
 
-    @media (max-width: 996px) {
-      width: 100%;
-    }
-  }
-  .widthRWD-25 {
-    width: 25%;
     @media (max-width: 996px) {
       width: 100%;
     }

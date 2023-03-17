@@ -82,6 +82,7 @@ function App() {
 
         <div className="bg-light h-100 d-flex flex-wrap  RouterWidth">
           <Switch>
+          <Route exact path="/login" component={UserLogin}></Route>
             <Route exact path="/" component={Home}></Route>
             <Route path="/clinic/:id" component={ClinicDetail} />
             <Route path="/approved" component={Approved} />
