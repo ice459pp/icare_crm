@@ -11,6 +11,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import store from "./store/store"
 import { Provider } from 'react-redux';
+import UserLogin from './pages/login';
 import "./scss/checkbox.css"
 // import reportWebVitals from './reportWebVitals';
 library.add(fab, fas, far);
@@ -19,6 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
   <HashRouter>
+{/* <UserLogin></UserLogin> */}
     <App />
   </HashRouter>
   </Provider>

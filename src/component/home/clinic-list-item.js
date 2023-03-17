@@ -6,10 +6,31 @@ import { useHistory, Link } from "react-router-dom";
 import { Button, Modal, Form, Accordion } from "react-bootstrap";
 import Modal_AddLog from "../home/log/modal_addLog";
 import ClinicDetailLog from "./clinicDetail-log";
+import {
+  setToday,
+  setClinicID,
+  onSalesChange,
+  resetState,
+} from "../../store/log_writingSlice";
+import { useDispatch, useSelector } from "react-redux";
 let logListArr = [];
+// let nowToday = "";
+const nowTodayChange = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const date = String(now.getDate()).padStart(2, "0");
+  const hour = String(now.getHours()).padStart(2, "0");
+  const minute = String(now.getMinutes()).padStart(2, "0");
+
+  return `${year}/${month}/${date} ${hour}:${minute}`;
+};
 const ClinicListItem = (props) => {
   // ClinicListItem13
   let { item } = props;
+  let log_Detail = useSelector((state) => state.log_writingSlice);
+  let dispatch = useDispatch();
+
   // console.log(item, "itemmm");
   const goPath = useHistory(); //設常數接收useHistory()回傳的物件
   const pushClinicDetail = () => {
@@ -20,6 +41,14 @@ const ClinicListItem = (props) => {
   // const [isOpen, setIsOpen] = useState(true);
 
   const handleAddLogModal = () => {
+    // 新增log
+    let nowToday = nowTodayChange();
+    dispatch(setToday(nowToday));
+    dispatch(setClinicID(item.id));
+    let token = "撈cookies 的token";
+    dispatch(onSalesChange(token));
+    dispatch(resetState());
+
     // TODO  POST API LOG (new|| edit)
     setShowAddLogModal(!showAddLogModal);
   };
@@ -91,8 +120,6 @@ const ClinicListItem = (props) => {
         clinic_status: "可電訪",
       },
     ];
-
-
   }, []);
   return (
     <Fragment>
@@ -131,7 +158,7 @@ const ClinicListItem = (props) => {
           </button>
         </td>
       </tr>
-{/* log列表 */}
+      {/* log列表 */}
       <Modal
         className="radio-custom"
         show={showLogListModal}
@@ -147,7 +174,11 @@ const ClinicListItem = (props) => {
         </Modal.Header>
         <Modal.Body>
           {logListArr.map((item) => (
-            <ClinicDetailLog key={item.id} item={item} readonly={true}></ClinicDetailLog>
+            <ClinicDetailLog
+              key={item.id}
+              item={item}
+              readonly={true}
+            ></ClinicDetailLog>
           ))}
           {/* <Modal_AddLog action={"new"}></Modal_AddLog> */}
         </Modal.Body>
@@ -164,7 +195,7 @@ const ClinicListItem = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
-{/* 新增log */}
+      {/* 新增log */}
       <Modal
         className="radio-custom"
         show={showAddLogModal}
@@ -179,7 +210,7 @@ const ClinicListItem = (props) => {
           <Modal.Title>新增log</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Modal_AddLog action={"new"}></Modal_AddLog>
+          <Modal_AddLog clinic_id={item.id} action={"new"}></Modal_AddLog>
         </Modal.Body>
         <Modal.Footer>
           <Button

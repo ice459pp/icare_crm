@@ -21,6 +21,7 @@ function App() {
   const initHeight = `${window.innerHeight}`;
   const [height, setHeight] = useState(initHeight);
   const [menuIsShow, setMenuIsShow] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   let headNavbarRef = useRef();
   const style = {
@@ -45,13 +46,6 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  // if (isLogin) {
-  //   return (
-  //     <Route path="/login" component={UserLogin}> </Route>
-  //   //  <Redirect exact from="/" to="/login" />
-  //   )
-  // }
-
   return (
     <Fragment>
       <div
@@ -82,7 +76,7 @@ function App() {
 
         <div className="bg-light h-100 d-flex flex-wrap  RouterWidth">
           <Switch>
-          <Route exact path="/login" component={UserLogin}></Route>
+            <Route exact path="/login" component={UserLogin}></Route>
             <Route exact path="/" component={Home}></Route>
             <Route path="/clinic/:id" component={ClinicDetail} />
             <Route path="/approved" component={Approved} />

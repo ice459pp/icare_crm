@@ -5,19 +5,36 @@ import "../scss/home.scss";
 import ClinicListItem from "../component/home/clinic-list-item";
 import PaginationUI from "../component/home/Pagination";
 import { Button } from "react-bootstrap";
-import { onCityChange,onClinicNameChange,onClinicStatusChange,onDateSortChange,onDistrictChange } from "../store/filterClinicListSlice";
-import { useDispatch,useSelector } from "react-redux";
+import {
+  onCityChange,
+  onClinicNameChange,
+  onClinicStatusChange,
+  onDateSortChange,
+  onDistrictChange,
+} from "../store/filterClinicListSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 let qqq = [];
+const isAppLogin = () => {
+  return false
+};
 const Home = () => {
   const [dateSort, setDateSort] = useState(false);
-  let dispatch=useDispatch()
+  let dispatch = useDispatch();
+  let history = useHistory();
   const dateSortHandler = () => {
     // false 順
     // true 逆
     setDateSort(!dateSort);
-    dispatch(onDateSortChange(!dateSort))
+    dispatch(onDateSortChange(!dateSort));
   };
   useEffect(() => {
+
+    if (!isAppLogin()) {
+      history.push("/login");
+    }
+ 
     // todo API GET clinic_List
     qqq = [
       {

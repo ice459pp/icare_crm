@@ -6,8 +6,20 @@ import {
   onContentChange,
   onClinicStatusChange,
   onVisitCategoryChange,
+  onVisitDateTimeChange,
 } from "../../../store/log_writingSlice";
 import { useDispatch, useSelector } from "react-redux";
+const dateTransform = (timestamp) => {
+  const date = new Date(timestamp);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
+};
 const ModalAddLog = (props) => {
   let { item, action, clinic_id } = props;
   // console.log(item, "in ModalAddLog", action, "action");
@@ -42,15 +54,11 @@ const ModalAddLog = (props) => {
 
   const handleStatusChange = (event) => {
     const value = event.target.value;
-    // setClinicStatus(value);
     dispatch(onClinicStatusChange(value));
-    // console.log(value, "value");
   };
   const handleCategoryChange = (event) => {
     const value = event.target.value;
-    // setVisitCategory(value);
     dispatch(onVisitCategoryChange(value));
-    // console.log(value, "value");
   };
   const contentChange = (e) => {
     const value = e.target.value;
@@ -58,7 +66,9 @@ const ModalAddLog = (props) => {
   };
   const dateChange = (e) => {
     const value = e.target.value;
-    console.log(value, "value");
+    // console.log(new Date(e.target.value),"new Date(e.target.value)new Date(e.target.value)")
+    let visitDate = dateTransform(value);
+    dispatch(onVisitDateTimeChange(visitDate));
   };
   return (
     <Fragment>
@@ -145,7 +155,8 @@ const ModalAddLog = (props) => {
                 aria-describedby="basic-addon1"
                 type="datetime-local"
                 onChange={(e) => dateChange(e)}
-                defaultValue={new Date().toISOString().slice(0, -8)}
+                // value={new Date().toISOString().slice(0, -8)}
+                // min={new Date().toISOString().slice(0, -8)}
               />
             </InputGroup>
           )}

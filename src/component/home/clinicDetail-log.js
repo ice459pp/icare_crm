@@ -4,16 +4,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useParams } from "react-router-dom";
 import { Button, Modal, Form } from "react-bootstrap";
 import Modal_AddLog from "./log/modal_addLog";
-// import ClinicDetailLog from "../component/home/clinic-list"
-// const style = {
-//     height: `300px`
-// }
+
 const ClinicDetailLog = (props) => {
   let { item,readonly } = props;
   if (readonly) {
     // 不能編輯只能看
     item.isApproval=false
     console.log(item,"item")
+  }else{
+    item.isApproval=true
   }
   let params = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -66,10 +65,10 @@ const ClinicDetailLog = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
       >
         <Modal.Header className="bg-secondary text-white" closeButton>
-          <Modal.Title>編輯log</Modal.Title>
+          <Modal.Title>編輯log123</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Modal_AddLog item={item}></Modal_AddLog>
+          <Modal_AddLog readonly={false} action={"edit"}></Modal_AddLog>
         </Modal.Body>
         <Modal.Footer>
           <Button
