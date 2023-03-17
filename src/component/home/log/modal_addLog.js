@@ -26,30 +26,10 @@ const ModalAddLog = (props) => {
   const style = {
     height: `300px`,
   };
-  let clinic_info = {
-    id: "qweqweqe",
-    clinic_status: "可電訪",
-  };
-  let { clinic_status } = clinic_info;
+  
   let log_writingSlice = useSelector((state) => state.log_writingSlice);
   let clinicStatus = log_writingSlice.clinic_status;
   let visitCategory = log_writingSlice.visit_category;
-  // const [clinicStatus, setClinicStatus] = useState(clinic_status);
-  // const [visitCategory, setVisitCategory] = useState("初訪");
-
-  // if (action==="new") {
-
-  // }
-  // console.log(
-  //   new Date().toISOString().slice(0, -8),
-  //   "曖曖曖曖",
-  //   new Date().toLocaleString().slice(0, 16).replace(/[/.,]/g, "-")
-  // );
-
-  // useEffect(() => {
-  //   // TODO API GET CLINIC_info
-
-  // }, [12]);
   let dispatch = useDispatch();
 
   const handleStatusChange = (event) => {

@@ -33,7 +33,7 @@ const ClinicListItem = (props) => {
 
   // console.log(item, "itemmm");
   const goPath = useHistory(); //設常數接收useHistory()回傳的物件
-  const pushClinicDetail = () => {
+  const onMoreClinicDetail = () => {
     goPath.push(`/clinic/${item.id}`);
   };
   const [showAddLogModal, setShowAddLogModal] = useState(false);
@@ -42,6 +42,7 @@ const ClinicListItem = (props) => {
 
   const handleAddLogModal = () => {
     // 新增log
+    // 診所列表上的LOG的延伸modal
     let nowToday = nowTodayChange();
     dispatch(setToday(nowToday));
     dispatch(setClinicID(item.id));
@@ -49,11 +50,11 @@ const ClinicListItem = (props) => {
     dispatch(onSalesChange(token));
     dispatch(resetState());
 
-    // TODO  POST API LOG (new|| edit)
+    // TODO  POST API LOG (new)
     setShowAddLogModal(!showAddLogModal);
   };
   const handleLogListModal = () => {
-    // TODO GET API LOG_LIST
+    // TODO GET API LOG_LIST justneed 5 no page
     setShowLogListModal(!showLogListModal);
   };
   useEffect(() => {
@@ -151,7 +152,7 @@ const ClinicListItem = (props) => {
         </td>
         <td className="buttonIcon table-more">
           <button
-            onClick={pushClinicDetail}
+            onClick={onMoreClinicDetail}
             className="btn w-100 btn-sm btn-dark"
           >
             更多...

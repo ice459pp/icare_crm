@@ -6,17 +6,21 @@ import { Button, Modal, Form } from "react-bootstrap";
 import Modal_AddLog from "./log/modal_addLog";
 
 const ClinicDetailLog = (props) => {
-  let { item,readonly } = props;
+  let { item, readonly } = props;
   if (readonly) {
     // 不能編輯只能看
-    item.isApproval=false
-    console.log(item,"item")
-  }else{
-    item.isApproval=true
+    item.isApproval = false;
+  } else {
+    item.isApproval = true;
   }
   let params = useParams();
+  console.log(item, "itttemm");
+
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => {
+    console.log(item, "itttemm");
+    // 撈出redux LOG 資料的值，然後post給API 記得重製
+
     // TODOＡＰＩ　ＰＯＳＴ　ｅｄｉｔＬＯＧ
     setShowModal(!showModal);
   };

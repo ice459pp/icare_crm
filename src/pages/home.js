@@ -31,9 +31,9 @@ const Home = () => {
   };
   useEffect(() => {
 
-    if (!isAppLogin()) {
-      history.push("/login");
-    }
+    // if (!isAppLogin()) {
+    //   history.push("/login");
+    // }
  
     // todo API GET clinic_List
     qqq = [

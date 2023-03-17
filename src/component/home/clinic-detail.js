@@ -64,7 +64,8 @@ let logListArr = [
     id: "fgretlg785785fgdfgfdgsdwrlg",
     visitor_id: "dfasdfasdf",
     visitor_name: "DOG",
-    content: "經過與醫師討論後，決定先初werqwer次使用看看叫號功能，後續再與我們聯絡。",
+    content:
+      "經過與醫師討論後，決定先初werqwer次使用看看叫號功能，後續再與我們聯絡。",
     visit_category: "教育訓練",
     visit_datetime: "2023/03/06 9:30",
     now_datetime: "2023/03/06 9:30",
@@ -107,18 +108,32 @@ const ClinicDetail = () => {
   const [logSearch, setLogSearch] = useState("");
   const logSearchHandler = (value) => {
     let valueTrim = value.trim();
+    // TODO GET API LOGLIST
     setLogSearch(valueTrim);
+    // fetchApi(valueTrim)
   };
   const handleInformModaClose = () => setInformModalShow(false);
   const handleInformModaShow = () => setInformModalShow(true);
   const [logModalShow, setLogModalShow] = useState(false);
 
-  const handleLOGModalClose = () => setLogModalShow(false);
+  const sendNewLog = () => {
+    // TOＤＯ　ＡＰＩ　ＰＯＳＴ　ｌｏｇ　ｎｅｗ
+    setLogModalShow(!logModalShow);
+  };
   const handleLOGModalShow = () => setLogModalShow(true);
+
+  const startFetch = (xxx) => {
+    // load data
+    // const apiLostList = async (xxx) => {
+    //   await
+    // }
+    // apiLostList(xxx)
+  };
+
   useEffect(() => {
     // todo API GET LOG_LIST
     // todo API GET clinic_info
-
+    startFetch("xxx");
     clinicInfo = JSON.parse(JSON.stringify(clinicInfo));
     care_networkArr = clinicInfo.care_network.split("$");
   }, []);
@@ -282,7 +297,10 @@ const ClinicDetail = () => {
           <Modal.Title>編輯基本資料</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Modal_ClinicInformation care_networkArr={care_networkArr} item={clinicInfo}></Modal_ClinicInformation>
+          <Modal_ClinicInformation
+            care_networkArr={care_networkArr}
+            item={clinicInfo}
+          ></Modal_ClinicInformation>
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -298,14 +316,14 @@ const ClinicDetail = () => {
         </Modal.Footer>
       </Modal>
       <div className="log_button">
-        <Button variant="primary" size="lg" onClick={handleLOGModalShow}>
+        <Button variant="primary" size="lg" onClick={(e)=>{setLogModalShow(true)}}>
           <FontAwesomeIcon icon="fa-solid fa-plus" /> 新增Log
         </Button>{" "}
       </div>
       <Modal
         className="radio-custom"
         show={logModalShow}
-        onHide={handleLOGModalClose}
+        onHide={sendNewLog}
         centered
         backdrop="static"
         keyboard={false}
@@ -316,17 +334,20 @@ const ClinicDetail = () => {
           <Modal.Title>新增log</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Modal_AddLog></Modal_AddLog>
+          <Modal_AddLog action={"new"}></Modal_AddLog>
         </Modal.Body>
         <Modal.Footer>
           <Button
             variant="success"
             className="text-white w-25"
-            onClick={handleLOGModalClose}
+            onClick={sendNewLog}
           >
             送出
           </Button>
-          <Button variant="secondary" onClick={handleLOGModalClose}>
+          <Button
+            variant="secondary"
+            onClick={() => setLogModalShow(!logModalShow)}
+          >
             取消
           </Button>
         </Modal.Footer>
