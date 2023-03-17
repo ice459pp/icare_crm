@@ -14,7 +14,7 @@ const ClinicDetailLog = (props) => {
     item.isApproval = true;
   }
   let params = useParams();
-  console.log(item, "itttemm");
+  // console.log(item, "itttemm");
 
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => {
