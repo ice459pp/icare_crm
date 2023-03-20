@@ -16,16 +16,13 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import appConfig from "../app-config";
+import appSlice, { appAction } from "../store/appSlice";
 
 let qqq = [];
-const isAppLogin = () => {
-  const storage = window.localStorage
-  const authToken = storage.getItem("auth-token")
-  return authToken && true
-};
 
 const Home = () => {
   const [dateSort, setDateSort] = useState(false);
+  const appSlice = useSelector(state => state.appSlice)
   let dispatch = useDispatch();
   let history = useHistory();
   const dateSortHandler = () => {
@@ -56,11 +53,9 @@ const Home = () => {
       console.log(data)
     }
 
-    fetchApi()
+    // fetchApi()
 
-    if (isAppLogin()) {
-      
-    } else {
+    if (!appSlice.isLogin) {
       history.push("/login");
     }
  

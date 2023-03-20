@@ -1,8 +1,12 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, { Fragment, useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Route, useHistory } from "react-router-dom";
 import { apiLogin } from "../api/api-login";
+import { appAction } from "../store/appSlice";
 
 const UserLogin = () => {
+  let dispatch = useDispatch()
+  let appSlice = useSelector(state => state.appSlice)
   let [err, setErr] = useState('')
   let emailRef = useRef();
   let passwordRef = useRef();
@@ -23,11 +27,18 @@ const UserLogin = () => {
       }, (token) => {
         // complete fetch token
         setErr("")
-        localStorage.setItem('auth-token', token)
+        dispatch(appAction.login(token))
         navigate.push(`/`)
       }
     )
   };
+
+  useEffect(() => {
+    if (appSlice.isLogin) {
+      navigate.push(`/`)
+    }
+  }, [])
+
   // const [email, setEmail] = useState("");
   return (
     <div className="container h-100 d-flex justify-content-center align-items-center">

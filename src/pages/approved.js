@@ -1,8 +1,11 @@
-import React, { Fragment ,useState} from "react";
+import React, { Fragment ,useEffect,useState} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "../scss/home.scss"
 import "../scss/approved.scss";
 import ApprovedItem from "../component/approved/approved-item";
+import { useHistory } from "react-router-dom";
+import appSlice from "../store/appSlice";
+import { useSelector } from "react-redux";
 
 let arrayLog = [
     {
@@ -35,7 +38,13 @@ let arrayLog = [
 //     }
 //   }
 const Approved = () => {
-
+    const navigate = useHistory()
+    const appSlice = useSelector(state => state.appSlice)
+    useEffect(() => {
+        if (!appSlice.isLogin) {
+            navigate.push("/login");
+        }    
+    }, [])
     return (
         <div className="w-100 approved-page mt-3">
             <h4 className="text-center fw-bolder text-dark">待核可列表</h4>
