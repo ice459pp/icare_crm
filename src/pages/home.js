@@ -37,6 +37,13 @@ const Home = () => {
 
   useEffect(() => {
 
+    // const urlParams = new URLSearchParams()
+    // urlParams.append("userID", "admin@sprinf.com")
+    // urlParams.append("password", "12345678")
+    // const queryString = urlParams.toString()
+    // const apiUrl = `${appConfig.url}?${queryString}`
+
+    // console.log(urlParams)
     const fetchApi = async() => {
       let url = "https://pay.sprinf.com/api/clinic/info?clinic=7478412"
       const response = await fetch(url, {
@@ -48,6 +55,8 @@ const Home = () => {
       console.log("api response is: ")
       console.log(data)
     }
+
+    fetchApi()
 
     if (isAppLogin()) {
       

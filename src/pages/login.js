@@ -1,28 +1,39 @@
 import React, { Fragment, useState, useRef } from "react";
 import { Route, useHistory } from "react-router-dom";
+import { apiLogin } from "../api/api-login";
 
 const UserLogin = () => {
+  let [err, setErr] = useState('')
   let emailRef = useRef();
   let passwordRef = useRef();
-  const goPath = useHistory(); //設常數接收useHistory()回傳的物件
+  const navigate = useHistory();
+
   const submitHandler = (event) => {
     event.preventDefault();
     let email = emailRef.current.value;
     let password = passwordRef.current.value;
     if (!email || !password) {
+      setErr("請輸入完整登入資訊")
       return;
     }
-    // TODO API LOGIN
-    // save token
-    // redux checked
-    goPath.push(`/`);
+    
+    apiLogin(email, password, 
+      (err) => {
+        setErr(err)
+      }, (token) => {
+        // complete fetch token
+        setErr("")
+        localStorage.setItem('auth-token', token)
+        navigate.push(`/`)
+      }
+    )
   };
   // const [email, setEmail] = useState("");
   return (
     <div className="container h-100 d-flex justify-content-center align-items-center">
       <form className="w-25" onSubmit={submitHandler}>
         <div className="mb-3">
-          <label className="form-label">Email address</label>
+          <label className="form-label">帳號</label>
           <input
             ref={emailRef}
             type="email"
@@ -31,11 +42,11 @@ const UserLogin = () => {
             aria-describedby="emailHelp"
           />
           <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
+            該帳號為業務使用
           </div>
         </div>
         <div className="mb-3">
-          <label className="form-label">Password</label>
+          <label className="form-label">密碼</label>
           <input
             ref={passwordRef}
             type="password"
@@ -43,14 +54,15 @@ const UserLogin = () => {
             id="exampleInputPassword1"
           />
         </div>
-        <div className="mb-3 form-check">
+        {/* <div className="mb-3 form-check">
           <input
             type="checkbox"
             className="form-check-input"
             id="exampleCheck1"
           />
           <label className="form-check-label">Check me out</label>
-        </div>
+        </div> */}
+        {err && <div><p style={{color: 'red'}}>{err}</p></div>}
         <button type="submit" className="btn btn-primary w-100">
           登入
         </button>
