@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Search from "../component/home/search";
 import "../scss/home.scss";
 import ClinicListItem from "../component/home/clinic-list-item";
-import PaginationUI from "../component/home/Pagination";
+import PaginationUI from "../component/home/pagination";
 import { Button } from "react-bootstrap";
 
 import {
@@ -12,11 +12,11 @@ import {
   onClinicStatusChange,
   onDateSortChange,
   onDistrictChange,
-} from "../store/filterClinicListSlice";
+} from "../store/filter-clinic-list-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import appConfig from "../app-config";
-import appSlice, { appAction } from "../store/appSlice";
+import appSlice, { appAction } from "../store/app-slice";
 
 let qqq = [];
 

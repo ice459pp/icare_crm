@@ -1,8 +1,8 @@
 import {configureStore } from "@reduxjs/toolkit";
 // import { Value } from "sass";
-import filterClinicList from "./filterClinicListSlice"
-import log_writingSlice from "./log_writingSlice"
-import appSlice from "./appSlice"
+import filterClinicList from "./filter-clinic-list-slice"
+import log_writingSlice from "./log-writing-slice"
+import appSlice from "./app-slice"
 
 const store=configureStore({
     reducer:{

@@ -7,7 +7,7 @@ import {
   onClinicStatusChange,
   onVisitCategoryChange,
   onVisitDateTimeChange,
-} from "../../../store/log_writingSlice";
+} from "../../../store/log-writing-slice";
 import { useDispatch, useSelector } from "react-redux";
 const dateTransform = (timestamp) => {
   const date = new Date(timestamp);
@@ -20,6 +20,7 @@ const dateTransform = (timestamp) => {
 
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };
+
 const ModalAddLog = (props) => {
   let { item, action, clinic_id } = props;
   // console.log(item, "in ModalAddLog", action, "action");

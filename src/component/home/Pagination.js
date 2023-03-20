@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "react-bootstrap/Pagination";
 // import filterClinicListSlice from "../../store/filterClinicListSlice";
-import { onPageChange } from "../../store/filterClinicListSlice";
+import { onPageChange } from "../../store/filter-clinic-list-slice";
 import { useSelector, useDispatch } from "react-redux";
 // import Search from "../component/home/search";
 // import "../scss/home.scss"

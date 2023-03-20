@@ -7,7 +7,7 @@ import {
   onClinicStatusChange,
   onDateSortChange,
   onDistrictChange,
-} from "../../store/filterClinicListSlice";
+} from "../../store/filter-clinic-list-slice";
 import { useDispatch, useSelector } from "react-redux";
 // import TWzipcode from "react-twzipcode";
 import jsonData from "../../twzipcode.json";

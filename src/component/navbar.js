@@ -2,7 +2,7 @@ import React,{Fragment} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
-import { appAction } from "../store/appSlice";
+import { appAction } from "../store/app-slice";
 const Navbar=(props)=>{
     // console.log(props,"psss")
     const appSlice = useSelector(state => state.appSlice)

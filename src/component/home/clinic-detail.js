@@ -5,16 +5,16 @@ import { useParams } from "react-router-dom";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 // import ClinicDetail from "../component/home/clinic-list"
-import ClinicDetailLog from "./clinicDetail-log";
-import Modal_ClinicInformation from "./inform/Modal_ClinicInformation";
+import ClinicDetailLog from "./clinic-detail-log";
+import Modal_ClinicInformation from "./inform/modal-clinic-info";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import HomeIcon from "../icon/Home_icon";
 import PhoneIcon from "../icon/Phone_icon";
-import Modal_AddLog from "./log/modal_addLog";
+import Modal_AddLog from "./log/modal-add-log";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import PaginationUI from "./Pagination";
+import PaginationUI from "./pagination";
 let logListArr = [
   {
     id: "fgretlgwrlg",

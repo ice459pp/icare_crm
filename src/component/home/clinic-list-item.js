@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import ClinicList from "../component/home/clinic-list"
 import { useHistory, Link } from "react-router-dom";
 import { Button, Modal, Form, Accordion } from "react-bootstrap";
-import Modal_AddLog from "../home/log/modal_addLog";
-import ClinicDetailLog from "./clinicDetail-log";
+import Modal_AddLog from "./log/modal-add-log";
+import ClinicDetailLog from "./clinic-detail-log";
 import {
   setToday,
   setClinicID,
   onSalesChange,
   resetState,
-} from "../../store/log_writingSlice";
+} from "../../store/log-writing-slice";
 import { useDispatch, useSelector } from "react-redux";
 let logListArr = [];
 // let nowToday = "";

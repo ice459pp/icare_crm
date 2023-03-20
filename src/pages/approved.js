@@ -4,7 +4,7 @@ import "../scss/home.scss"
 import "../scss/approved.scss";
 import ApprovedItem from "../component/approved/approved-item";
 import { useHistory } from "react-router-dom";
-import appSlice from "../store/appSlice";
+import appSlice from "../store/app-slice";
 import { useSelector } from "react-redux";
 
 let arrayLog = [

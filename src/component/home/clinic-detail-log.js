@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Search from "../component/home/search";
 import { useParams } from "react-router-dom";
 import { Button, Modal, Form } from "react-bootstrap";
-import Modal_AddLog from "./log/modal_addLog";
+import Modal_AddLog from "./log/modal-add-log";
 
 const ClinicDetailLog = (props) => {
   let { item, readonly } = props;
