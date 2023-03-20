@@ -30,7 +30,6 @@ function App() {
   };
   const menuHandler = () => {
     setMenuIsShow(!menuIsShow);
-    // console.log(menuIsShow, "menu")
   };
 
   useEffect(() => {
@@ -38,7 +37,6 @@ function App() {
     const height = headNavbarRefDOM.clientHeight;
     setHeight(window.innerHeight - height);
     const handleResize = () => {
-      // console.log(height,"height")
       setHeight(window.innerHeight - height);
     };
     window.addEventListener("resize", handleResize);
