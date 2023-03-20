@@ -19,10 +19,9 @@ library.add(fab, fas, far);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-  <HashRouter>
-{/* <UserLogin></UserLogin> */}
+  <BrowserRouter>
     <App />
-  </HashRouter>
+  </BrowserRouter>
   </Provider>
 );
 
