@@ -5,6 +5,7 @@ import "../scss/home.scss";
 import ClinicListItem from "../component/home/clinic-list-item";
 import PaginationUI from "../component/home/Pagination";
 import { Button } from "react-bootstrap";
+
 import {
   onCityChange,
   onClinicNameChange,
@@ -14,11 +15,15 @@ import {
 } from "../store/filterClinicListSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import appConfig from "../app-config";
 
 let qqq = [];
 const isAppLogin = () => {
-  return false
+  const storage = window.localStorage
+  const authToken = storage.getItem("auth-token")
+  return authToken && true
 };
+
 const Home = () => {
   const [dateSort, setDateSort] = useState(false);
   let dispatch = useDispatch();
@@ -31,6 +36,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+
     const fetchApi = async() => {
       let url = "https://pay.sprinf.com/api/clinic/info?clinic=7478412"
       const response = await fetch(url, {
@@ -38,14 +44,16 @@ const Home = () => {
           'Content-Type': 'application/json'
         }
       })
+      const data = await response.json()
       console.log("api response is: ")
-      console.log(response)
+      console.log(data)
     }
 
-    fetchApi()
-    // if (!isAppLogin()) {
-    //   history.push("/login");
-    // }
+    if (isAppLogin()) {
+      
+    } else {
+      history.push("/login");
+    }
  
     // todo API GET clinic_List
     qqq = [
