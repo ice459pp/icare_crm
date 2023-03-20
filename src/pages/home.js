@@ -29,8 +29,20 @@ const Home = () => {
     setDateSort(!dateSort);
     dispatch(onDateSortChange(!dateSort));
   };
-  useEffect(() => {
 
+  useEffect(() => {
+    const fetchApi = async() => {
+      let url = "https://pay.sprinf.com/api/clinic/info?clinic=7478412"
+      const response = await fetch(url, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      console.log("api response is: ")
+      console.log(response)
+    }
+
+    fetchApi()
     // if (!isAppLogin()) {
     //   history.push("/login");
     // }
