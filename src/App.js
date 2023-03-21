@@ -50,7 +50,7 @@ function App() {
         ref={headNavbarRef}
         className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
       >
-        <div className="h4 m-0">iCare_CRM</div>
+        <div className="h4 m-0">診所管理系統</div>
         {!menuIsShow && (
           <div onClick={menuHandler} className="m-0 menu">
             <FontAwesomeIcon icon="fas fa-bars" />
