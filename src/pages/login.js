@@ -27,17 +27,18 @@ const UserLogin = () => {
       }, (token) => {
         // complete fetch token
         setErr("")
-        dispatch(appAction.login(token))
-        navigate.push(`/`)
+        const storage = window.localStorage
+        storage.setItem("user-token", token)
+        dispatch(appAction.login())
       }
     )
   };
 
   useEffect(() => {
     if (appSlice.isLogin) {
-      navigate.push(`/`)
+      navigate.push('/')
     }
-  }, [])
+  }, [appSlice.isLogin])
 
   // const [email, setEmail] = useState("");
   return (

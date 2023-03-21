@@ -2,23 +2,18 @@ import { createSlice } from "@reduxjs/toolkit"
 const KEY_TOKEN = "user-token"
 
 const appState = {
-  isLogin: localStorage.getItem(KEY_TOKEN) !== "", 
-  userToken: localStorage.getItem(KEY_TOKEN)
+  isLogin: window.localStorage.getItem(KEY_TOKEN) !== null
 }
 
 const appSlice = createSlice({
-  name: 'app', 
+  name: 'app-slice', 
   initialState: appState, 
   reducers: {
-    login(state, action) {
+    login(state) {
       state.isLogin = true
-      const storage = window.localStorage
-      storage.setItem(KEY_TOKEN, action.payload)
     },
     logout(state) {
       state.isLogin = false
-      const storage = window.localStorage
-      storage.removeItem(KEY_TOKEN)
     }
   }
 })

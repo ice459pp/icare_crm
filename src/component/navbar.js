@@ -1,10 +1,11 @@
-import React,{Fragment} from "react";
+import React,{Fragment, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux"
 import { appAction } from "../store/app-slice";
 const Navbar=(props)=>{
-    // console.log(props,"psss")
+    
+    const navigate = useHistory()
     const appSlice = useSelector(state => state.appSlice)
     const dispatch = useDispatch()
     const showMenuHandler=()=>{
@@ -12,8 +13,16 @@ const Navbar=(props)=>{
     }
 
     const logoutHandler = () => {
+        const storage = window.localStorage
+        storage.removeItem("user-token")
         dispatch(appAction.logout())
     }
+
+    useEffect(()=>{
+        if (!appSlice.isLogin) {
+            navigate.push("/login")
+        }
+    }, [appSlice.isLogin])
 
     return (
         <Fragment>

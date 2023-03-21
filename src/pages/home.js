@@ -7,10 +7,7 @@ import { Button } from "react-bootstrap";
 import SearchFilter from "../component/home/search-filter";
 import ClinicListItem from "../component/home/clinic-list-item";
 import PaginationUI from "../component/home/pagination";
-import appConfig from "../app-config";
 import { apiClinicList } from "../api/api-clinic-list";
-
-let qqq = [];
 
 const Home = () => {
   const appSlice = useSelector(state => state.appSlice)
@@ -66,7 +63,10 @@ const Home = () => {
     dateSort, 
     filterStatus, 
   ) => {
-    const token = appSlice.userToken
+    const storage = window.localStorage
+    const token = storage.getItem("user-token")
+
+    console.log('home: ' + token)
     apiClinicList(
       token, 
       page, 
@@ -76,10 +76,11 @@ const Home = () => {
       dateSort, 
       filterStatus, 
       (err) => {
-
+        console.log('err' + err)
       }, 
       (list, total, totalPage) => {
         // set list
+        console.log(list)
         setClinicList(list)
       }
     )
@@ -87,23 +88,14 @@ const Home = () => {
 
   useEffect(() => {
     // check app is login
-    if (!appSlice.isLogin) {
-      navigate.push("/login");
-      return
+    console.log('islogin: ' + appSlice.isLogin)
+    if (appSlice.isLogin) {
+      fetchApi(page, filterCity, filterDistrict, searchText, dateSort, filterStatus)
+    } else {
+      navigate.push("/login") 
     }
-    fetchApi()
-    // fetch clinic log from api
-    // apiClinicList(
-    //   appSlice.userToken, 
-    //   1, 
-    //   "", 
-    //   "", 
-    //   "", 
 
-    // )
- 
-    // todo API GET clinic_List
-  }, []);
+  }, [appSlice.isLogin]);
   // search13
   return (
     <Fragment>
