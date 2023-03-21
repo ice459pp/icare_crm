@@ -1,73 +1,58 @@
 import React, { Fragment, useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InputGroup, Dropdown, DropdownButton, Form } from "react-bootstrap";
-import {
-  onCityChange,
-  onClinicNameChange,
-  onClinicStatusChange,
-  onDateSortChange,
-  onDistrictChange,
-} from "../../store/filter-clinic-list-slice";
-import { useDispatch, useSelector } from "react-redux";
 // import TWzipcode from "react-twzipcode";
 import jsonData from "../../twzipcode.json";
 const styles = {
   borderRadius: `10px 0 0 10px`,
 };
 
-const Search = () => {
-  let dispatch = useDispatch();
+const SearchFilter = (props) => {
   let clinicNameRef = useRef(null);
-  let filterClinicList = useSelector((store) => store.filterClinicList);
-
-  let { city, clinicName, clinic_status, dateSort, district, pages } =
-    filterClinicList;
 
   // console.log(filterClinicList,"filterClinicList",district)
   const [clinicStatus, setClinicStatus] = useState("不分");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [districts, setDistricts] = useState([]);
-
+  
   useEffect(() => {
-    // TODO API POST clinic_list 參數
     if (selectedCity) {
       setDistricts(Object.keys(jsonData[selectedCity]));
     }
-    console.log(filterClinicList, "filterClinicList in useEffect");
-
-  }, [filterClinicList]);
+  }, []);
   const clinicStatusHandler = (e) => {
-    let value = e.target.value;
-    dispatch(onClinicStatusChange(value));
-  };
+    let value = e.target.value
+    props.onStatusChange(value)
+  }
   const clinicNameSearch = () => {
     let value = clinicNameRef.current.value || "";
-    dispatch(onClinicNameChange(value));
+    props.onSearchText(value)
     clinicNameRef.current.value = "";
   };
   const cityChange = (e) => {
     let value = e.target.value;
     setSelectedCity(value);
-    dispatch(onCityChange(value));
+    setDistricts(Object.keys(jsonData[value]))
+    props.onCityChange(value)
   };
   const districtChange = (e) => {
     let value = e.target.value;
     setSelectedDistrict(value);
-    dispatch(onDistrictChange(value));
+    props.onDistrictChange(value)
   };
 
   return (
     <Fragment>
       <form className="p-3 search">
         <div className="d-flex align-items-center mb-2 search-clinicStatus">
-          <label className="">診所狀態:</label>
+          <label className="">診所進度:</label>
           <Form.Select
             aria-label="Default select example"
             className="widthRWD-40 "
             onChange={clinicStatusHandler}
           >
-            <option value="不分">不分</option>
+            <option value="">全部</option>
             <option value="可回訪">可回訪</option>
             <option value="可電訪">可電訪</option>
             <option value="結案">結案</option>
@@ -83,7 +68,7 @@ const Search = () => {
                 // value={city}
                 onChange={(e) => cityChange(e)}
               >
-                {/* <option value="">不分城市</option> */}
+                <option value="">全部縣市</option>
                 {Object.keys(jsonData).map((city) => (
                   <option key={city} value={city}>
                     {city}
@@ -98,7 +83,7 @@ const Search = () => {
                 onChange={(e) => districtChange(e)}
                 disabled={!districts.length}
               >
-                {/* <option value="">不分區</option> */}
+                <option value="">所有地區</option>
                 {districts.map((district) => (
                   <option key={district} value={district}>
                     {district}
@@ -133,4 +118,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default SearchFilter;

@@ -1,41 +1,50 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Search from "../component/home/search";
-import "../scss/home.scss";
-import ClinicListItem from "../component/home/clinic-list-item";
-import PaginationUI from "../component/home/pagination";
-import { Button } from "react-bootstrap";
-
-import {
-  onCityChange,
-  onClinicNameChange,
-  onClinicStatusChange,
-  onDateSortChange,
-  onDistrictChange,
-} from "../store/filter-clinic-list-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../scss/home.scss";
+import { Button } from "react-bootstrap";
+import SearchFilter from "../component/home/search-filter";
+import ClinicListItem from "../component/home/clinic-list-item";
+import PaginationUI from "../component/home/pagination";
 import appConfig from "../app-config";
 import { apiClinicList } from "../api/api-clinic-list";
 
 let qqq = [];
 
 const Home = () => {
-  const [dateSort, setDateSort] = useState(false);
   const appSlice = useSelector(state => state.appSlice)
-  let dispatch = useDispatch();
-  let history = useHistory();
+  let navigate = useHistory();
+
+  const [dateSort, setDateSort] = useState(false);
+
   const dateSortHandler = () => {
     // false 順
     // true 逆
     setDateSort(!dateSort);
-    dispatch(onDateSortChange(!dateSort));
+    
   };
+
+  const statusChangeHandler = () => {
+    console.log("status change")
+  }
+
+  const cityChangeHangle = () => {
+    console.log("city change")
+  }
+
+  const districtChangeHandler = () => {
+    console.log("district change")
+  }
+
+  const searchTextHandler = () => {
+    console.log("search text")
+  }
 
   useEffect(() => {
     // check app is login
     if (!appSlice.isLogin) {
-      history.push("/login");
+      navigate.push("/login");
       return
     }
 
@@ -105,7 +114,11 @@ const Home = () => {
   return (
     <Fragment>
       <div className="w-100 mt-3 padding-RWD">
-        <Search></Search>
+        <SearchFilter 
+          onStatusChange={statusChangeHandler} 
+          onCityChange={cityChangeHangle} 
+          onDistrictChange={districtChangeHandler} 
+          onSearchText={searchTextHandler} />
       </div>
       <div className="w-100 padding-RWD mt-3">
         <h4 className="text-center fw-bolder text-dark">診所列表</h4>
