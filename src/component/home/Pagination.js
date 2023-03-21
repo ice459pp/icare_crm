@@ -70,7 +70,7 @@ const PaginationUI = (props) => {
     <Fragment>
       <Pagination variant="secondary">
         {/* <Pagination.First /> */}
-        <Pagination.Prev onClick={pagePrevHandler} />
+        {page > 5 && <Pagination.Prev onClick={pagePrevHandler} />}
         {qqq}
         <Pagination.Next onClick={pageNextHandler} />
         {/* <Pagination.Last /> */}

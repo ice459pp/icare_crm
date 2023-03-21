@@ -7,8 +7,8 @@ export const apiClinicList = async (
   filter_city = "", 
   filter_district = "", 
   filter_name = "", 
-  filter_datetime = "normal",
-  filter_clinic_status = "可回訪",
+  filter_datetime = false,
+  filter_clinic_status = "",
   onError = () => {}, 
   onComplete = () => {}
 ) => {
@@ -26,13 +26,13 @@ export const apiClinicList = async (
       urlParams.append("filter_name", filter_name)
     }
 
-    urlParams.append("filter_datetime", filter_datetime)
-    urlParams.append("filter_clinic_status", filter_clinic_status)
+    urlParams.append("filter_datetime", filter_datetime ? "reserve" : "normal")
+
+    if (filter_clinic_status) {
+      urlParams.append("filter_clinic_status", filter_clinic_status)
+    }
     const queryString = urlParams.toString()
     const apiUrl = `${appConfig.url}/clinic/list/${page}?${queryString}`
-
-    console.log(apiUrl)
-    return
     const response = await fetch(
       apiUrl, {
       method: 'GET', 
@@ -45,7 +45,12 @@ export const apiClinicList = async (
       throw new Error("Error Occur")
     }
     if (json.status) {
-      onComplete(json.data.token)
+      const data = json.data
+      const list = data.list
+      const total = data.total
+      const totalPage = data.totalPage
+      console.log(data)
+      onComplete(list, total, totalPage)
     } else {
       onError(json.error)
     }

@@ -16,33 +16,73 @@ const Home = () => {
   const appSlice = useSelector(state => state.appSlice)
   let navigate = useHistory();
 
-  const [dateSort, setDateSort] = useState(false);
-
-  const dateSortHandler = () => {
-    // false 順
-    // true 逆
-    setDateSort(!dateSort);
-    
-  };
+  const [clinicList, setClinicList] = useState([])
+  const [filterStatus, setFilterStatus] = useState('')
+  const [filterCity, setFilterCity] = useState('')
+  const [filterDistrict, setFilterDictrict] = useState('')
+  const [searchText, setSearchText] = useState('')
+  // normal and reserve
+  const [dateSort, setDateSort] = useState(false)
+  const [page, setPage] = useState(1)
 
   const statusChangeHandler = (value) => {
-    console.log("status change " + value)
+    setFilterStatus(value)
+    fetchApi(page, filterCity, filterDistrict, searchText, dateSort, value)
   }
 
   const cityChangeHangle = (value) => {
-    console.log("city change ")
+    console.log(value)
+    setFilterCity(value)
+    fetchApi(page, value, filterDistrict, searchText, dateSort, filterStatus)
   }
 
   const districtChangeHandler = (value) => {
-    console.log("district change " + value)
+    console.log(value)
+    setFilterDictrict(value)
+    fetchApi(page, filterCity, value, searchText, dateSort, filterStatus)
   }
 
   const searchTextHandler = (value) => {
-    console.log("search text " + value)
+    setSearchText(value)
+    fetchApi(page, filterCity, filterDistrict, value, dateSort, filterStatus)
+  }
+
+  const dateSortHandler = () => {
+    const sort = !dateSort
+    setDateSort(sort);
+    fetchApi(page, filterCity, filterDistrict, searchText, sort, filterStatus)
   }
 
   const pageChangeHandler = (value) => {
-    console.log("page change " + value)
+    setPage(value)
+    fetchApi(value, filterCity, filterDistrict, searchText, dateSort, filterStatus)
+  }
+
+  const fetchApi = (
+    page, 
+    filterCity, 
+    filterDistrict, 
+    searchText, 
+    dateSort, 
+    filterStatus, 
+  ) => {
+    const token = appSlice.userToken
+    apiClinicList(
+      token, 
+      page, 
+      filterCity, 
+      filterDistrict, 
+      searchText, 
+      dateSort, 
+      filterStatus, 
+      (err) => {
+
+      }, 
+      (list, total, totalPage) => {
+        // set list
+        setClinicList(list)
+      }
+    )
   }
 
   useEffect(() => {
@@ -51,7 +91,7 @@ const Home = () => {
       navigate.push("/login");
       return
     }
-
+    fetchApi()
     // fetch clinic log from api
     // apiClinicList(
     //   appSlice.userToken, 
@@ -63,56 +103,6 @@ const Home = () => {
     // )
  
     // todo API GET clinic_List
-    qqq = [
-      {
-        id: "c1",
-        name: "cxxx診所",
-        phone: "0921231434",
-        city: "台北市",
-        district: "大安區",
-        road: "瑞光路4段18號5-5",
-        visitor_id: "dfasdfasdf",
-        visitor_name: "阿民",
-        visit_datetime: "2023/2/25",
-        clinic_status: "可電訪",
-      },
-      {
-        id: "c2",
-        name: "家齊診所",
-        phone: "0921231434",
-        city: "台北市",
-        district: "大安區",
-        road: "阿民路4段18號5-5",
-        visitor_id: "dfasdf",
-        visitor_name: "龍哥",
-        visit_datetime: "2023/2/25",
-        clinic_status: "可回訪",
-      },
-      {
-        id: "c3",
-        name: "捷克診所",
-        phone: "0921231434",
-        city: "台北市",
-        district: "大安區",
-        road: "瑞光路4段18號5-5",
-        visitor_id: "dfasdf",
-        visitor_name: "大艾",
-        visit_datetime: "2023/2/25",
-        clinic_status: "結案",
-      },
-      {
-        id: "c4",
-        name: "高地植髮診所",
-        phone: "0921231434",
-        city: "台北市",
-        district: "大安區",
-        road: "阿民路4段18號5-5",
-        visitor_id: "dfasedfsdf",
-        visitor_name: "龍哥",
-        visit_datetime: "2023/2/25",
-        clinic_status: "可電訪",
-      },
-    ];
   }, []);
   // search13
   return (
@@ -151,7 +141,7 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {qqq.map((item) => (
+            {clinicList.map((item) => (
               <ClinicListItem key={item.id} item={item}></ClinicListItem>
             ))}
           </tbody>

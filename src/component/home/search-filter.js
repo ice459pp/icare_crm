@@ -11,7 +11,7 @@ const SearchFilter = (props) => {
   let clinicNameRef = useRef(null);
 
   // console.log(filterClinicList,"filterClinicList",district)
-  const [clinicStatus, setClinicStatus] = useState("不分");
+  const [clinicStatus, setClinicStatus] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [districts, setDistricts] = useState([]);
@@ -28,12 +28,11 @@ const SearchFilter = (props) => {
   const clinicNameSearch = () => {
     let value = clinicNameRef.current.value || "";
     props.onSearchText(value)
-    clinicNameRef.current.value = "";
   };
   const cityChange = (e) => {
     let value = e.target.value;
     setSelectedCity(value);
-    setDistricts(Object.keys(jsonData[value]))
+    setDistricts(jsonData[value] !== undefined ? Object.keys(jsonData[value]) : [])
     props.onCityChange(value)
   };
   const districtChange = (e) => {
@@ -99,7 +98,7 @@ const SearchFilter = (props) => {
         </div>
         <InputGroup className="" size="sm">
           <Form.Control
-            placeholder="搜尋診所名稱..."
+            placeholder="搜尋地址、道路名稱"
             aria-label="Recipient's username"
             aria-describedby="basic-addon2"
             ref={clinicNameRef}
