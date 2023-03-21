@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux"
 import appConfig from "../app-config.json"
 
 export const apiClinicList = async (
