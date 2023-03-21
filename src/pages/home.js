@@ -21,6 +21,8 @@ const Home = () => {
   // normal and reserve
   const [dateSort, setDateSort] = useState(false)
   const [page, setPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(0)
+  const [totalCount, setTotalCount] = useState(0)
 
   const statusChangeHandler = (value) => {
     setFilterStatus(value)
@@ -72,7 +74,8 @@ const Home = () => {
         console.log('err' + err)
       }, 
       (list, total, totalPage) => {
-        // set list
+        setTotalCount(total)
+        setTotalPage(totalPage)
         setClinicList(list)
       }
     )
@@ -103,7 +106,7 @@ const Home = () => {
       <div className="w-100 padding-RWD mt-3">
         <h4 className="text-center fw-bolder text-dark">診所列表</h4>
         <div className="d-flex align-items-end tableSort mb-2">
-          <div className="me-3 text-dark fw-bold">3 / 15 頁 ，共500筆</div>
+          <div className="me-3 text-dark fw-bold">{`${page} / ${totalPage}`} 頁 ，共{totalCount}筆</div>
           <Button variant="secondary" onClick={dateSortHandler} size="sm">
             日期排序
             {dateSort ? (
@@ -134,7 +137,7 @@ const Home = () => {
         </table>
       </div>
       <div className="d-flex justify-content-center w-100">
-        <PaginationUI onPageChange={pageChangeHandler}></PaginationUI>
+        <PaginationUI totalPage={totalPage} onPageChange={pageChangeHandler}></PaginationUI>
       </div>
     </Fragment>
   );

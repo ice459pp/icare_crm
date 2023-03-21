@@ -2,77 +2,47 @@ import React, { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "react-bootstrap/Pagination";
 
-const array = [
-  { number: 1 },
-  { number: 2 },
-  { number: 3 },
-  { number: 4 },
-  { number: 5 },
-  { number: 6 },
-  { number: 7 },
-  { number: 8 },
-  { number: 9 },
-  { number: 10 },
-  { number: 11 },
-  { number: 12 },
-  { number: 13 },
-  { number: 14 },
-  { number: 15 },
-];
-const totalPages = 100
-
-let active = 3
-const range = 3 // 顯示的範圍
-const filteredArray = array.filter(
-  (item) => Math.abs(item.number - active) <= range
-);
-
 const PaginationUI = (props) => {
-  const [page, setPage] = useState(1)
+  const totalPage = props.totalPage
+
+  const [page, setPage] = useState(1);
 
   const pageNumHandler = (pageNumber) => {
-    setPage(pageNumber)
-  }
+    setPage(pageNumber);
+  };
 
   const pagePrevHandler = () => {
     let newPage = page - 1;
     if (newPage < 1) {
       return
     }
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
   const pageNextHandler = () => {
     let newPage = page + 1;
-    if (newPage > totalPages) {
+    if (newPage > totalPage) {
       return
     }
-    setPage(newPage)
-  }
+    setPage(newPage);
+  };
 
   useEffect(() => {
-    props.onPageChange(page)
-  }, [page])
-
-  const qqq = filteredArray.map((item) => (
-    // why onClick ?
-    <Pagination.Item
-      onClick={() => pageNumHandler(item.number)}
-      active={item.number === page}
-      key={item.number}
-    >
-      {item.number}
-    </Pagination.Item>
-  ))
+    props.onPageChange(page);
+  }, [page]);
 
   return (
     <Fragment>
       <Pagination variant="secondary">
-        {/* <Pagination.First /> */}
-        {page > 5 && <Pagination.Prev onClick={pagePrevHandler} />}
-        {qqq}
+        {(page - 4 >= 0) && <Pagination.First onClick={() => pageNumHandler(1)} />}
+        <Pagination.Prev onClick={pagePrevHandler} />
+        {(page - 2 > 0) && <Pagination.Item active={false} key={page - 2} onClick={() => pageNumHandler(page - 2)}>{page - 2}</Pagination.Item>}
+        {(page - 1 > 0) && <Pagination.Item active={false} key={page - 1} onClick={() => pageNumHandler(page - 1)}>{page - 1}</Pagination.Item>}
+        <Pagination.Item active={true} key={page}>{page}</Pagination.Item>
+        {(page + 1 <= totalPage) && <Pagination.Item active={false} key={page + 1} onClick={() => pageNumHandler(page + 1)}>{page + 1}</Pagination.Item>}
+        {(page + 2 <= totalPage) && <Pagination.Item active={false} key={page + 2} onClick={() => pageNumHandler(page + 2)}>{page + 2}</Pagination.Item>}
         <Pagination.Next onClick={pageNextHandler} />
-        {/* <Pagination.Last /> */}
+        {(page + 2 < totalPage) && <Pagination.Last onClick={() => pageNumHandler(totalPage)} />}
       </Pagination>
     </Fragment>
   );

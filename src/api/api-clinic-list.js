@@ -48,8 +48,8 @@ export const apiClinicList = async (
       const data = json.data
       const list = data.list
       const total = data.total
-      const totalPage = data.totalPage
-      onComplete(list, total, totalPage)
+      const totalpage = data.totalpage
+      onComplete(list, total, totalpage)
     } else {
       onError(json.error)
     }
