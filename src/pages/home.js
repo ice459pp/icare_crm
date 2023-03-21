@@ -25,20 +25,24 @@ const Home = () => {
     
   };
 
-  const statusChangeHandler = () => {
-    console.log("status change")
+  const statusChangeHandler = (value) => {
+    console.log("status change " + value)
   }
 
-  const cityChangeHangle = () => {
-    console.log("city change")
+  const cityChangeHangle = (value) => {
+    console.log("city change ")
   }
 
-  const districtChangeHandler = () => {
-    console.log("district change")
+  const districtChangeHandler = (value) => {
+    console.log("district change " + value)
   }
 
-  const searchTextHandler = () => {
-    console.log("search text")
+  const searchTextHandler = (value) => {
+    console.log("search text " + value)
+  }
+
+  const pageChangeHandler = (value) => {
+    console.log("page change " + value)
   }
 
   useEffect(() => {
@@ -154,7 +158,7 @@ const Home = () => {
         </table>
       </div>
       <div className="d-flex justify-content-center w-100">
-        <PaginationUI></PaginationUI>
+        <PaginationUI onPageChange={pageChangeHandler}></PaginationUI>
       </div>
     </Fragment>
   );
