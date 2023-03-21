@@ -16,7 +16,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import appConfig from "../app-config";
-import appSlice, { appAction } from "../store/app-slice";
+import { apiClinicList } from "../api/api-clinic-list";
 
 let qqq = [];
 
@@ -33,31 +33,21 @@ const Home = () => {
   };
 
   useEffect(() => {
-
-    // const urlParams = new URLSearchParams()
-    // urlParams.append("userID", "admin@sprinf.com")
-    // urlParams.append("password", "12345678")
-    // const queryString = urlParams.toString()
-    // const apiUrl = `${appConfig.url}?${queryString}`
-
-    // console.log(urlParams)
-    const fetchApi = async() => {
-      let url = "https://pay.sprinf.com/api/clinic/info?clinic=7478412"
-      const response = await fetch(url, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      const data = await response.json()
-      console.log("api response is: ")
-      console.log(data)
-    }
-
-    // fetchApi()
-
+    // check app is login
     if (!appSlice.isLogin) {
       history.push("/login");
+      return
     }
+
+    // fetch clinic log from api
+    // apiClinicList(
+    //   appSlice.userToken, 
+    //   1, 
+    //   "", 
+    //   "", 
+    //   "", 
+
+    // )
  
     // todo API GET clinic_List
     qqq = [
