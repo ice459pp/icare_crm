@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 const KEY_TOKEN = "user-token"
 
 const appState = {
-  isLogin: localStorage.getItem(KEY_TOKEN) !== ""
+  isLogin: localStorage.getItem(KEY_TOKEN) !== "", 
+  userToken: localStorage.getItem(KEY_TOKEN)
 }
 
 const appSlice = createSlice({
