@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../scss/home.scss";
@@ -11,7 +11,7 @@ import { apiClinicList } from "../api/api-clinic-list";
 
 const Home = () => {
   const appSlice = useSelector(state => state.appSlice)
-  let navigate = useHistory();
+  const navigate = useHistory();
 
   const [clinicList, setClinicList] = useState([])
   const [filterStatus, setFilterStatus] = useState('')
@@ -52,48 +52,36 @@ const Home = () => {
     setPage(value)
   }
 
-  const fetchApi = (
-    page, 
-    filterCity, 
-    filterDistrict, 
-    searchText, 
-    dateSort, 
-    filterStatus, 
-  ) => {
-    const token = appSlice.userToken
-
-    apiClinicList(
-      token, 
-      page, 
-      filterCity, 
-      filterDistrict, 
-      searchText, 
-      dateSort, 
-      filterStatus, 
-      (err) => {
-        console.log('err' + err)
-      }, 
-      (list, total, totalPage) => {
-        setTotalCount(total)
-        setTotalPage(totalPage)
-        setClinicList(list)
-      }
-    )
-  }
-
-
-
   // this is for login status
   useEffect(() => {
+
     // check app is login
     if (appSlice.isLogin) {
-      fetchApi(page, filterCity, filterDistrict, searchText, dateSort, filterStatus)
+      const token = appSlice.userToken
+  
+      apiClinicList(
+        token, 
+        page, 
+        filterCity, 
+        filterDistrict, 
+        searchText, 
+        dateSort, 
+        filterStatus, 
+        (err) => {
+          console.log('err' + err)
+        }, 
+        (list, total, totalPage) => {
+          setTotalCount(total)
+          setTotalPage(totalPage)
+          setClinicList(list)
+        }
+      )
     } else {
       navigate.push("/login") 
     }
 
   }, [appSlice.isLogin, page, filterCity, filterDistrict, searchText, dateSort, filterStatus]);
-  // search13
+
   return (
     <Fragment>
       <div className="w-100 mt-3 padding-RWD">
