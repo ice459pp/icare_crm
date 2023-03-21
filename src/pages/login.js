@@ -27,9 +27,7 @@ const UserLogin = () => {
       }, (token) => {
         // complete fetch token
         setErr("")
-        const storage = window.localStorage
-        storage.setItem("user-token", token)
-        dispatch(appAction.login())
+        dispatch(appAction.login(token))
       }
     )
   };

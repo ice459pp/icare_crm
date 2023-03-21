@@ -27,7 +27,6 @@ const Home = () => {
   }
 
   const cityChangeHangle = (value) => {
-    console.log(value)
     setFilterCity(value)
     if (!value) {
       setFilterDictrict("")
@@ -35,7 +34,6 @@ const Home = () => {
   }
 
   const districtChangeHandler = (value) => {
-    console.log(value)
     setFilterDictrict(value)
   }
 
@@ -60,8 +58,7 @@ const Home = () => {
     dateSort, 
     filterStatus, 
   ) => {
-    const storage = window.localStorage
-    const token = storage.getItem("user-token")
+    const token = appSlice.userToken
 
     apiClinicList(
       token, 

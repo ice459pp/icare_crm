@@ -13,8 +13,6 @@ const Navbar=(props)=>{
     }
 
     const logoutHandler = () => {
-        const storage = window.localStorage
-        storage.removeItem("user-token")
         dispatch(appAction.logout())
     }
 
