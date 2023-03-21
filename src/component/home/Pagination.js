@@ -32,7 +32,6 @@ const PaginationUI = (props) => {
 
   const pageNumHandler = (pageNumber) => {
     setPage(pageNumber)
-    props.onPageChange(pageNumber)
   }
 
   const pagePrevHandler = () => {
@@ -40,9 +39,7 @@ const PaginationUI = (props) => {
     if (newPage < 1) {
       return
     }
-
     setPage(newPage)
-    props.onPageChange(newPage)
   }
 
   const pageNextHandler = () => {
@@ -50,10 +47,12 @@ const PaginationUI = (props) => {
     if (newPage > totalPages) {
       return
     }
-
     setPage(newPage)
-    props.onPageChange(newPage)
   }
+
+  useEffect(() => {
+    props.onPageChange(page)
+  }, [page])
 
   const qqq = filteredArray.map((item) => (
     // why onClick ?
