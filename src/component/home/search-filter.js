@@ -19,23 +19,24 @@ const SearchFilter = (props) => {
   useEffect(() => {
     if (selectedCity) {
       setDistricts(Object.keys(jsonData[selectedCity]));
+    } else {
+      setDistricts([]);
     }
-  }, []);
+  }, [selectedCity]);
   const clinicStatusHandler = (e) => {
     let value = e.target.value
     props.onStatusChange(value)
   }
-  const clinicNameSearch = () => {
+  const searchTextHandler = () => {
     let value = clinicNameRef.current.value || "";
     props.onSearchText(value)
   };
-  const cityChange = (e) => {
+  const cityChangeHandler = (e) => {
     let value = e.target.value;
     setSelectedCity(value);
-    setDistricts(jsonData[value] !== undefined ? Object.keys(jsonData[value]) : [])
     props.onCityChange(value)
   };
-  const districtChange = (e) => {
+  const districtChangeHandler = (e) => {
     let value = e.target.value;
     setSelectedDistrict(value);
     props.onDistrictChange(value)
@@ -65,7 +66,7 @@ const SearchFilter = (props) => {
                 className="county-sel"
                 value={selectedCity}
                 // value={city}
-                onChange={(e) => cityChange(e)}
+                onChange={(e) => cityChangeHandler(e)}
               >
                 <option value="">全部縣市</option>
                 {Object.keys(jsonData).map((city) => (
@@ -77,9 +78,7 @@ const SearchFilter = (props) => {
               <select
                 className="district-sel"
                 value={selectedDistrict}
-                // value={districts}
-                // onChange={(e) =>dispatch(onDistrictChange(e.target.value))}
-                onChange={(e) => districtChange(e)}
+                onChange={(e) => districtChangeHandler(e)}
                 disabled={!districts.length}
               >
                 <option value="">所有地區</option>
@@ -107,7 +106,7 @@ const SearchFilter = (props) => {
             className="btn btn-secondary"
             type="button"
             id="button-addon2"
-            onClick={clinicNameSearch}
+            onClick={searchTextHandler}
           >
             <FontAwesomeIcon icon="fas fa-search" />
           </button>

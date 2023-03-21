@@ -24,35 +24,32 @@ const Home = () => {
 
   const statusChangeHandler = (value) => {
     setFilterStatus(value)
-    fetchApi(page, filterCity, filterDistrict, searchText, dateSort, value)
   }
 
   const cityChangeHangle = (value) => {
     console.log(value)
     setFilterCity(value)
-    fetchApi(page, value, filterDistrict, searchText, dateSort, filterStatus)
+    if (!value) {
+      setFilterDictrict("")
+    }
   }
 
   const districtChangeHandler = (value) => {
     console.log(value)
     setFilterDictrict(value)
-    fetchApi(page, filterCity, value, searchText, dateSort, filterStatus)
   }
 
   const searchTextHandler = (value) => {
     setSearchText(value)
-    fetchApi(page, filterCity, filterDistrict, value, dateSort, filterStatus)
   }
 
   const dateSortHandler = () => {
     const sort = !dateSort
     setDateSort(sort);
-    fetchApi(page, filterCity, filterDistrict, searchText, sort, filterStatus)
   }
 
   const pageChangeHandler = (value) => {
     setPage(value)
-    fetchApi(value, filterCity, filterDistrict, searchText, dateSort, filterStatus)
   }
 
   const fetchApi = (
@@ -66,7 +63,6 @@ const Home = () => {
     const storage = window.localStorage
     const token = storage.getItem("user-token")
 
-    console.log('home: ' + token)
     apiClinicList(
       token, 
       page, 
@@ -80,22 +76,23 @@ const Home = () => {
       }, 
       (list, total, totalPage) => {
         // set list
-        console.log(list)
         setClinicList(list)
       }
     )
   }
 
+
+
+  // this is for login status
   useEffect(() => {
     // check app is login
-    console.log('islogin: ' + appSlice.isLogin)
     if (appSlice.isLogin) {
       fetchApi(page, filterCity, filterDistrict, searchText, dateSort, filterStatus)
     } else {
       navigate.push("/login") 
     }
 
-  }, [appSlice.isLogin]);
+  }, [appSlice.isLogin, page, filterCity, filterDistrict, searchText, dateSort, filterStatus]);
   // search13
   return (
     <Fragment>
