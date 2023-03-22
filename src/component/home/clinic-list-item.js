@@ -113,7 +113,7 @@ const ClinicListItem = (props) => {
             className="btn-sm w-100 text-light"
             variant="success"
           >
-            新增紀錄
+            查看紀錄
           </Button>{" "}
         </td>
         <td className="buttonIcon table-more">
@@ -137,7 +137,7 @@ const ClinicListItem = (props) => {
         aria-labelledby="contained-modal-title-vcenter"
       >
         <Modal.Header className="bg-secondary text-white" closeButton>
-          <Modal.Title>log列表</Modal.Title>
+          <Modal.Title>拜訪紀錄 - {item.name}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {listData.map((item) => (
