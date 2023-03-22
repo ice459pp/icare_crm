@@ -1,3 +1,35 @@
 {
-  "url": "https://pay.sprinf.com/api"
+  "url": "https://pay.sprinf.com/api", 
+  "visit_category": [
+    {
+      "id": 1, 
+      "name": "初訪"
+    },
+    {
+      "id": 2, 
+      "name": "回訪"
+    },
+    {
+      "id": 3, 
+      "name": "電訪"
+    },
+    {
+      "id": 4, 
+      "name": "教育訓練"
+    }
+  ], 
+  "visit_status": [
+    {
+      "id": 1, 
+      "name": "可回訪"
+    }, 
+    {
+      "id": 2, 
+      "name": "可電訪"
+    },
+    {
+      "id": 3, 
+      "name": "結案"
+    }
+  ]
 }

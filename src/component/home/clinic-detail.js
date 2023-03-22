@@ -280,7 +280,7 @@ const ClinicDetail = () => {
             <ClinicDetailLog key={item.id} item={item}></ClinicDetailLog>
           ))}
           <div className="d-flex justify-content-center mt-4">
-            <PaginationUI></PaginationUI>
+            {/* <PaginationUI></PaginationUI> */}
           </div>
         </div>
       </div>

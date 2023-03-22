@@ -2,14 +2,13 @@ import React, { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory, Link } from "react-router-dom";
 import { Button, Modal, Form, InputGroup } from "react-bootstrap";
-import {
-  onContentChange,
-  onClinicStatusChange,
-  onVisitCategoryChange,
-  onVisitDateTimeChange,
-} from "../../../store/log-writing-slice";
+
 import { useDispatch, useSelector } from "react-redux";
-const dateTransform = (timestamp) => {
+import InputRadio from "./input-radio";
+import ErrorText from "../error-text";
+import { apiLogCreate } from "../../../api/api-clinic-log";
+import appSlice from "../../../store/app-slice";
+const formatDate = (timestamp) => {
   const date = new Date(timestamp);
 
   const year = date.getFullYear();
@@ -21,113 +20,139 @@ const dateTransform = (timestamp) => {
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };
 
+const categoryArr = [
+  {
+    id: 1,
+    text: "初訪",
+  },
+  {
+    id: 2,
+    text: "回訪",
+  },
+  {
+    id: 3,
+    text: "電訪",
+  },
+  {
+    id: 4,
+    text: "教育訓練",
+  },
+];
+const statusArr = [
+  {
+    id: 1,
+    text: "可回訪",
+  },
+  {
+    id: 2,
+    text: "可電訪",
+  },
+  {
+    id: 3,
+    text: "結案",
+  },
+];
 const ModalAddLog = (props) => {
-  let { item, action, clinic_id } = props;
+  let { action, clinic_id } = props;
+  const appSlice = useSelector((state) => state.appSlice);
+
   // console.log(item, "in ModalAddLog", action, "action");
   const style = {
     height: `300px`,
   };
-  
+
   let log_writingSlice = useSelector((state) => state.log_writingSlice);
   let clinicStatus = log_writingSlice.clinic_status;
   let visitCategory = log_writingSlice.visit_category;
   let dispatch = useDispatch();
 
-  const handleStatusChange = (event) => {
+  const [errorText, setErrorText] = useState("");
+  const [apiStart, setApiStart] = useState(false);
+
+  // 初訪 回訪 電訪 教育訓練
+  const [category, setCategory] = useState("初訪");
+
+  // 可回訪 可電訪 結案
+  const [status, setStatus] = useState("可回訪");
+
+  const [description, setDiscription] = useState("");
+
+  const [visitDate, setVisitDate] = useState(
+    new Date().toISOString().slice(0, -8)
+  );
+
+  const statusChangeHandler = (event) => {
     const value = event.target.value;
-    dispatch(onClinicStatusChange(value));
+    setStatus(value);
   };
-  const handleCategoryChange = (event) => {
+
+  const categoryChangeHandler = (event) => {
     const value = event.target.value;
-    dispatch(onVisitCategoryChange(value));
+    setCategory(value);
   };
-  const contentChange = (e) => {
+
+  const discriptionChangeHandler = (e) => {
     const value = e.target.value;
-    dispatch(onContentChange(value));
+    setDiscription(value);
   };
-  const dateChange = (e) => {
+
+  const dateChangeHandler = (e) => {
     const value = e.target.value;
-    // console.log(new Date(e.target.value),"new Date(e.target.value)new Date(e.target.value)")
-    let visitDate = dateTransform(value);
-    dispatch(onVisitDateTimeChange(visitDate));
+    setVisitDate(value);
   };
+
+  const createLogHandler = () => {
+    setApiStart(true);
+  };
+
+  const closeModalHandler = () => {
+    props.onClose()
+  };
+
+  useEffect(() => {
+    if (apiStart) {
+      const token = appSlice.userToken;
+      
+      console.log(clinic_id)
+      apiLogCreate(
+        token,
+        clinic_id,
+        category,
+        status,
+        formatDate(visitDate),
+        description,
+        "add",
+        (err) => {
+          setErrorText(err);
+        },
+        () => {
+          props.onRefresh()
+        }
+      )
+    }
+  }, [apiStart]);
+
   return (
     <Fragment>
       <div className="py-2">
         <div className="form-floating">
           <div className="input-group  px-2 ps-3 py-2 radio-custom inputRadio">
             <div className="pe-3">拜訪類別:</div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input custom-control-input"
-                type="radio"
-                name="visit_category"
-                id="radio1"
-                value="初訪"
-                checked={visitCategory === "初訪"}
-                onChange={handleCategoryChange}
-              />
-              <label
-                className="form-check-label custom-control-label"
-                // for="radio1"
-                htmlFor="radio1"
-              >
-                初訪
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input custom-control-input"
-                type="radio"
-                name="visit_category"
-                id="radio2"
-                value="回訪"
-                checked={visitCategory === "回訪"}
-                onChange={handleCategoryChange}
-              />
-              <label
-                className="form-check-label custom-control-label"
-                htmlFor="radio2"
-              >
-                回訪
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input custom-control-input"
-                type="radio"
-                name="visit_category"
-                id="radio3"
-                value="電訪"
-                checked={visitCategory === "電訪"}
-                onChange={handleCategoryChange}
-              />
-              <label
-                className="form-check-label custom-control-label"
-                htmlFor="radio3"
-              >
-                電訪
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input custom-control-input"
-                type="radio"
-                name="visit_category"
-                id="radio4"
-                value="教育訓練"
-                checked={visitCategory === "教育訓練"}
-                onChange={handleCategoryChange}
-              />
-              <label
-                className="form-check-label custom-control-label"
-                htmlFor="radio4"
-              >
-                教育訓練
-              </label>
-            </div>
+
+            {categoryArr.map((item) => {
+              return (
+                <InputRadio
+                  key={item.id}
+                  id={item.id}
+                  text={item.text}
+                  name="visit"
+                  isCheck={item.text === category}
+                  onChange={categoryChangeHandler}
+                />
+              );
+            })}
           </div>
-          {action === "new" && (
+          {action === "create" && (
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
               <Form.Control
@@ -135,8 +160,8 @@ const ModalAddLog = (props) => {
                 aria-label="拜訪時間"
                 aria-describedby="basic-addon1"
                 type="datetime-local"
-                onChange={(e) => dateChange(e)}
-                // value={new Date().toISOString().slice(0, -8)}
+                onChange={(e) => dateChangeHandler(e)}
+                value={visitDate}
                 // min={new Date().toISOString().slice(0, -8)}
               />
             </InputGroup>
@@ -158,64 +183,38 @@ const ModalAddLog = (props) => {
             className="form-control inputTextarea"
             placeholder="Leave a comment here"
             id="floatingTextarea2"
-            onChange={(e) => contentChange(e)}
+            onChange={(e) => discriptionChangeHandler(e)}
           ></textarea>
           <div className="input-group  px-2 ps-3 py-2  radio-custom inputRadio mt-2 mb-0 inputRadio-ClinicStatus">
             <div className="pe-3">診所狀態:</div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input custom-control-input"
-                type="radio"
-                name="clinic_status"
-                id="radio1"
-                value="可回訪"
-                checked={clinicStatus === "可回訪"}
-                onChange={handleStatusChange}
-              />
-              <label
-                className="form-check-label custom-control-label"
-                // for="radio1"
-                htmlFor="radio1"
-              >
-                可回訪
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input custom-control-input"
-                type="radio"
-                name="clinic_status"
-                id="radio2"
-                value="可電訪"
-                checked={clinicStatus === "可電訪"}
-                onChange={handleStatusChange}
-              />
-              <label
-                className="form-check-label custom-control-label"
-                htmlFor="radio2"
-              >
-                可電訪
-              </label>
-            </div>
-            <div className="form-check form-check-inline">
-              <input
-                className="form-check-input custom-control-input"
-                type="radio"
-                name="clinic_status"
-                id="radio3"
-                value="結案"
-                checked={clinicStatus === "結案"}
-                onChange={handleStatusChange}
-              />
-              <label
-                className="form-check-label custom-control-label"
-                htmlFor="radio3"
-              >
-                結案
-              </label>
-            </div>
+
+            {statusArr.map((item) => {
+              return (
+                <InputRadio
+                  key={item.id}
+                  id={item.id}
+                  text={item.text}
+                  name="status"
+                  isCheck={item.text === status}
+                  onChange={statusChangeHandler}
+                />
+              );
+            })}
           </div>
         </div>
+      </div>
+      {errorText && <ErrorText text={errorText} />}
+      <div>
+        <Button
+          variant="success"
+          className="text-white w-25"
+          onClick={createLogHandler}
+        >
+          送出
+        </Button>
+        <Button variant="secondary" onClick={closeModalHandler}>
+          取消
+        </Button>
       </div>
     </Fragment>
   );
