@@ -1,6 +1,9 @@
-import React, { Fragment, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { InputGroup, Form } from "react-bootstrap";
+import React, { Fragment, useState, useRef, useEffect } from "react";
+import { InputGroup, Form, Button } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { apiClinicUpdate } from "../../../api/api-clinic-edit";
+import appSlice from "../../../store/app-slice";
+import InputCheckText from "./input-check-text";
 // call_number_way: "線上叫號";
 // care_group: "";
 // city: "台北市";
@@ -21,77 +24,122 @@ const optionTrim = (option) => {
   let newOption = option.trim();
   return newOption;
 };
-const ClinicInformation = (props) => {
-  let { item, care_networkArr } = props;
-  console.log(item, "item", "ClinicInformation", care_networkArr);
-  let {
-    call_number_way,
-    care_group,
-    city,
-    district,
-    experience,
-    his,
-    id,
-    isDecided,
-    isUse_video,
-    isVisit_datetime,
-    care_netWork,
-    name,
-    people,
-    phone,
-    road,
-  } = item;
+const ClinicEditModal = (props) => {
+  let { item } = props;
+  // let {
+  //   call_number_way,
+  //   care_group,
+  //   care_network,
+  //   city,
+  //   district,
+  //   experience,
+  //   his,
+  //   id,
+  //   isDecided,
+  //   isUse_video,
+  //   isVisit_datetime,
+  //   name,
+  //   people,
+  //   phone,
+  //   road,
+  // } = item;
 
-  // ClinicInformation13
-  let radioInput_dateTime = false;
-  if (isVisit_datetime) {
-    radioInput_dateTime = true;
-  } else {
-    radioInput_dateTime = false;
-  }
-  let radioInput_careNetwork = false;
-  if (care_netWork) {
-    radioInput_careNetwork = true;
-  } else {
-    radioInput_careNetwork = false;
-  }
-  const [visitRadio, setVisitRadio] = useState(false);
-  const [careNetworkRadio, setCareNetworkRadio] = useState(false);
-  const [options, setOptions] = useState([
-    "糖尿病",
-    "慢性腎臟病",
-    "氣喘",
-    "BC肝",
-    "慢性阻塞性肺病",
-  ]);
-  let arr = ["慢性病", "BC肝", "慢性腎臟病", "ABCD其他資訊"];
-  const unselectedOptions = arr.filter((item) =>! options.includes(item));
-  console.log(unselectedOptions, "unselectedOptionsunselectedOptionsv");
-  const visitRadioHandler = (e) => {
-    const value = e.target.value === "true";
-    setVisitRadio(value);
+  const appSlice = useSelector(state => state.appSlice)
+
+  const [name, setName] = useState(item.name);
+  const [phone, setPhone] = useState(item.phone);
+  const [people, setPeople] = useState(item.people);
+  const [road, setRoad] = useState(item.road);
+  const [id, setId] = useState(item.id);
+  const [his, setHis] = useState(item.his);
+  const [district, setDistrict] = useState(item.district);
+  const [experience, setExperience] = useState(item.experience);
+  const [city, setCity] = useState(item.city);
+  const [callNumberWay, setCallNumberWay] = useState(item.call_number_way);
+  const [careGroup, setCareGroup] = useState(item.care_group);
+  const [clinicStatus, setClinicStatus] = useState(item.clinic_status);
+  const [careNetwork, setCareNetwork] = useState(
+    item.care_network === "" ? [] :
+    item.care_network.split("$").map((item, index) => {
+      return {text: item, id: index};
+    })
+  );
+  const [isDecided, setIsDecided] = useState(item.isDecided);
+  const [isUseVideo, setIsUseVideo] = useState(item.isUse_video);
+  const [visitDatetime, setVisitDatetime] = useState(item.isVisit_datetime);
+
+  const [apiUpdate, setApiUpdate] = useState(false)
+
+  const careNetworkHandler = (data) => {
+    let preString = data.previous;
+    let nowString = data.now.replace("$", "");
+    let arr = Array.from(careNetwork);
+    let find = arr.find(item => item.text == preString)
+    find.text = nowString
+    setCareNetwork(arr);
   };
-  const careNetworkRadioHandler = (e) => {
-    const value = e.target.value === "true";
-    setCareNetworkRadio(value);
+
+  const careNetwrokRemove = (value) => {
+    let c = careNetwork.filter((item) => item.text !== value);
+    setCareNetwork(c);
   };
 
-  const addOption = () => {
-    const newOption = prompt("Please enter the new option", "");
+  const careNetworkCreate = () => {
+    let arr = Array.from(careNetwork);
+    arr.push({text: "", id: `k${Date.now()}`});
+    setCareNetwork(arr);
+  };
 
-    let formal_option = optionTrim(newOption);
-    if (!formal_option) {
-      alert("內容不可為空白");
-      return;
+  useEffect(() => {
+    if (apiUpdate) {
+      const token = appSlice.userToken
+      var joinGroup = ""
+      const careNetworkCount = careNetwork.length
+      careNetwork.forEach((item, index) => {
+        joinGroup += item.text
+        if (index + 1 < careNetworkCount) {
+          joinGroup += "$"
+        }
+      })
+
+      console.log(joinGroup)
+      apiClinicUpdate(
+        token, 
+        id, 
+        name, 
+        phone, 
+        city, 
+        district, 
+        road, 
+        his, 
+        isUseVideo, 
+        isDecided, 
+        people, 
+        callNumberWay, 
+        visitDatetime, 
+        careGroup, 
+        experience, 
+        joinGroup.trim(),
+        (err) => {
+          alert(err)
+        }, 
+        () => {
+          setApiUpdate(false)
+          props.onRefresh()
+        }
+      )
+      
     }
-    let isSameone = options.includes(formal_option);
-    // console.log(isNewone,"isNEWONE")
-    if (isSameone) {
-      alert("內容重複");
-      return;
-    }
-    setOptions([...options, formal_option]);
-  };
+  }, [apiUpdate])
+
+  const apiUpdateHandler = () => {
+    setApiUpdate(true)
+  }
+
+  useEffect(() => {
+    console.log(careNetwork);
+  }, [careNetwork]);
+
   return (
     <Fragment>
       <div className="basicInform">
@@ -104,8 +152,11 @@ const ClinicInformation = (props) => {
               type="text"
               className="form-control"
               id="clinicName"
-              placeholder="怡和診所"
-              value={name}
+              placeholder=""
+              defaultValue={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
             />
           </div>
           <div className="w-25">
@@ -117,7 +168,8 @@ const ClinicInformation = (props) => {
               className="form-control"
               id="clinicCode"
               placeholder="3501183547"
-              value={id}
+              defaultValue={id}
+              disabled
             />
           </div>
           <div className="w-25 ">
@@ -129,7 +181,10 @@ const ClinicInformation = (props) => {
               className="form-control"
               id="clinicTelephone"
               placeholder="02-2362-5100"
-              value={phone}
+              defaultValue={phone}
+              onChange={(e) => {
+                setPhone(e.target.value);
+              }}
             />
           </div>
         </section>
@@ -144,7 +199,10 @@ const ClinicInformation = (props) => {
                 className="form-control"
                 id="city"
                 placeholder="台北市"
-                value={city}
+                defaultValue={city}
+                onChange={(e) => {
+                  setCity(e.target.value);
+                }}
               />
             </div>
             <div className="w-100 ">
@@ -156,7 +214,10 @@ const ClinicInformation = (props) => {
                 className="form-control"
                 id="district"
                 placeholder="內湖區"
-                value={district}
+                defaultValue={district}
+                onChange={(e) => {
+                  setDistrict(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -169,7 +230,10 @@ const ClinicInformation = (props) => {
               className="form-control"
               id="address"
               placeholder="汀州路二段212號"
-              value={road}
+              defaultValue={road}
+              onChange={(e) => {
+                setRoad(e.target.value);
+              }}
             />
           </div>
         </section>
@@ -184,8 +248,11 @@ const ClinicInformation = (props) => {
                 className="form-select"
                 aria-label="Default select example"
                 defaultValue={his}
+                onChange={(e) => {
+                  setHis(e.target.value);
+                }}
               >
-                <option selected>請選擇</option>
+                <option value="">無使用</option>
                 <option value="展望">展望</option>
                 <option value="耀聖">耀聖</option>
                 <option value="其他">其他</option>
@@ -200,7 +267,10 @@ const ClinicInformation = (props) => {
                 className="form-control"
                 id="callMode"
                 placeholder=""
-                defaultValue={call_number_way}
+                defaultValue={callNumberWay}
+                onChange={(e) => {
+                  setCallNumberWay(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -215,6 +285,9 @@ const ClinicInformation = (props) => {
                 id="otherDoctor"
                 placeholder="無"
                 defaultValue={experience}
+                onChange={(e) => {
+                  setExperience(e.target.value);
+                }}
               />
             </div>
             <div className="w-100">
@@ -227,6 +300,9 @@ const ClinicInformation = (props) => {
                 id="doctorNumber"
                 placeholder="1"
                 defaultValue={people}
+                onChange={(e) => {
+                  setPeople(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -242,7 +318,10 @@ const ClinicInformation = (props) => {
                     type="radio"
                     name="video"
                     id="videoTrue"
-                    checked={isUse_video}
+                    onChange={() => {
+                      setIsUseVideo(true);
+                    }}
+                    defaultChecked={isUseVideo}
                   />
                   <label
                     className="form-check-label text-dark"
@@ -257,7 +336,10 @@ const ClinicInformation = (props) => {
                     type="radio"
                     name="video"
                     id="videoFalse"
-                    checked={!isUse_video}
+                    onChange={() => {
+                      setIsUseVideo(false);
+                    }}
+                    defaultChecked={!isUseVideo}
                   />
                   <label className="form-check-label" htmlFor="videoFalse">
                     無
@@ -273,10 +355,16 @@ const ClinicInformation = (props) => {
                     className="form-check-input"
                     type="radio"
                     name="mainDoctor"
-                    id="mainDoctorTrue"
-                    checked={!isDecided}
+                    id="decideDoctorTrue"
+                    onChange={() => {
+                      setIsDecided(true);
+                    }}
+                    defaultChecked={isDecided}
                   />
-                  <label className="form-check-label" htmlFor="mainDoctorTrue">
+                  <label
+                    className="form-check-label"
+                    htmlFor="decideDoctorTrue"
+                  >
                     有
                   </label>
                 </div>
@@ -285,10 +373,16 @@ const ClinicInformation = (props) => {
                     className="form-check-input"
                     type="radio"
                     name="mainDoctor"
-                    id="mainDoctorFalse"
-                    checked={!isDecided}
+                    id="decideDoctorFalse"
+                    onChange={() => {
+                      setIsDecided(false);
+                    }}
+                    defaultChecked={!isDecided}
                   />
-                  <label className="form-check-label" htmlFor="mainDoctorFalse">
+                  <label
+                    className="form-check-label"
+                    htmlFor="decideDoctorFalse"
+                  >
                     無
                   </label>
                 </div>
@@ -303,7 +397,10 @@ const ClinicInformation = (props) => {
                 className="form-control form-control-sm"
                 id="doctorGroup"
                 placeholder=""
-                defaultValue={care_group}
+                defaultValue={careGroup}
+                onChange={(e) => {
+                  setCareGroup(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -312,11 +409,8 @@ const ClinicInformation = (props) => {
           <div className="w-100 d-flex inform-radio1">
             <div className="w-100 pe-4  ">
               <label className="form-label">
-                診所狀態: <span className="px-3">已回訪</span>
+                最新拜訪狀態: <span className="px-3">{clinicStatus}</span>
               </label>
-              {/* <div className="d-flex">
-                已回訪
-              </div> */}
             </div>
           </div>
         </section>
@@ -326,13 +420,14 @@ const ClinicInformation = (props) => {
             <div className="d-flex align-items-center flex-wrap overflow-hidden ">
               <div className="form-check py-2 pe-5">
                 <input
-                  onChange={visitRadioHandler}
-                  value="true"
+                  onChange={(e) => {
+                    setVisitDatetime(visitDatetime);
+                  }}
                   className="form-check-input"
                   type="radio"
                   name="visitTime"
                   id="visitTimeTrue"
-                  defaultChecked={radioInput_dateTime}
+                  defaultChecked={visitDatetime ? true : false}
                 />
                 <label className="form-check-label" htmlFor="visitTimeTrue">
                   可
@@ -340,104 +435,66 @@ const ClinicInformation = (props) => {
               </div>
               <div className="form-check py-2 pe-5">
                 <input
-                  onChange={visitRadioHandler}
-                  value="false"
+                  onChange={(e) => {
+                    setVisitDatetime("");
+                  }}
                   className="form-check-input"
                   type="radio"
                   name="visitTime"
                   id="visitTimeFalse"
-                  defaultChecked={!radioInput_dateTime}
+                  defaultChecked={!visitDatetime ? true : false}
                 />
                 <label className="form-check-label" htmlFor="visitTimeFalse">
                   否
                 </label>
               </div>
-              {isVisit_datetime ? (
-                <div className=" input-group-sm ">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="時間"
-                    value={isVisit_datetime}
-                  />
-                </div>
-              ) : (
-                ""
-              )}
+              <div className=" input-group-sm ">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="時間"
+                  defaultValue={visitDatetime}
+                  onChange={(e) => {
+                    setVisitDatetime(e.target.value);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </section>
         <section className="pt-2  inform-care-network">
-          <label className="form-label">有無加入照護網:</label>
+          <label className="form-label">照護網項目:</label>
           <div className="d-flex align-items-center flex-wrap">
             <div className="form-check py-2  pe-5">
-              <input
-                onChange={careNetworkRadioHandler}
-                value="true"
-                className="form-check-input"
-                type="radio"
-                name="CareNetwork"
-                id="CareNetworkTrue"
-                defaultChecked={radioInput_careNetwork}
-              />
-              <label className="form-check-label" htmlFor="CareNetworkTrue">
-                有
-              </label>
+              <Button variant="secondary" onClick={careNetworkCreate}>
+                新增
+              </Button>
             </div>
-            <div className="form-check py-2  pe-5">
-              <input
-                onChange={careNetworkRadioHandler}
-                value="false"
-                className="form-check-input"
-                type="radio"
-                name="CareNetwork"
-                id="CareNetworkFalse"
-                defaultChecked={!radioInput_careNetwork}
-              />
-              <label className="form-check-label" htmlFor="CareNetworkFalse">
-                無
-              </label>
+            <div className="form-check CareNetwork">
+              {careNetwork.map((item) => (
+                <InputCheckText
+                  key={item.id}
+                  text={item.text}
+                  onChange={careNetworkHandler}
+                  onRemove={careNetwrokRemove}
+                />
+              ))}
             </div>
-            {/* {careNetworkRadio && (<div>dfasdasf</div>)} */}
-            {careNetworkRadio && (
-              <div className=" d-flex CareNetwork">
-                {/* 多選區 */}
-
-                {options.map((option, index) => (
-                  <div key={index} className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      name={index}
-                      id={index}
-                      defaultChecked={arr.includes(option)}
-                    />
-                    <label className="form-check-label" htmlFor={index}>
-                      {option}
-                      {/* <FontAwesomeIcon
-                          className="fs-6 text-danger  ps-2 removeOptionIcon"
-                          icon="fa-solid fa-circle-xmark"
-                        /> */}
-                    </label>
-                  </div>
-                ))}
-                <InputGroup size="sm" className="my-2 w-100">
-                  <Form.Control
-                    aria-label="Small"
-                    aria-describedby="inputGroup-sizing-sm"
-                    placeholder="新增內容..."
-                    value={unselectedOptions.join(",")}
-                  />
-                </InputGroup>
-                {/* <button onClick={addOption}>Add option</button> */}
-              </div>
-            )}
           </div>
         </section>
+        <Button
+            variant="success"
+            className="text-white w-25"
+            onClick={apiUpdateHandler}
+          >
+            送出
+          </Button>
+          <Button variant="secondary" onClick={props.onClose}>
+            取消
+          </Button>
       </div>
     </Fragment>
   );
 
-  // list listItem
 };
-export default ClinicInformation;
+export default ClinicEditModal;

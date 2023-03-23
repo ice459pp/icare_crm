@@ -1,12 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import Search from "../component/home/search";
-import { useParams } from "react-router-dom";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
-// import ClinicDetail from "../component/home/clinic-list"
+import { useHistory, useParams } from "react-router-dom";
+
 import ClinicDetailLog from "./clinic-detail-log";
-import Modal_ClinicInformation from "./inform/modal-clinic-info";
+import ClinicEditModal from "./inform/modal-clinic-edit";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import HomeIcon from "../icon/Home_icon";
@@ -15,133 +13,81 @@ import Modal_AddLog from "./log/modal-add-log";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import PaginationUI from "./pagination";
-let logListArr = [
-  {
-    id: "fgretlgwrlg",
-    visitor_id: "dfasdfa6876sdf",
-    visitor_name: "阿民",
-    content: "經過與醫師討論後，決定先初次使用看看叫號功能，後續再與我們聯絡。",
-    visit_category: "教育訓練",
-    visit_datetime: "2023/03/06 9:30",
-    now_datetime: "2023/03/06 9:30",
-    isApproval: false,
-    clinic_status: "可電訪",
-  },
-  {
-    id: "fgretlgwrlsdassadg",
-    visitor_id: "dfasdfa76666sdf",
-    visitor_name: "龍哥",
-    content: "經過與醫師討論後，決定先初次使用看看叫號功能，後續再與我們聯絡。",
-    visit_category: "初訪",
-    visit_datetime: "2023/03/06 9:30",
-    now_datetime: "2023/03/06 9:30",
-    isApproval: false,
-    clinic_status: "結案",
-  },
-  {
-    id: "fgret96885lgwwrlg",
-    visitor_id: "dfasdfdefqqeasdf",
-    visitor_name: "turtle",
-    content: "經過與醫師討論後，決定先初次使用看看叫號功能，後續再與我們聯絡。",
-    visit_category: "電訪",
-    visit_datetime: "2023/03/06 9:30",
-    now_datetime: "2023/03/06 9:30",
-    isApproval: false,
-    clinic_status: "可回訪",
-  },
-  {
-    id: "fgretl7865785gwrlg",
-    visitor_id: "dfasdfasdwdwwukiukoliof",
-    visitor_name: "elephant",
-    content: "經過與醫師討論後，決定先初次使用看看叫號功能，後續再與我們聯絡。",
-    visit_category: "回訪",
-    visit_datetime: "2023/03/06 9:30",
-    now_datetime: "2023/03/06 9:30",
-    isApproval: false,
-    clinic_status: "可電訪",
-  },
-  {
-    id: "fgretlg785785fgdfgfdgsdwrlg",
-    visitor_id: "dfasdfasdf",
-    visitor_name: "DOG",
-    content:
-      "經過與醫師討論後，決定先初werqwer次使用看看叫號功能，後續再與我們聯絡。",
-    visit_category: "教育訓練",
-    visit_datetime: "2023/03/06 9:30",
-    now_datetime: "2023/03/06 9:30",
-    isApproval: false,
-    clinic_status: "可電訪",
-  },
-  {
-    id: "fgre786786tlgwrlg",
-    visitor_id: "dfasdfasdf",
-    visitor_name: "sheep",
-    content: "經過與醫師討論後，決定先初次使用看看叫號功能，後續再與我們聯絡。",
-    visit_category: "初訪",
-    visit_datetime: "2023/03/06 9:30",
-    now_datetime: "2023/03/06 9:30",
-    isApproval: false,
-    clinic_status: "可回訪",
-  },
-];
-let clinicInfo = {
-  id: "c1",
-  name: "cxxx診所",
-  phone: "0921231434",
-  city: "台北市",
-  district: "大安區",
-  road: "瑞光路4段18號5-5",
-  his: "耀聖", // 1耀聖
-  isUse_video: false,
+import { apiClinicInfo } from "../../api/api-clinic-info";
+import { useSelector } from "react-redux";
+let logListArr = [];
+let clinicData = {
+  id: "", // clinic id
+  name: "", // clinic name
+  phone: "", // 0912345678
+  city: "", // 台北市
+  district: "", // district
+  road: "", // address
+  his: "", // 耀聖
+  isUse_video: false, // streaming
   isDecided: false, //醫師能否做主
-  people: 3, //醫師人數
-  call_number_way: "線上叫號",
-  isVisit_datetime: "15:00~18:00", // 可否預約拜訪時間
-  care_group: "臺大醫院",
-  experience: "臺大醫院耳鼻喉科副主任",
-  care_network: "慢性病$BC肝$慢性腎臟病$ABCD其他資訊",
-  clinic_status: "可電訪",
+  people: 0, //醫師人數
+  call_number_way: "", // 叫號方式
+  isVisit_datetime: "", // 可否預約拜訪時間
+  care_group: "", // 醫療群
+  experience: "", // 其他醫院執業
+  care_network: "", // 照護網
+  clinic_status: "", // 可電訪 clinic status
 };
-let care_networkArr = [];
+
 const ClinicDetail = () => {
-  const [informModalShow, setInformModalShow] = useState(false);
+  const appSlice = useSelector((state) => state.appSlice);
+  const navigate = useHistory();
+  const params = useParams();
+  const id = params.id;
+
   const [logSearch, setLogSearch] = useState("");
   const logSearchHandler = (value) => {
     let valueTrim = value.trim();
-    // TODO GET API LOGLIST
+
     setLogSearch(valueTrim);
-    // fetchApi(valueTrim)
   };
-  const handleInformModaClose = () => setInformModalShow(false);
-  const handleInformModaShow = () => setInformModalShow(true);
-  const [logModalShow, setLogModalShow] = useState(false);
+
+  const refreshHandler = () => {
+    setEditModalShow(false)
+    setFetchClinicInfo(true)
+  }
 
   const sendNewLog = () => {
-    // TOＤＯ　ＡＰＩ　ＰＯＳＴ　ｌｏｇ　ｎｅｗ
     setLogModalShow(!logModalShow);
   };
-  const handleLOGModalShow = () => setLogModalShow(true);
 
-  const startFetch = (xxx) => {
-    // load data
-    // const apiLostList = async (xxx) => {
-    //   await
-    // }
-    // apiLostList(xxx)
-  };
+  const [editModalShow, setEditModalShow] = useState(false);
+  const closeEditModalHandler = () => setEditModalShow(false);
+  const showEditModalHandler = () => setEditModalShow(true);
+  const [logModalShow, setLogModalShow] = useState(false);
+
+  const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
+  const [clinicInfo, setClinicInfo] = useState(clinicData);
 
   useEffect(() => {
-    // todo API GET LOG_LIST
-    // todo API GET clinic_info
-    startFetch("xxx");
-    clinicInfo = JSON.parse(JSON.stringify(clinicInfo));
-    care_networkArr = clinicInfo.care_network.split("$");
-  }, []);
+    if (appSlice.isLogin) {
+      const token = appSlice.userToken;
+      apiClinicInfo(
+        token,
+        id,
+        (err) => {
+          alert(err)
+        },
+        (data) => {
+          setFetchClinicInfo(false)
+          setClinicInfo(data);
+        }
+      );
+    } else {
+      navigate.push("/login");
+    }
+  }, [fetchClinicInfo]);
+
   return (
     <Fragment>
       <div className="w-100 padding-RWD">
         <div className="py-2 w-100">
-          {/* <div className="h5 text-dark fw-bolder">基本資料:</div> */}
           <div className="w-100 bg-white  inform">
             <section className="clinicName">
               <div className="h3 fw-bolder  text-primary">
@@ -234,8 +180,12 @@ const ClinicDetail = () => {
                   {!clinicInfo.care_network && `無`}
                   {clinicInfo.care_network && (
                     <Fragment>
-                      <div className="text-success p-0">有</div>
-                      {care_networkArr.map((item) => (
+                      <div className="text-success p-0">
+                        {clinicInfo.care_network.split("$").length > 0
+                          ? "有"
+                          : "無"}
+                      </div>
+                      {clinicInfo.care_network.split("$").map((item) => (
                         <div key={item} className="sick_btn">
                           {item}
                         </div>
@@ -249,7 +199,7 @@ const ClinicDetail = () => {
               <Button
                 variant="success"
                 className="text-white edit_button"
-                onClick={handleInformModaShow}
+                onClick={showEditModalHandler}
               >
                 編輯
               </Button>
@@ -285,8 +235,8 @@ const ClinicDetail = () => {
         </div>
       </div>
       <Modal
-        show={informModalShow}
-        onHide={handleInformModaClose}
+        show={editModalShow}
+        onHide={closeEditModalHandler}
         backdrop="static"
         keyboard={false}
         aria-labelledby="contained-modal-title-vcenter"
@@ -294,29 +244,24 @@ const ClinicDetail = () => {
         size="lg"
       >
         <Modal.Header className="bg-secondary text-white" closeButton>
-          <Modal.Title>編輯基本資料</Modal.Title>
+          <Modal.Title>編輯診所資料</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Modal_ClinicInformation
-            care_networkArr={care_networkArr}
+          <ClinicEditModal
             item={clinicInfo}
-          ></Modal_ClinicInformation>
+            onClose={closeEditModalHandler}
+            onRefresh={refreshHandler}
+          ></ClinicEditModal>
         </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="success"
-            className="text-white w-25"
-            onClick={handleInformModaClose}
-          >
-            送出
-          </Button>
-          <Button variant="secondary" onClick={handleInformModaClose}>
-            取消
-          </Button>
-        </Modal.Footer>
       </Modal>
       <div className="log_button">
-        <Button variant="primary" size="lg" onClick={(e)=>{setLogModalShow(true)}}>
+        <Button
+          variant="primary"
+          size="lg"
+          onClick={(e) => {
+            setLogModalShow(true);
+          }}
+        >
           <FontAwesomeIcon icon="fa-solid fa-plus" /> 新增Log
         </Button>{" "}
       </div>

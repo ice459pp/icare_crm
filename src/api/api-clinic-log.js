@@ -39,7 +39,6 @@ export const apiLogList = async (
       const totalpage = data.totalpage
       onComplete(list, total, totalpage)
     } else {
-      console.log(json)
       onError(json.error)
     }
 

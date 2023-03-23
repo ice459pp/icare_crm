@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useHistory, Link } from "react-router-dom";
 import { Button, Modal, Form, InputGroup } from "react-bootstrap";
 
 import { useDispatch, useSelector } from "react-redux";
 import InputRadio from "./input-radio";
 import ErrorText from "../error-text";
 import { apiLogCreate } from "../../../api/api-clinic-log";
-import appSlice from "../../../store/app-slice";
+
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
 

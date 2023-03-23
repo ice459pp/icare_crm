@@ -17,12 +17,13 @@ const nowTodayChange = () => {
   return `${year}/${month}/${date} ${hour}:${minute}`;
 };
 const ClinicListItem = (props) => {
-  let { item } = props;
-  const appSlice = useSelector((state) => state.appSlice);
-  const navigate = useHistory();
-  const onMoreClinicDetail = () => {
-    navigate.push(`/clinic/${item.id}`);
-  };
+  let { item } = props
+  const appSlice = useSelector((state) => state.appSlice)
+  const navigate = useHistory()
+  
+  const moreDetailHandler = () => {
+    navigate.push(`/clinic/${item.id}`)
+  }
 
   const [listData, setListData] = useState([])
   const [showAddLogModal, setShowAddLogModal] = useState(false)
@@ -118,7 +119,7 @@ const ClinicListItem = (props) => {
         </td>
         <td className="buttonIcon table-more">
           <button
-            onClick={onMoreClinicDetail}
+            onClick={moreDetailHandler}
             className="btn w-100 btn-sm btn-dark"
           >
             查看更多
