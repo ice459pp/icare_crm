@@ -55,6 +55,11 @@ const ModalAddLog = (props) => {
   let { action, clinic_id, log } = props;
   const appSlice = useSelector((state) => state.appSlice);
 
+  const currentDateTime = () => {
+    var tzoffset = (new Date()).getTimezoneOffset() * 60000
+    return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -8)
+  }
+  
   // console.log(item, "in ModalAddLog", action, "action");
   const style = {
     height: `300px`,
@@ -72,7 +77,7 @@ const ModalAddLog = (props) => {
   const [description, setDiscription] = useState(log ? log.content : "");
 
   const [visitDate, setVisitDate] = useState(
-    log ? log.now_datetime.replaceAll('/', '-').replace(' ', 'T') : (new Date().toISOString().slice(0, -8))
+    log ? log.now_datetime.replaceAll('/', '-').replace(' ', 'T') : currentDateTime()
   );
 
   useEffect(() => {
