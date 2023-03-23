@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import InputRadio from "./input-radio";
 import ErrorText from "../error-text";
 import { apiLogCreate } from "../../../api/api-clinic-log";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -59,22 +60,24 @@ const ModalAddLog = (props) => {
     height: `300px`,
   };
 
-  let log_writingSlice = useSelector((state) => state.log_writingSlice);
-
   const [errorText, setErrorText] = useState("");
   const [apiStart, setApiStart] = useState(false);
 
   // 初訪 回訪 電訪 教育訓練
-  const [category, setCategory] = useState(log ? log.visit_category : '初訪');
+  const [category, setCategory] = useState(log ? log.visit_category : "初訪");
 
   // 可回訪 可電訪 結案
-  const [status, setStatus] = useState(log ? log.clinic_status : '可回訪');
+  const [status, setStatus] = useState(log ? log.clinic_status : "可回訪");
 
-  const [description, setDiscription] = useState(log ? log.content : '');
+  const [description, setDiscription] = useState(log ? log.content : "");
 
   const [visitDate, setVisitDate] = useState(
-    new Date().toISOString().slice(0, -8)
+    log ? log.now_datetime.replaceAll('/', '-').replace(' ', 'T') : (new Date().toISOString().slice(0, -8))
   );
+
+  useEffect(() => {
+    console.log(log)
+  }, [])
 
   const statusChangeHandler = (event) => {
     const value = event.target.value;
@@ -107,21 +110,20 @@ const ModalAddLog = (props) => {
   useEffect(() => {
     if (apiStart) {
       const token = appSlice.userToken;
-
       apiLogCreate(
         token,
         clinic_id,
-        log ? log.id : '',
+        log ? log.id : "",
         category,
         status,
         formatDate(visitDate),
         description,
-        log ? 'edit' : 'add',
+        log ? "edit" : "add",
         (err) => {
           setErrorText(err);
         },
         () => {
-          setApiStart(false)
+          setApiStart(false);
           props.onRefresh();
         }
       );
@@ -140,7 +142,7 @@ const ModalAddLog = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
     >
       <Modal.Header className="bg-secondary text-white" closeButton>
-        <Modal.Title>{log ? '編輯拜訪紀錄': '新增拜訪紀錄'}</Modal.Title>
+        <Modal.Title>{log ? "編輯拜訪紀錄" : "新增拜訪紀錄"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* <ModalAddLog
@@ -168,37 +170,24 @@ const ModalAddLog = (props) => {
                   );
                 })}
               </div>
-              {action === "add" && (
-                <InputGroup className="mb-3">
-                  <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
-                  <Form.Control
-                    placeholder="20:00~07:00"
-                    aria-label="拜訪時間"
-                    aria-describedby="basic-addon1"
-                    type="datetime-local"
-                    onChange={(e) => dateChangeHandler(e)}
-                    value={visitDate}
-                    // min={new Date().toISOString().slice(0, -8)}
-                  />
-                </InputGroup>
-              )}
-              {action === "edit" && (
-                <InputGroup className="mb-3">
-                  <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
-                  <Form.Control
-                    placeholder="20:00~07:00"
-                    aria-label="拜訪時間"
-                    aria-describedby="basic-addon1"
-                    type="datetime-local"
-                  />
-                </InputGroup>
-              )}
+              <InputGroup className="mb-3">
+                <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
+                <Form.Control
+                  placeholder="20:00~07:00"
+                  aria-label="拜訪時間"
+                  aria-describedby="basic-addon1"
+                  type="datetime-local"
+                  onChange={(e) => dateChangeHandler(e)}
+                  value={visitDate}
+                />
+              </InputGroup>
 
               <textarea
                 style={style}
                 className="form-control inputTextarea"
                 placeholder="Leave a comment here"
                 id="floatingTextarea2"
+                defaultValue={description}
                 onChange={(e) => discriptionChangeHandler(e)}
               ></textarea>
               <div className="input-group  px-2 ps-3 py-2  radio-custom inputRadio mt-2 mb-0 inputRadio-ClinicStatus">

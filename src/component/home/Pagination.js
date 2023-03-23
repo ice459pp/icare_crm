@@ -2,12 +2,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 
 const PaginationUI = (props) => {
-  const totalPage = props.totalPage
-
-  const [page, setPage] = useState(1);
+  const {page, totalPage} = props
 
   const pageNumHandler = (pageNumber) => {
-    setPage(pageNumber);
+    props.onPageChange(pageNumber)
   };
 
   const pagePrevHandler = () => {
@@ -15,7 +13,7 @@ const PaginationUI = (props) => {
     if (newPage < 1) {
       return
     }
-    setPage(newPage);
+    props.onPageChange(newPage)
   };
 
   const pageNextHandler = () => {
@@ -23,12 +21,12 @@ const PaginationUI = (props) => {
     if (newPage > totalPage) {
       return
     }
-    setPage(newPage);
+    props.onPageChange(newPage)
   };
 
-  useEffect(() => {
-    props.onPageChange(page);
-  }, [page]);
+  // useEffect(() => {
+  //   props.onPageChange(page);
+  // }, [page]);
 
   return (
     <Fragment>

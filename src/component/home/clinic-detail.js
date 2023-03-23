@@ -50,6 +50,7 @@ const ClinicDetail = () => {
   const [logSearch, setLogSearch] = useState("");
 
   const pageChangeHandler = (value) => {
+    console.log(value)
     setPage(value);
   };
 
@@ -80,13 +81,13 @@ const ClinicDetail = () => {
   const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
   const [clinicInfo, setClinicInfo] = useState(clinicData);
 
-  const showAddLogModalHandler = () => {
-    setShowAddLogModal(true);
+  const createLogClickHandler = () => {
+    setShowAddLogModal(true)
   };
 
   const closeAddLogModalHandler = () => {
-    setShowAddLogModal(false)
     setLog(null)
+    setShowAddLogModal(false)
   };
 
   // for detail log editing
@@ -101,20 +102,10 @@ const ClinicDetail = () => {
 
   const [log, setLog] = useState(null)
   
-  const logClickHandler = (logItem) => {
+  const editLogClickHandler = (logItem) => {
     setLog(logItem)
-    console.log(logItem)
+    setShowAddLogModal(true)
   }
-
-  useEffect(() => {
-    // if (!showAddLogModal) {
-    //   setLog(null)
-    // }
-
-    if (log) {
-      setShowAddLogModal(true)
-    }
-  }, [log, showAddLogModal])
 
   // this will be trigger when show log modal
   useEffect(() => {
@@ -315,6 +306,7 @@ const ClinicDetail = () => {
           </div>
           <div className="d-flex justify-content-center mt-4">
             <PaginationUI
+              page={page}
               totalPage={totalPage}
               onPageChange={pageChangeHandler}
             ></PaginationUI>
@@ -324,11 +316,12 @@ const ClinicDetail = () => {
               key={item.id}
               item={item}
               readonly={true}
-              onLogClick={logClickHandler}
+              onLogClick={editLogClickHandler}
             ></ClinicDetailLog>
           ))}
           <div className="d-flex justify-content-center mt-4">
             <PaginationUI
+              page={page}
               totalPage={totalPage}
               onPageChange={pageChangeHandler}
             ></PaginationUI>
@@ -357,19 +350,29 @@ const ClinicDetail = () => {
         </Modal.Body>
       </Modal>
       <div className="log_button">
-        <Button variant="primary" size="lg" onClick={showAddLogModalHandler}>
+        <Button variant="primary" size="lg" onClick={createLogClickHandler}>
           建立紀錄
         </Button>{" "}
       </div>
       {/* 新增log */}
-      <ModalAddLog
+      {(log === null && showAddLogModal) && <ModalAddLog
         clinic_id={id}
-        action={log ? "edit" : "add"}
-        log={log}
+        action="add"
+        log={null}
         showMoadl={showAddLogModal}
         onClose={closeAddLogModalHandler}
         onRefresh={refreshHandler}
-      />
+      />}
+
+      {(log && showAddLogModal) && 
+      <ModalAddLog
+      clinic_id={id}
+      action="edit"
+      log={log}
+      showMoadl={showAddLogModal}
+      onClose={closeAddLogModalHandler}
+      onRefresh={refreshHandler}
+    />}
 
     </Fragment>
   );
