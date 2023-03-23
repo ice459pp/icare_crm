@@ -50,6 +50,7 @@ export const apiLogList = async (
 export const apiLogCreate = async (
   token = "",
   id = "",
+  logId = "",
   visit_category, 
   clinic_status,
   visit_datetime = "", 
@@ -62,6 +63,9 @@ export const apiLogCreate = async (
     const apiUrl = `${appConfig.url}/visit/log/action`
     let formData = new FormData()
     formData.append("clinic_id", id)
+    if (logId !== '') {
+      formData.append("log_id", logId)
+    }
     formData.append("visit_category", visit_category)
     formData.append("clinic_status", clinic_status)
     formData.append("visit_datetime", visit_datetime)

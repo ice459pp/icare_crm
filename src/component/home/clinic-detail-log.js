@@ -26,38 +26,39 @@ const ClinicDetailLog = (props) => {
   };
   return (
     <Fragment>
-      <section data-id={item.id} className="bg-white text-dark logCard">
-        <div className="logCard_title">
-          <div data-id={item.visitor_id}>{item.visitor_name}</div>
-          <div className="logCard_title_dateStatus_PC">
-            <div className="date">{item.visit_datetime}</div>
-            <button className="btn btn-success text-white status">
-              {item.visit_category}
-            </button>
+      <div onClick={() => {props.onLogClick(item)}}>
+        <section data-id={item.id} className="bg-white text-dark logCard">
+          <div className="logCard_title">
+            <div data-id={item.visitor_id}>{item.visitor_name}</div>
+            <div className="logCard_title_dateStatus_PC">
+              <div className="date">{item.visit_datetime}</div>
+              <button className="btn btn-success text-white status">
+                {item.visit_category}
+              </button>
+            </div>
+            <div className="logCard_title_dateStatus_PD">
+              <button className="btn btn-success text-white status">
+                {item.visit_category}
+              </button>
+            </div>
           </div>
-          <div className="logCard_title_dateStatus_PD">
-            <button className="btn btn-success text-white status">
-              {item.visit_category}
-            </button>
+          <div className="date_PD">{item.visit_datetime}</div>
+          <div className="logCard_content">{item.content}</div>
+          <div className="logCard_footer">
+            {item.now_datetime} 新增{" "}
+            {!item.isApproval ? (
+              ""
+            ) : (
+              <FontAwesomeIcon
+                className="fs-4"
+                style={{ cursor: "pointer" }}
+                onClick={handleModal}
+                icon="fa-solid fa-pen-to-square"
+              />
+            )}
           </div>
-        </div>
-        <div className="date_PD">{item.visit_datetime}</div>
-        <div className="logCard_content">{item.content}</div>
-        <div className="logCard_footer">
-          {item.now_datetime} 新增{" "}
-          {!item.isApproval ? (
-            ""
-          ) : (
-            <FontAwesomeIcon
-              className="fs-4"
-              style={{ cursor: "pointer" }}
-              onClick={handleModal}
-              icon="fa-solid fa-pen-to-square"
-            />
-          )}
-        </div>
-      </section>
-
+        </section>
+      </div>
       <Modal
         className="radio-custom"
         show={showModal}

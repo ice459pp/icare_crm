@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, Form, InputGroup } from "react-bootstrap";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import InputRadio from "./input-radio";
 import ErrorText from "../error-text";
 import { apiLogCreate } from "../../../api/api-clinic-log";
@@ -51,7 +51,7 @@ const statusArr = [
   },
 ];
 const ModalAddLog = (props) => {
-  let { action, clinic_id } = props;
+  let { action, clinic_id, log } = props;
   const appSlice = useSelector((state) => state.appSlice);
 
   // console.log(item, "in ModalAddLog", action, "action");
@@ -60,20 +60,17 @@ const ModalAddLog = (props) => {
   };
 
   let log_writingSlice = useSelector((state) => state.log_writingSlice);
-  let clinicStatus = log_writingSlice.clinic_status;
-  let visitCategory = log_writingSlice.visit_category;
-  let dispatch = useDispatch();
 
   const [errorText, setErrorText] = useState("");
   const [apiStart, setApiStart] = useState(false);
 
   // 初訪 回訪 電訪 教育訓練
-  const [category, setCategory] = useState("初訪");
+  const [category, setCategory] = useState(log ? log.visit_category : '初訪');
 
   // 可回訪 可電訪 結案
-  const [status, setStatus] = useState("可回訪");
+  const [status, setStatus] = useState(log ? log.clinic_status : '可回訪');
 
-  const [description, setDiscription] = useState("");
+  const [description, setDiscription] = useState(log ? log.content : '');
 
   const [visitDate, setVisitDate] = useState(
     new Date().toISOString().slice(0, -8)
@@ -111,15 +108,15 @@ const ModalAddLog = (props) => {
     if (apiStart) {
       const token = appSlice.userToken;
 
-      console.log(clinic_id);
       apiLogCreate(
         token,
         clinic_id,
+        log ? log.id : '',
         category,
         status,
         formatDate(visitDate),
         description,
-        "add",
+        log ? 'edit' : 'add',
         (err) => {
           setErrorText(err);
         },
@@ -143,7 +140,7 @@ const ModalAddLog = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
     >
       <Modal.Header className="bg-secondary text-white" closeButton>
-        <Modal.Title>新增拜訪紀錄</Modal.Title>
+        <Modal.Title>{log ? '編輯拜訪紀錄': '新增拜訪紀錄'}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* <ModalAddLog

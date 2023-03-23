@@ -16,7 +16,7 @@ import PaginationUI from "./pagination";
 import { apiClinicInfo } from "../../api/api-clinic-info";
 import { useSelector } from "react-redux";
 import ModalAddLog from "./log/modal-add-log";
-let logListArr = [];
+import { apiLogList } from "../../api/api-clinic-log";
 let clinicData = {
   id: "", // clinic id
   name: "", // clinic name
@@ -42,39 +42,103 @@ const ClinicDetail = () => {
   const params = useParams();
   const id = params.id;
 
-  
+  const [listData, setListData] = useState([]);
+  const [refreshLog, setRefreshLog] = useState(false);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [logSearch, setLogSearch] = useState("");
-  const logSearchHandler = (value) => {
-    let valueTrim = value.trim();
 
-    setLogSearch(valueTrim);
+  const pageChangeHandler = (value) => {
+    setPage(value);
+  };
+
+  const logSearchHandler = (value) => {
+    const timer = setInterval(() => {
+      clearInterval(timer);
+      setLogSearch(value.trim());
+    }, 1300);
+  };
+
+  const clearSearchHandler = () => {
+    setLogSearch("");
   };
 
   const refreshHandler = () => {
-    setEditModalShow(false)
-    setShowAddLogModal(false)
-    setFetchClinicInfo(true)
-  }
+    setEditModalShow(false);
+    setShowAddLogModal(false);
+    setFetchClinicInfo(true);
+    setRefreshLog(true);
+  };
 
   const [editModalShow, setEditModalShow] = useState(false);
   const closeEditModalHandler = () => setEditModalShow(false);
   const showEditModalHandler = () => setEditModalShow(true);
 
-  const [showAddLogModal, setShowAddLogModal] = useState(false)
+  const [showAddLogModal, setShowAddLogModal] = useState(false);
+
+  const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
+  const [clinicInfo, setClinicInfo] = useState(clinicData);
+
   const showAddLogModalHandler = () => {
     setShowAddLogModal(true);
   };
 
   const closeAddLogModalHandler = () => {
-    setShowAddLogModal(false);
+    setShowAddLogModal(false)
+    setLog(null)
   };
 
-  const refreshLogHandler = () => {
+  // for detail log editing
+  /**
+   * 
+   * logId={logId}
+        category={logCategory}
+        datetime={logDatetime}
+        description={logDescription}
+        status={logStatus}} logId 
+   */
 
+  const [log, setLog] = useState(null)
+  
+  const logClickHandler = (logItem) => {
+    setLog(logItem)
+    console.log(logItem)
   }
 
-  const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
-  const [clinicInfo, setClinicInfo] = useState(clinicData);
+  useEffect(() => {
+    // if (!showAddLogModal) {
+    //   setLog(null)
+    // }
+
+    if (log) {
+      setShowAddLogModal(true)
+    }
+  }, [log, showAddLogModal])
+
+  // this will be trigger when show log modal
+  useEffect(() => {
+    // this is important.
+    if (appSlice.isLogin) {
+      // fetch log api
+      const token = appSlice.userToken;
+      apiLogList(
+        token,
+        page,
+        id,
+        logSearch,
+        (err) => {
+          alert(err);
+        },
+        (list, total, totalPage) => {
+          setTotalCount(total);
+          setTotalPage(totalPage);
+          setListData(list);
+          setRefreshLog(false);
+        }
+      );
+    }
+  }, [refreshLog, page, logSearch]);
 
   useEffect(() => {
     if (appSlice.isLogin) {
@@ -83,10 +147,10 @@ const ClinicDetail = () => {
         token,
         id,
         (err) => {
-          alert(err)
+          alert(err);
         },
         (data) => {
-          setFetchClinicInfo(false)
+          setFetchClinicInfo(false);
           setClinicInfo(data);
         }
       );
@@ -221,30 +285,57 @@ const ClinicDetail = () => {
           <div className="h5 text-dark fw-bolder log_title">
             <div>Log:</div>
             <InputGroup size="sm" className="">
-              查詢:
-              <Form.Control
-                onChange={(e) => logSearchHandler(e.target.value)}
+              查詢結果({totalCount}筆):
+              {/* <Form.Control
+                onBlur={(e) => logSearchHandler(e.target.value)}
                 value={logSearch}
                 aria-label="Small"
                 aria-describedby="inputGroup-sizing-sm"
+              /> */}
+              <input
+                type="text"
+                className="form-control"
+                placeholder="內容紀錄查詢"
+                defaultValue=""
+                onChange={(e) => {
+                  logSearchHandler(e.target.value);
+                }}
+                // onBlur={(e) => {
+                //   logSearchHandler(e.target.value)
+                // }}
               />
-              {logSearch && (
+              {logSearch !== "" && (
                 <FontAwesomeIcon
-                  onClick={() => logSearchHandler("")}
+                  onClick={clearSearchHandler}
                   className="text-danger cursor-pointer fs-5"
                   icon="fa-solid fa-circle-xmark"
                 />
               )}
             </InputGroup>
           </div>
-          {logListArr.map((item) => (
-            <ClinicDetailLog key={item.id} item={item}></ClinicDetailLog>
+          <div className="d-flex justify-content-center mt-4">
+            <PaginationUI
+              totalPage={totalPage}
+              onPageChange={pageChangeHandler}
+            ></PaginationUI>
+          </div>
+          {listData.map((item) => (
+            <ClinicDetailLog
+              key={item.id}
+              item={item}
+              readonly={true}
+              onLogClick={logClickHandler}
+            ></ClinicDetailLog>
           ))}
           <div className="d-flex justify-content-center mt-4">
-            {/* <PaginationUI></PaginationUI> */}
+            <PaginationUI
+              totalPage={totalPage}
+              onPageChange={pageChangeHandler}
+            ></PaginationUI>
           </div>
         </div>
       </div>
+      {/* 編輯診所 */}
       <Modal
         show={editModalShow}
         onHide={closeEditModalHandler}
@@ -266,18 +357,15 @@ const ClinicDetail = () => {
         </Modal.Body>
       </Modal>
       <div className="log_button">
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={showAddLogModalHandler}
-        >
-          <FontAwesomeIcon icon="fa-solid fa-plus" /> 新增Log
+        <Button variant="primary" size="lg" onClick={showAddLogModalHandler}>
+          建立紀錄
         </Button>{" "}
       </div>
       {/* 新增log */}
       <ModalAddLog
         clinic_id={id}
-        action={"add"}
+        action={log ? "edit" : "add"}
+        log={log}
         showMoadl={showAddLogModal}
         onClose={closeAddLogModalHandler}
         onRefresh={refreshHandler}
