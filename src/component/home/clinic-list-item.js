@@ -17,19 +17,19 @@ const nowTodayChange = () => {
   return `${year}/${month}/${date} ${hour}:${minute}`;
 };
 const ClinicListItem = (props) => {
-  let { item } = props
-  const appSlice = useSelector((state) => state.appSlice)
-  const navigate = useHistory()
-  
-  const moreDetailHandler = () => {
-    navigate.push(`/clinic/${item.id}`)
-  }
+  let { item } = props;
+  const appSlice = useSelector((state) => state.appSlice);
+  const navigate = useHistory();
 
-  const [listData, setListData] = useState([])
-  const [showAddLogModal, setShowAddLogModal] = useState(false)
-  const [showLogListModal, setShowLogListModal] = useState(false)
-  const [refreshLog, setRefreshLog] = useState(false)
-  const [page, setPage] = useState(1)
+  const moreDetailHandler = () => {
+    navigate.push(`/clinic/${item.id}`);
+  };
+
+  const [listData, setListData] = useState([]);
+  const [showAddLogModal, setShowAddLogModal] = useState(false);
+  const [showLogListModal, setShowLogListModal] = useState(false);
+  const [refreshLog, setRefreshLog] = useState(false);
+  const [page, setPage] = useState(1);
 
   const handleAddLogModal1 = () => {
     // 新增log
@@ -61,14 +61,10 @@ const ClinicListItem = (props) => {
     setShowLogListModal(false);
   };
 
-  const createVisitLogHandler = (data) => {
-    console.log(data)
-  };
-
   const refreshMoadlHandler = () => {
-    setShowAddLogModal(false)
-    setRefreshLog(true)
-  }
+    setShowAddLogModal(false);
+    setRefreshLog(true);
+  };
 
   // this will be trigger when show log modal
   useEffect(() => {
@@ -83,8 +79,9 @@ const ClinicListItem = (props) => {
         "",
         (err) => {},
         (list, total, totalPage) => {
-          setListData(list)
-          setRefreshLog(false)
+          console.log(list)
+          setListData(list);
+          setRefreshLog(false);
         }
       );
     }
@@ -164,30 +161,13 @@ const ClinicListItem = (props) => {
         </Modal.Footer>
       </Modal>
       {/* 新增log */}
-      <Modal
-        className="radio-custom"
-        show={showAddLogModal}
-        onHide={closeAddLogModalHandler}
-        centered
-        backdrop="static"
-        keyboard={false}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-      >
-        <Modal.Header className="bg-secondary text-white" closeButton>
-          <Modal.Title>新增拜訪紀錄</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <ModalAddLog
-            clinic_id={item.id}
-            action={"create"}
-            onCreateLog={createVisitLogHandler}
-            onClose={closeAddLogModalHandler}
-            onRefresh={refreshMoadlHandler}
-          />
-        </Modal.Body>
-        <Modal.Footer></Modal.Footer>
-      </Modal>
+      <ModalAddLog
+        clinic_id={item.id}
+        action={"add"}
+        showMoadl={showAddLogModal}
+        onClose={closeAddLogModalHandler}
+        onRefresh={refreshMoadlHandler}
+      />
     </Fragment>
   );
 

@@ -15,6 +15,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import PaginationUI from "./pagination";
 import { apiClinicInfo } from "../../api/api-clinic-info";
 import { useSelector } from "react-redux";
+import ModalAddLog from "./log/modal-add-log";
 let logListArr = [];
 let clinicData = {
   id: "", // clinic id
@@ -41,6 +42,7 @@ const ClinicDetail = () => {
   const params = useParams();
   const id = params.id;
 
+  
   const [logSearch, setLogSearch] = useState("");
   const logSearchHandler = (value) => {
     let valueTrim = value.trim();
@@ -50,17 +52,26 @@ const ClinicDetail = () => {
 
   const refreshHandler = () => {
     setEditModalShow(false)
+    setShowAddLogModal(false)
     setFetchClinicInfo(true)
   }
-
-  const sendNewLog = () => {
-    setLogModalShow(!logModalShow);
-  };
 
   const [editModalShow, setEditModalShow] = useState(false);
   const closeEditModalHandler = () => setEditModalShow(false);
   const showEditModalHandler = () => setEditModalShow(true);
-  const [logModalShow, setLogModalShow] = useState(false);
+
+  const [showAddLogModal, setShowAddLogModal] = useState(false)
+  const showAddLogModalHandler = () => {
+    setShowAddLogModal(true);
+  };
+
+  const closeAddLogModalHandler = () => {
+    setShowAddLogModal(false);
+  };
+
+  const refreshLogHandler = () => {
+
+  }
 
   const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
   const [clinicInfo, setClinicInfo] = useState(clinicData);
@@ -258,45 +269,20 @@ const ClinicDetail = () => {
         <Button
           variant="primary"
           size="lg"
-          onClick={(e) => {
-            setLogModalShow(true);
-          }}
+          onClick={showAddLogModalHandler}
         >
           <FontAwesomeIcon icon="fa-solid fa-plus" /> 新增Log
         </Button>{" "}
       </div>
-      <Modal
-        className="radio-custom"
-        show={logModalShow}
-        onHide={sendNewLog}
-        centered
-        backdrop="static"
-        keyboard={false}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-      >
-        <Modal.Header className="bg-secondary text-white" closeButton>
-          <Modal.Title>新增log</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Modal_AddLog action={"new"}></Modal_AddLog>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="success"
-            className="text-white w-25"
-            onClick={sendNewLog}
-          >
-            送出
-          </Button>
-          <Button
-            variant="secondary"
-            onClick={() => setLogModalShow(!logModalShow)}
-          >
-            取消
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {/* 新增log */}
+      <ModalAddLog
+        clinic_id={id}
+        action={"add"}
+        showMoadl={showAddLogModal}
+        onClose={closeAddLogModalHandler}
+        onRefresh={refreshHandler}
+      />
+
     </Fragment>
   );
 

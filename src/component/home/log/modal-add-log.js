@@ -104,14 +104,14 @@ const ModalAddLog = (props) => {
   };
 
   const closeModalHandler = () => {
-    props.onClose()
+    props.onClose();
   };
 
   useEffect(() => {
     if (apiStart) {
       const token = appSlice.userToken;
-      
-      console.log(clinic_id)
+
+      console.log(clinic_id);
       apiLogCreate(
         token,
         clinic_id,
@@ -124,97 +124,121 @@ const ModalAddLog = (props) => {
           setErrorText(err);
         },
         () => {
-          props.onRefresh()
+          setApiStart(false)
+          props.onRefresh();
         }
-      )
+      );
     }
   }, [apiStart]);
 
   return (
-    <Fragment>
-      <div className="py-2">
-        <div className="form-floating">
-          <div className="input-group  px-2 ps-3 py-2 radio-custom inputRadio">
-            <div className="pe-3">拜訪類別:</div>
+    <Modal
+      className="radio-custom"
+      show={props.showMoadl}
+      onHide={props.onClose}
+      centered
+      backdrop="static"
+      keyboard={false}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+    >
+      <Modal.Header className="bg-secondary text-white" closeButton>
+        <Modal.Title>新增拜訪紀錄</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {/* <ModalAddLog
+            clinic_id={id}
+            action={"create"}
+            onClose={closeAddLogModalHandler}
+            onRefresh={refreshLogHandler}
+          /> */}
+        <Fragment>
+          <div className="py-2">
+            <div className="form-floating">
+              <div className="input-group  px-2 ps-3 py-2 radio-custom inputRadio">
+                <div className="pe-3">拜訪類別:</div>
 
-            {categoryArr.map((item) => {
-              return (
-                <InputRadio
-                  key={item.id}
-                  id={item.id}
-                  text={item.text}
-                  name="visit"
-                  isCheck={item.text === category}
-                  onChange={categoryChangeHandler}
-                />
-              );
-            })}
+                {categoryArr.map((item) => {
+                  return (
+                    <InputRadio
+                      key={item.id}
+                      id={item.id}
+                      text={item.text}
+                      name="visit"
+                      isCheck={item.text === category}
+                      onChange={categoryChangeHandler}
+                    />
+                  );
+                })}
+              </div>
+              {action === "add" && (
+                <InputGroup className="mb-3">
+                  <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
+                  <Form.Control
+                    placeholder="20:00~07:00"
+                    aria-label="拜訪時間"
+                    aria-describedby="basic-addon1"
+                    type="datetime-local"
+                    onChange={(e) => dateChangeHandler(e)}
+                    value={visitDate}
+                    // min={new Date().toISOString().slice(0, -8)}
+                  />
+                </InputGroup>
+              )}
+              {action === "edit" && (
+                <InputGroup className="mb-3">
+                  <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
+                  <Form.Control
+                    placeholder="20:00~07:00"
+                    aria-label="拜訪時間"
+                    aria-describedby="basic-addon1"
+                    type="datetime-local"
+                  />
+                </InputGroup>
+              )}
+
+              <textarea
+                style={style}
+                className="form-control inputTextarea"
+                placeholder="Leave a comment here"
+                id="floatingTextarea2"
+                onChange={(e) => discriptionChangeHandler(e)}
+              ></textarea>
+              <div className="input-group  px-2 ps-3 py-2  radio-custom inputRadio mt-2 mb-0 inputRadio-ClinicStatus">
+                <div className="pe-3">診所狀態:</div>
+
+                {statusArr.map((item) => {
+                  return (
+                    <InputRadio
+                      key={item.id}
+                      id={item.id}
+                      text={item.text}
+                      name="status"
+                      isCheck={item.text === status}
+                      onChange={statusChangeHandler}
+                    />
+                  );
+                })}
+              </div>
+            </div>
           </div>
-          {action === "create" && (
-            <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
-              <Form.Control
-                placeholder="20:00~07:00"
-                aria-label="拜訪時間"
-                aria-describedby="basic-addon1"
-                type="datetime-local"
-                onChange={(e) => dateChangeHandler(e)}
-                value={visitDate}
-                // min={new Date().toISOString().slice(0, -8)}
-              />
-            </InputGroup>
-          )}
-          {action === "edit" && (
-            <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
-              <Form.Control
-                placeholder="20:00~07:00"
-                aria-label="拜訪時間"
-                aria-describedby="basic-addon1"
-                type="datetime-local"
-              />
-            </InputGroup>
-          )}
-
-          <textarea
-            style={style}
-            className="form-control inputTextarea"
-            placeholder="Leave a comment here"
-            id="floatingTextarea2"
-            onChange={(e) => discriptionChangeHandler(e)}
-          ></textarea>
-          <div className="input-group  px-2 ps-3 py-2  radio-custom inputRadio mt-2 mb-0 inputRadio-ClinicStatus">
-            <div className="pe-3">診所狀態:</div>
-
-            {statusArr.map((item) => {
-              return (
-                <InputRadio
-                  key={item.id}
-                  id={item.id}
-                  text={item.text}
-                  name="status"
-                  isCheck={item.text === status}
-                  onChange={statusChangeHandler}
-                />
-              );
-            })}
+          {errorText && <ErrorText text={errorText} />}
+          <div>
+            <Button
+              variant="success"
+              className="text-white w-25"
+              onClick={createLogHandler}
+            >
+              送出
+            </Button>
+            <Button variant="secondary" onClick={closeModalHandler}>
+              取消
+            </Button>
           </div>
-        </div>
-      </div>
-      {errorText && <ErrorText text={errorText} />}
-      <div>
-        <Button
-          variant="success"
-          className="text-white w-25"
-          onClick={createLogHandler}
-        >
-          送出
-        </Button>
-        <Button variant="secondary" onClick={closeModalHandler}>
-          取消
-        </Button>
-      </div>
-    </Fragment>
+        </Fragment>
+      </Modal.Body>
+      <Modal.Footer></Modal.Footer>
+    </Modal>
   );
 };
 export default ModalAddLog;
