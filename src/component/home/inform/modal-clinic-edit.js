@@ -44,7 +44,7 @@ const ClinicEditModal = (props) => {
   //   road,
   // } = item;
 
-  const appSlice = useSelector(state => state.appSlice)
+  const appSlice = useSelector((state) => state.appSlice);
 
   const [name, setName] = useState(item.name);
   const [phone, setPhone] = useState(item.phone);
@@ -59,23 +59,24 @@ const ClinicEditModal = (props) => {
   const [careGroup, setCareGroup] = useState(item.care_group);
   const [clinicStatus, setClinicStatus] = useState(item.clinic_status);
   const [careNetwork, setCareNetwork] = useState(
-    item.care_network === "" ? [] :
-    item.care_network.split("$").map((item, index) => {
-      return {text: item, id: index};
-    })
+    item.care_network === ""
+      ? []
+      : item.care_network.split("$").map((item, index) => {
+          return { text: item, id: index };
+        })
   );
   const [isDecided, setIsDecided] = useState(item.isDecided);
   const [isUseVideo, setIsUseVideo] = useState(item.isUse_video);
   const [visitDatetime, setVisitDatetime] = useState(item.isVisit_datetime);
 
-  const [apiUpdate, setApiUpdate] = useState(false)
+  const [apiUpdate, setApiUpdate] = useState(false);
 
   const careNetworkHandler = (data) => {
     let preString = data.previous;
     let nowString = data.now.replace("$", "");
     let arr = Array.from(careNetwork);
-    let find = arr.find(item => item.text == preString)
-    find.text = nowString
+    let find = arr.find((item) => item.text == preString);
+    find.text = nowString;
     setCareNetwork(arr);
   };
 
@@ -86,55 +87,54 @@ const ClinicEditModal = (props) => {
 
   const careNetworkCreate = () => {
     let arr = Array.from(careNetwork);
-    arr.push({text: "", id: `k${Date.now()}`});
+    arr.push({ text: "", id: `k${Date.now()}` });
     setCareNetwork(arr);
   };
 
   useEffect(() => {
     if (apiUpdate) {
-      const token = appSlice.userToken
-      var joinGroup = ""
-      const careNetworkCount = careNetwork.length
+      const token = appSlice.userToken;
+      var joinGroup = "";
+      const careNetworkCount = careNetwork.length;
       careNetwork.forEach((item, index) => {
-        joinGroup += item.text
+        joinGroup += item.text;
         if (index + 1 < careNetworkCount) {
-          joinGroup += "$"
+          joinGroup += "$";
         }
-      })
+      });
 
-      console.log(joinGroup)
+      console.log(joinGroup);
       apiClinicUpdate(
-        token, 
-        id, 
-        name, 
-        phone, 
-        city, 
-        district, 
-        road, 
-        his, 
-        isUseVideo, 
-        isDecided, 
-        people, 
-        callNumberWay, 
-        visitDatetime, 
-        careGroup, 
-        experience, 
+        token,
+        id,
+        name,
+        phone,
+        city,
+        district,
+        road,
+        his,
+        isUseVideo,
+        isDecided,
+        people,
+        callNumberWay,
+        visitDatetime,
+        careGroup,
+        experience,
         joinGroup.trim(),
         (err) => {
-          alert(err)
-        }, 
+          alert(err);
+        },
         () => {
-          setApiUpdate(false)
-          props.onRefresh()
+          setApiUpdate(false);
+          props.onRefresh();
         }
-      )
-      
+      );
     }
-  }, [apiUpdate])
+  }, [apiUpdate]);
 
   const apiUpdateHandler = () => {
-    setApiUpdate(true)
-  }
+    setApiUpdate(true);
+  };
 
   useEffect(() => {
     console.log(careNetwork);
@@ -421,7 +421,8 @@ const ClinicEditModal = (props) => {
               <div className="form-check py-2 pe-5">
                 <input
                   onChange={(e) => {
-                    setVisitDatetime(visitDatetime);
+                    const date = new Date();
+                    setVisitDatetime(`${date.getHours()}:${date.getMinutes()}`);
                   }}
                   className="form-check-input"
                   type="radio"
@@ -448,17 +449,19 @@ const ClinicEditModal = (props) => {
                   否
                 </label>
               </div>
-              <div className=" input-group-sm ">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="時間"
-                  defaultValue={visitDatetime}
-                  onChange={(e) => {
-                    setVisitDatetime(e.target.value);
-                  }}
-                />
-              </div>
+              {visitDatetime && (
+                <div className=" input-group-sm ">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="時間"
+                    defaultValue={visitDatetime}
+                    onChange={(e) => {
+                      setVisitDatetime(e.target.value);
+                    }}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </section>
@@ -483,18 +486,17 @@ const ClinicEditModal = (props) => {
           </div>
         </section>
         <Button
-            variant="success"
-            className="text-white w-25"
-            onClick={apiUpdateHandler}
-          >
-            送出
-          </Button>
-          <Button variant="secondary" onClick={props.onClose}>
-            取消
-          </Button>
+          variant="success"
+          className="text-white w-25"
+          onClick={apiUpdateHandler}
+        >
+          送出
+        </Button>
+        <Button variant="secondary" onClick={props.onClose}>
+          取消
+        </Button>
       </div>
     </Fragment>
   );
-
 };
 export default ClinicEditModal;
