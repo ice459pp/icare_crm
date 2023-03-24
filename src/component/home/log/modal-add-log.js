@@ -77,7 +77,7 @@ const ModalAddLog = (props) => {
   const [description, setDiscription] = useState(log ? log.content : "");
 
   const [visitDate, setVisitDate] = useState(
-    log ? log.now_datetime.replaceAll('/', '-').replace(' ', 'T') : currentDateTime()
+    log ? log.visit_datetime.replaceAll('/', '-').replace(' ', 'T') : currentDateTime()
   );
 
   useEffect(() => {
