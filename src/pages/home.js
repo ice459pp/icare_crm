@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../scss/home.scss";
@@ -8,9 +8,11 @@ import SearchFilter from "../component/home/search-filter";
 import ClinicListItem from "../component/home/clinic-list-item";
 import PaginationUI from "../component/home/pagination";
 import { apiClinicList } from "../api/api-clinic-list";
+import { appAction } from "../store/app-slice";
 
 const Home = () => {
   const appSlice = useSelector((state) => state.appSlice);
+  const dispatch = useDispatch()
   const navigate = useHistory();
 
   const [clinicList, setClinicList] = useState([]);
@@ -52,6 +54,10 @@ const Home = () => {
     setPage(value);
   };
 
+  const logoutHandler = () => {
+    dispatch(appAction.logout())
+  }
+
   // this is for login status
   useEffect(() => {
     // check app is login
@@ -67,7 +73,8 @@ const Home = () => {
         dateSort,
         filterStatus,
         (err) => {
-          console.log("err" + err);
+          alert(err)
+          logoutHandler()
         },
         (list, total, totalPage) => {
           setTotalCount(total);
