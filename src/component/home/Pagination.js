@@ -2,46 +2,74 @@ import React, { Fragment, useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
 
 const PaginationUI = (props) => {
-  const {page, totalPage} = props
+  const { page, totalPage } = props;
+  const [pages, setPages] = useState([]);
+
+  useEffect(() => {
+    let pageArr = [];
+    if (totalPage <= 10) {
+      for (let i = 1; i <= totalPage; i++) {
+        pageArr.push(i);
+      }
+    } else if (page < 6) {
+      for (let i = 1; i <= 10; i++) {
+        pageArr.push(i);
+      }
+    } else if (page > totalPage - 5) {
+      for (let i = totalPage - 9; i <= totalPage; i++) {
+        pageArr.push(i);
+      }
+    } else {
+      for (let i = page - 5; i <= page + 4; i++) {
+        pageArr.push(i);
+      }
+    }
+    setPages(pageArr);
+  }, [page, totalPage]);
 
   const pageNumHandler = (pageNumber) => {
-    props.onPageChange(pageNumber)
+    props.onPageChange(pageNumber);
   };
 
   const pagePrevHandler = () => {
     let newPage = page - 1;
     if (newPage < 1) {
-      return
+      return;
     }
-    props.onPageChange(newPage)
+    props.onPageChange(newPage);
   };
 
   const pageNextHandler = () => {
     let newPage = page + 1;
     if (newPage > totalPage) {
-      return
+      return;
     }
-    props.onPageChange(newPage)
+    props.onPageChange(newPage);
   };
-
-  // useEffect(() => {
-  //   props.onPageChange(page);
-  // }, [page]);
 
   return (
     <Fragment>
       <Pagination variant="secondary">
-        {(page - 4 >= 0) && <Pagination.First onClick={() => pageNumHandler(1)} />}
+        {page - 4 >= 0 && (
+          <Pagination.First onClick={() => pageNumHandler(1)} />
+        )}
         <Pagination.Prev onClick={pagePrevHandler} />
-        {(page - 2 > 0) && <Pagination.Item active={false} key={page - 2} onClick={() => pageNumHandler(page - 2)}>{page - 2}</Pagination.Item>}
-        {(page - 1 > 0) && <Pagination.Item active={false} key={page - 1} onClick={() => pageNumHandler(page - 1)}>{page - 1}</Pagination.Item>}
-        <Pagination.Item active={true} key={page}>{page}</Pagination.Item>
-        {(page + 1 <= totalPage) && <Pagination.Item active={false} key={page + 1} onClick={() => pageNumHandler(page + 1)}>{page + 1}</Pagination.Item>}
-        {(page + 2 <= totalPage) && <Pagination.Item active={false} key={page + 2} onClick={() => pageNumHandler(page + 2)}>{page + 2}</Pagination.Item>}
+        {pages.map((pageNum) => (
+          <Pagination.Item
+            active={pageNum === page}
+            key={pageNum}
+            onClick={() => pageNumHandler(pageNum)}
+          >
+            {pageNum}
+          </Pagination.Item>
+        ))}
         <Pagination.Next onClick={pageNextHandler} />
-        {(page + 2 < totalPage) && <Pagination.Last onClick={() => pageNumHandler(totalPage)} />}
+        {page + 4 < totalPage && (
+          <Pagination.Last onClick={() => pageNumHandler(totalPage)} />
+        )}
       </Pagination>
     </Fragment>
   );
 };
+
 export default PaginationUI;

@@ -8,6 +8,7 @@ const styles = {
 };
 
 const SearchFilter = (props) => {
+  console.log(props, "propsSearch");
   let clinicNameRef = useRef(null);
 
   // console.log(filterClinicList,"filterClinicList",district)
@@ -15,7 +16,7 @@ const SearchFilter = (props) => {
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [districts, setDistricts] = useState([]);
-  
+
   useEffect(() => {
     if (selectedCity) {
       setDistricts(Object.keys(jsonData[selectedCity]));
@@ -24,22 +25,27 @@ const SearchFilter = (props) => {
     }
   }, [selectedCity]);
   const clinicStatusHandler = (e) => {
-    let value = e.target.value
-    props.onStatusChange(value)
-  }
+    let value = e.target.value;
+    props.onStatusChange(value);
+  };
   const searchTextHandler = () => {
     let value = clinicNameRef.current.value || "";
-    props.onSearchText(value)
+    props.onSearchText(value);
   };
   const cityChangeHandler = (e) => {
     let value = e.target.value;
     setSelectedCity(value);
-    props.onCityChange(value)
+    props.onCityChange(value);
   };
   const districtChangeHandler = (e) => {
     let value = e.target.value;
     setSelectedDistrict(value);
-    props.onDistrictChange(value)
+    props.onDistrictChange(value);
+  };
+  const resetHandler = () => {
+    // setSelectedCity("")
+    // setSelectedDistrict("")
+    // setDistricts("")
   };
 
   return (
@@ -93,6 +99,7 @@ const SearchFilter = (props) => {
           <FontAwesomeIcon
             className="fs-4 text-danger"
             icon="fas fa-times-circle"
+            onClick={resetHandler}
           />
         </div>
         <InputGroup className="" size="sm">

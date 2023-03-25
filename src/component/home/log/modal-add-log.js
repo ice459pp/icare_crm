@@ -50,16 +50,24 @@ const statusArr = [
     id: 3,
     text: "結案",
   },
+  {
+    id: 4,
+    text: "成交",
+  },
+  {
+    id: 5,
+    text: "棄用",
+  },
 ];
 const ModalAddLog = (props) => {
   let { action, clinic_id, log } = props;
   const appSlice = useSelector((state) => state.appSlice);
 
   const currentDateTime = () => {
-    var tzoffset = (new Date()).getTimezoneOffset() * 60000
-    return (new Date(Date.now() - tzoffset)).toISOString().slice(0, -8)
-  }
-  
+    var tzoffset = new Date().getTimezoneOffset() * 60000;
+    return new Date(Date.now() - tzoffset).toISOString().slice(0, -8);
+  };
+
   // console.log(item, "in ModalAddLog", action, "action");
   const style = {
     height: `300px`,
@@ -77,12 +85,14 @@ const ModalAddLog = (props) => {
   const [description, setDiscription] = useState(log ? log.content : "");
 
   const [visitDate, setVisitDate] = useState(
-    log ? log.visit_datetime.replaceAll('/', '-').replace(' ', 'T') : currentDateTime()
+    log
+      ? log.visit_datetime.replaceAll("/", "-").replace(" ", "T")
+      : currentDateTime()
   );
 
   useEffect(() => {
-    console.log(log)
-  }, [])
+    console.log(log);
+  }, []);
 
   const statusChangeHandler = (event) => {
     const value = event.target.value;
@@ -214,21 +224,26 @@ const ModalAddLog = (props) => {
             </div>
           </div>
           {errorText && <ErrorText text={errorText} />}
-          <div>
-            <Button
-              variant="success"
-              className="text-white w-25"
-              onClick={createLogHandler}
-            >
-              送出
-            </Button>
-            <Button variant="secondary" onClick={closeModalHandler}>
-              取消
-            </Button>
-          </div>
         </Fragment>
       </Modal.Body>
-      <Modal.Footer></Modal.Footer>
+      <Modal.Footer>
+        <div className="footer-button">
+          <Button
+            variant="success"
+            className="text-white confirm "
+            onClick={createLogHandler}
+          >
+            送出
+          </Button>
+          <Button
+            className="cancel "
+            variant="secondary"
+            onClick={closeModalHandler}
+          >
+            取消
+          </Button>
+        </div>
+      </Modal.Footer>
     </Modal>
   );
 };

@@ -72,7 +72,7 @@ function App() {
           <Navbar showMenu={(e) => menuHandler()}></Navbar>
         </div>
 
-        <div className="bg-light h-100 d-flex flex-wrap  RouterWidth">
+        <div className="bg-light h-100 flex-wrap  RouterWidth">
           <Switch>
             <Route exact path="/login" component={UserLogin}></Route>
             <Route exact path="/" component={Home}></Route>

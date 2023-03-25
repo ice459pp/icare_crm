@@ -12,6 +12,9 @@
   }
   .modal-body {
     font-size: medium;
+    @media (max-width: 576px) {
+      padding: 0 0.75rem;
+    }
     .modal-body-head {
       justify-content: center;
       align-items: center;
@@ -55,9 +58,58 @@
     }
   }
   .modal-footer {
+    @media (max-width: 996px) {
+      padding: 0.25rem;
+    }
     .btn {
       @media (max-width: 576px) {
         font-size: 0.75rem;
+      }
+    }
+    .footer-button {
+      display: flex;
+      justify-content: flex-end;
+      width: 50%;
+      @media (max-width: 996px) {
+        width: 100%;
+      }
+      button {
+        &.confirm {
+          width: 75%;
+          margin: 0 0.25rem 0 0;
+          @media (max-width: 996px) {
+            width: 100%;
+          }
+        }
+        &.cancel {
+          margin: 0 0 0 0.25rem;
+          @media (max-width: 996px) {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+.footer-button {
+  display: flex;
+  justify-content: flex-end;
+  width: 50%;
+  @media (max-width: 996px) {
+    width: 100%;
+  }
+  button {
+    &.confirm {
+      width: 50%;
+      margin: 0 0.25rem 0 0;
+      @media (max-width: 996px) {
+        width: 100%;
+      }
+    }
+    &.cancel {
+      margin: 0 0 0 0.25rem;
+      @media (max-width: 996px) {
+        width: 100%;
       }
     }
   }

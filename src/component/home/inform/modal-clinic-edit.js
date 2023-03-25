@@ -3,6 +3,8 @@ import { InputGroup, Form, Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { apiClinicUpdate } from "../../../api/api-clinic-edit";
 import appSlice from "../../../store/app-slice";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import InputCheckText from "./input-check-text";
 // call_number_way: "線上叫號";
 // care_group: "";
@@ -87,6 +89,7 @@ const ClinicEditModal = (props) => {
 
   const careNetworkCreate = () => {
     let arr = Array.from(careNetwork);
+    console.log(arr,"arrrrrr",careNetwork,"careNetwork")
     arr.push({ text: "", id: `k${Date.now()}` });
     setCareNetwork(arr);
   };
@@ -466,13 +469,20 @@ const ClinicEditModal = (props) => {
           </div>
         </section>
         <section className="pt-2  inform-care-network">
-          <label className="form-label">照護網項目:</label>
+          <label className="form-label d-flex align-items-center">
+            照護網項目:
+            <FontAwesomeIcon
+              onClick={careNetworkCreate}
+              className="px-2 fs-4"
+              icon="fa-solid fa-circle-plus"
+            />
+          </label>
           <div className="d-flex align-items-center flex-wrap">
-            <div className="form-check py-2  pe-5">
+            {/* <div className="form-check py-2  pe-5">
               <Button variant="secondary" onClick={careNetworkCreate}>
                 新增
               </Button>
-            </div>
+            </div> */}
             <div className="form-check CareNetwork">
               {careNetwork.map((item) => (
                 <InputCheckText
@@ -485,16 +495,22 @@ const ClinicEditModal = (props) => {
             </div>
           </div>
         </section>
-        <Button
-          variant="success"
-          className="text-white w-25"
-          onClick={apiUpdateHandler}
-        >
-          送出
-        </Button>
-        <Button variant="secondary" onClick={props.onClose}>
-          取消
-        </Button>
+        <div className="footer-button mt-2 w-100">
+          <Button
+            variant="success"
+            className="text-white confirm"
+            onClick={apiUpdateHandler}
+          >
+            送出
+          </Button>
+          <Button
+            variant="secondary"
+            className="cancel"
+            onClick={props.onClose}
+          >
+            取消
+          </Button>
+        </div>
       </div>
     </Fragment>
   );

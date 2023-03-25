@@ -427,6 +427,7 @@ textarea {
           padding-left: 1rem;
           display: flex;
           align-items: center;
+          flex-wrap: wrap;
           @media (max-width: 996px) {
             padding: 0;
           }

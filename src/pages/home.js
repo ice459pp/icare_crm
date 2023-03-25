@@ -12,7 +12,8 @@ import { appAction } from "../store/app-slice";
 
 const Home = () => {
   const appSlice = useSelector((state) => state.appSlice);
-  const dispatch = useDispatch()
+  // get token
+  const dispatch = useDispatch();
   const navigate = useHistory();
 
   const [clinicList, setClinicList] = useState([]);
@@ -55,8 +56,8 @@ const Home = () => {
   };
 
   const logoutHandler = () => {
-    dispatch(appAction.logout())
-  }
+    dispatch(appAction.logout());
+  };
 
   // this is for login status
   useEffect(() => {
@@ -73,8 +74,8 @@ const Home = () => {
         dateSort,
         filterStatus,
         (err) => {
-          alert(err)
-          logoutHandler()
+          alert(err);
+          logoutHandler();
         },
         (list, total, totalPage) => {
           setTotalCount(total);
@@ -142,10 +143,10 @@ const Home = () => {
       </div>
       <div className="d-flex justify-content-center w-100">
         <Pagination
-              page={page}
-              totalPage={totalPage}
-              onPageChange={pageChangeHandler}
-            ></Pagination>
+          page={page}
+          totalPage={totalPage}
+          onPageChange={pageChangeHandler}
+        ></Pagination>
       </div>
     </Fragment>
   );
