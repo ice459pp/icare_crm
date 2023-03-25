@@ -12,7 +12,7 @@ import PhoneIcon from "../icon/Phone_icon";
 import Modal_AddLog from "./log/modal-add-log";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import PaginationUI from "./pagination";
+import Pagination from "./Pagination";
 import { apiClinicInfo } from "../../api/api-clinic-info";
 import { useSelector } from "react-redux";
 import ModalAddLog from "./log/modal-add-log";
@@ -305,11 +305,11 @@ const ClinicDetail = () => {
             </InputGroup>
           </div>
           <div className="d-flex justify-content-center mt-4">
-            <PaginationUI
+            <Pagination
               page={page}
               totalPage={totalPage}
               onPageChange={pageChangeHandler}
-            ></PaginationUI>
+            ></Pagination>
           </div>
           {listData.map((item) => (
             <ClinicDetailLog
@@ -320,11 +320,11 @@ const ClinicDetail = () => {
             ></ClinicDetailLog>
           ))}
           <div className="d-flex justify-content-center mt-4">
-            <PaginationUI
+            <Pagination
               page={page}
               totalPage={totalPage}
               onPageChange={pageChangeHandler}
-            ></PaginationUI>
+            ></Pagination>
           </div>
         </div>
       </div>

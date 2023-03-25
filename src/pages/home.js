@@ -6,7 +6,7 @@ import "../scss/home.scss";
 import { Button } from "react-bootstrap";
 import SearchFilter from "../component/home/search-filter";
 import ClinicListItem from "../component/home/clinic-list-item";
-import PaginationUI from "../component/home/pagination";
+import Pagination from "../component/home/Pagination";
 import { apiClinicList } from "../api/api-clinic-list";
 import { appAction } from "../store/app-slice";
 
@@ -141,11 +141,11 @@ const Home = () => {
         </table>
       </div>
       <div className="d-flex justify-content-center w-100">
-        <PaginationUI
+        <Pagination
               page={page}
               totalPage={totalPage}
               onPageChange={pageChangeHandler}
-            ></PaginationUI>
+            ></Pagination>
       </div>
     </Fragment>
   );
