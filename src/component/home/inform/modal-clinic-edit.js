@@ -89,7 +89,6 @@ const ClinicEditModal = (props) => {
 
   const careNetworkCreate = () => {
     let arr = Array.from(careNetwork);
-    console.log(arr,"arrrrrr",careNetwork,"careNetwork")
     arr.push({ text: "", id: `k${Date.now()}` });
     setCareNetwork(arr);
   };

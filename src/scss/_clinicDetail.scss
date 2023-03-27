@@ -13,6 +13,13 @@
       }
     }
   }
+  .filter-reset-icon {
+    color: #ee6991;
+    cursor: pointer;
+    &:hover {
+      color: #ff004c;
+    }
+  }
   .widthRWD {
     width: 50%;
 
@@ -21,7 +28,7 @@
     }
   }
 
-  .input-group-sm {
+  .input-group-textSearch {
     width: 50%;
 
     @media (max-width: 996px) {
