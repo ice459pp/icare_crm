@@ -22,6 +22,13 @@ import InputCheckText from "./input-check-text";
 // people: 3;
 // phone: "0921231434";
 // road: "瑞光路4段18號5-5";
+const careNetworkArr = [
+  "BC肝",
+  "氣喘",
+  "糖尿病",
+  "慢性腎臟病",
+  "慢性阻塞性肺病",
+];
 const optionTrim = (option) => {
   let newOption = option.trim();
   return newOption;
@@ -45,7 +52,8 @@ const ClinicEditModal = (props) => {
   //   phone,
   //   road,
   // } = item;
-
+let networkRef=useRef()
+// console.log(networkRef.current.value,"aaaaaa")
   const appSlice = useSelector((state) => state.appSlice);
 
   const [name, setName] = useState(item.name);
@@ -60,53 +68,68 @@ const ClinicEditModal = (props) => {
   const [callNumberWay, setCallNumberWay] = useState(item.call_number_way);
   const [careGroup, setCareGroup] = useState(item.care_group);
   const [clinicStatus, setClinicStatus] = useState(item.clinic_status);
-  const [careNetwork, setCareNetwork] = useState(
-    item.care_network === ""
-      ? []
-      : item.care_network.split("$").map((item, index) => {
-          return { text: item, id: index };
-        })
-  );
+  const [TRY, setTRY] = useState([]);
+
+  // const [careNetwork, setCareNetwork] = useState(
+  //   // item.care_network === ""
+  //   //   ? []
+  //   //   : item.care_network.split("$").map((item, index) => {
+  //   //       return { text: item, id: index };
+  //   //     })
+  //   careNetworkArr
+  // );
   const [isDecided, setIsDecided] = useState(item.isDecided);
   const [isUseVideo, setIsUseVideo] = useState(item.isUse_video);
   const [visitDatetime, setVisitDatetime] = useState(item.isVisit_datetime);
 
   const [apiUpdate, setApiUpdate] = useState(false);
   const [isOtherHis, setisOtherHis] = useState(false);
-
+// console.log("careNetwork",careNetwork)
   const careNetworkHandler = (data) => {
-    let preString = data.previous;
-    let nowString = data.now.replace("$", "");
-    let arr = Array.from(careNetwork);
-    let find = arr.find((item) => item.text == preString);
-    find.text = nowString;
-    setCareNetwork(arr);
+    console.log("careNetwork",data,"addd")
+    let arr=[]
+    arr=[...TRY,data]
+    setTRY(arr)
+    // let preString = data.previous;
+    // let nowString = data.now.replace("$", "");
+    // let arr = Array.from(careNetwork);
+    // let find = arr.find((item) => item.text === preString);
+    // find.text = nowString;
+    // setCareNetwork(arr);
   };
 
   const careNetwrokRemove = (value) => {
-    let c = careNetwork.filter((item) => item.text !== value);
-    setCareNetwork(c);
+    console.log(value,"remove")
+    let c = TRY.filter((item) => item!== value);
+    setTRY(c)
+    // setCareNetwork(c);
   };
-
-  const careNetworkCreate = () => {
-    let arr = Array.from(careNetwork);
-    arr.push({ text: "", id: `k${Date.now()}` });
-    setCareNetwork(arr);
-  };
+console.log(TRY,"TRYTRY")
+  // const careNetworkCreate = () => {
+  //   let arr = Array.from(careNetwork);
+  //   arr.push({ text: "", id: `k${Date.now()}` });
+  //   setCareNetwork(arr);
+  // };
 
   useEffect(() => {
     if (apiUpdate) {
       const token = appSlice.userToken;
       var joinGroup = "";
-      const careNetworkCount = careNetwork.length;
-      careNetwork.forEach((item, index) => {
-        joinGroup += item.text;
+      if (networkRef.current.value) {
+        console.log("可可夜總會")
+        setTRY([...TRY,networkRef.current.value])
+      }
+      const careNetworkCount = TRY.length;
+      console.log(TRY,"TRY",networkRef.current.value)
+      TRY.forEach((item, index) => {
+        joinGroup += item;
         if (index + 1 < careNetworkCount) {
           joinGroup += "$";
         }
       });
+      // joinGroup=joinGroup+$`{networkRef.current.value}`
 
-      console.log(joinGroup);
+      console.log(joinGroup,"e04e04e040e40e40404040");
       apiClinicUpdate(
         token,
         id,
@@ -139,16 +162,16 @@ const ClinicEditModal = (props) => {
   };
   const setHisHandler = (value) => {
     if (value === "其他") {
-      setisOtherHis(true)
+      setisOtherHis(true);
     } else {
-      setisOtherHis(false)
+      setisOtherHis(false);
       setHis(value);
     }
   };
 
-  useEffect(() => {
-    console.log(careNetwork);
-  }, [careNetwork]);
+  // useEffect(() => {
+  //   console.log(careNetwork);
+  // }, [careNetwork]);
 
   return (
     <Fragment>
@@ -472,30 +495,29 @@ const ClinicEditModal = (props) => {
                   否
                 </label>
               </div>
-              
-                <div className=" input-group-sm ">
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="時間備註"
-                    defaultValue={visitDatetime}
-                    onChange={(e) => {
-                      setVisitDatetime(e.target.value);
-                    }}
-                  />
-                </div>
-              
+
+              <div className=" input-group-sm ">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="時間備註"
+                  defaultValue={visitDatetime}
+                  onChange={(e) => {
+                    setVisitDatetime(e.target.value);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </section>
         <section className="pt-2  inform-care-network">
           <label className="form-label d-flex align-items-center">
             照護網項目:
-            <FontAwesomeIcon
+            {/* <FontAwesomeIcon
               onClick={careNetworkCreate}
               className="px-2 fs-4"
               icon="fa-solid fa-circle-plus"
-            />
+            /> */}
           </label>
           <div className="d-flex align-items-center flex-wrap">
             {/* <div className="form-check py-2  pe-5">
@@ -504,14 +526,25 @@ const ClinicEditModal = (props) => {
               </Button>
             </div> */}
             <div className="form-check CareNetwork">
-              {careNetwork.map((item) => (
+              {careNetworkArr.map((item) => (
                 <InputCheckText
-                  key={item.id}
-                  text={item.text}
+                  key={item}
+                  text={item}
                   onChange={careNetworkHandler}
                   onRemove={careNetwrokRemove}
                 />
               ))}
+              <InputGroup size="sm" className="mx-2 my-2">
+                {/* <InputGroup.Text id="inputGroup-sizing-sm">
+                  Small
+                </InputGroup.Text> */}
+                <Form.Control
+                ref={networkRef}
+                  aria-label="Small"
+                  aria-describedby="inputGroup-sizing-sm"
+                  // onChange={(e)=>careNetworkHandler(e.target.value)}
+                />
+              </InputGroup>
             </div>
           </div>
         </section>
