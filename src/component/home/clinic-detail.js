@@ -50,7 +50,7 @@ const ClinicDetail = () => {
   const [logSearch, setLogSearch] = useState("");
 
   const pageChangeHandler = (value) => {
-    console.log(value)
+    console.log(value);
     setPage(value);
   };
 
@@ -82,12 +82,12 @@ const ClinicDetail = () => {
   const [clinicInfo, setClinicInfo] = useState(clinicData);
 
   const createLogClickHandler = () => {
-    setShowAddLogModal(true)
+    setShowAddLogModal(true);
   };
 
   const closeAddLogModalHandler = () => {
-    setLog(null)
-    setShowAddLogModal(false)
+    setLog(null);
+    setShowAddLogModal(false);
   };
 
   // for detail log editing
@@ -100,12 +100,12 @@ const ClinicDetail = () => {
         status={logStatus}} logId 
    */
 
-  const [log, setLog] = useState(null)
-  
+  const [log, setLog] = useState(null);
+
   const editLogClickHandler = (logItem) => {
-    setLog(logItem)
-    setShowAddLogModal(true)
-  }
+    setLog(logItem);
+    setShowAddLogModal(true);
+  };
 
   // this will be trigger when show log modal
   useEffect(() => {
@@ -181,18 +181,33 @@ const ClinicDetail = () => {
             <section className=" card">
               <div className="card-item">
                 <div className="card-item-title">HIS系統</div>
-                <div className="card-item-content">{clinicInfo.his}</div>
+                {/* <div className="card-item-content">{clinicInfo.his}</div> */}
+                <div
+                  className={`card-item-content ${
+                    clinicInfo.his ? "text-dark" : "text-danger"
+                  }`}
+                >
+                  {clinicInfo.his ? clinicInfo.his : "無"}
+                </div>
               </div>
               <div className="card-item">
                 <div className="card-item-title">有無視訊</div>
-                <div className="card-item-content text-success">
+                <div
+                  className={`card-item-content ${
+                    clinicInfo.isUse_video ? "text-success" : "text-danger"
+                  }`}
+                >
                   {clinicInfo.isUse_video ? "有" : "無"}
                 </div>
               </div>
               <div className="card-item">
                 <div className="card-item-title">診所狀態</div>
-                <div className="card-item-content text-danger">
-                  {clinicInfo.clinic_status}
+                <div
+                  className={`card-item-content ${
+                    clinicInfo.clinic_status ? "text-dark" : "text-danger"
+                  }`}
+                >
+                  {clinicInfo.clinic_status ? "有" : "無"}
                 </div>
               </div>
               <div className="card-item">
@@ -201,8 +216,12 @@ const ClinicDetail = () => {
               </div>
               <div className="card-item">
                 <div className="card-item-title">叫號方式</div>
-                <div className="card-item-content">
-                  {clinicInfo.call_number_way}
+                <div
+                  className={`card-item-content ${
+                    clinicInfo.call_number_way ? "text-dark" : "text-danger"
+                  }`}
+                >
+                  {clinicInfo.call_number_way ? "有" : "無"}
                 </div>
               </div>
             </section>
@@ -218,39 +237,50 @@ const ClinicDetail = () => {
                   </div>
                 ) : (
                   <div className="table-item-content">
-                    <span className="text-success p-0">無</span>
+                    <span className="text-danger p-0">無</span>
                   </div>
                 )}
               </div>
               <div className="table-item">
                 <div className="table-item-title">醫師能否作主:</div>
-                <div className="table-item-content text-danger">
+                <div
+                  className={`table-item-content ${
+                    clinicInfo.isDecided ? "text-success" : "text-danger"
+                  }`}
+                >
                   {clinicInfo.isDecided ? "能" : "不能"}
                 </div>
               </div>
               <div className="table-item">
                 <div className="table-item-title">醫療群:</div>
-                <div className="table-item-content text-danger">
+                <div
+                  className={`table-item-content ${
+                    clinicInfo.care_group ? "text-dark" : "text-danger"
+                  }`}
+                >
                   {clinicInfo.care_group ? `${clinicInfo.care_group}` : "無"}
                 </div>
               </div>
               <div className="table-item">
                 <div className="table-item-title">其他醫院執業:</div>
-                <div className="table-item-content text-danger">
+                <div
+                  className={`table-item-content ${
+                    clinicInfo.experience ? "text-dark" : "text-danger"
+                  }`}
+                >
                   {clinicInfo.experience ? `${clinicInfo.experience}` : "無"}
                 </div>
               </div>
               <div className="table-item">
                 <div className="table-item-title">有無加入照護網:</div>
-                <div className="table-item-content ">
+                <div
+                  className={`table-item-content ${
+                    clinicInfo.care_network ? "text-dark" : "text-danger"
+                  }`}
+                >
                   {!clinicInfo.care_network && `無`}
                   {clinicInfo.care_network && (
                     <Fragment>
-                      <div className="text-success p-0">
-                        {clinicInfo.care_network.split("$").length > 0
-                          ? "有"
-                          : "無"}
-                      </div>
                       {clinicInfo.care_network.split("$").map((item) => (
                         <div key={item} className="sick_btn">
                           {item}
@@ -355,25 +385,27 @@ const ClinicDetail = () => {
         </Button>{" "}
       </div>
       {/* 新增log */}
-      {(log === null && showAddLogModal) && <ModalAddLog
-        clinic_id={id}
-        action="add"
-        log={null}
-        showMoadl={showAddLogModal}
-        onClose={closeAddLogModalHandler}
-        onRefresh={refreshHandler}
-      />}
+      {log === null && showAddLogModal && (
+        <ModalAddLog
+          clinic_id={id}
+          action="add"
+          log={null}
+          showMoadl={showAddLogModal}
+          onClose={closeAddLogModalHandler}
+          onRefresh={refreshHandler}
+        />
+      )}
 
-      {(log && showAddLogModal) && 
-      <ModalAddLog
-      clinic_id={id}
-      action="edit"
-      log={log}
-      showMoadl={showAddLogModal}
-      onClose={closeAddLogModalHandler}
-      onRefresh={refreshHandler}
-    />}
-
+      {log && showAddLogModal && (
+        <ModalAddLog
+          clinic_id={id}
+          action="edit"
+          log={log}
+          showMoadl={showAddLogModal}
+          onClose={closeAddLogModalHandler}
+          onRefresh={refreshHandler}
+        />
+      )}
     </Fragment>
   );
 

@@ -35,6 +35,7 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
+  console.log(item, "item");
   // let {
   //   call_number_way,
   //   care_group,
@@ -52,8 +53,8 @@ const ClinicEditModal = (props) => {
   //   phone,
   //   road,
   // } = item;
-let networkRef=useRef()
-// console.log(networkRef.current.value,"aaaaaa")
+  let networkRef = useRef();
+  // console.log(networkRef.current.value,"aaaaaa")
   const appSlice = useSelector((state) => state.appSlice);
 
   const [name, setName] = useState(item.name);
@@ -84,12 +85,12 @@ let networkRef=useRef()
 
   const [apiUpdate, setApiUpdate] = useState(false);
   const [isOtherHis, setisOtherHis] = useState(false);
-// console.log("careNetwork",careNetwork)
+  // console.log("careNetwork",careNetwork)
   const careNetworkHandler = (data) => {
-    console.log("careNetwork",data,"addd")
-    let arr=[]
-    arr=[...TRY,data]
-    setTRY(arr)
+    console.log("careNetwork", data, "addd");
+    let arr = [];
+    arr = [...TRY, data];
+    setTRY(arr);
     // let preString = data.previous;
     // let nowString = data.now.replace("$", "");
     // let arr = Array.from(careNetwork);
@@ -99,12 +100,11 @@ let networkRef=useRef()
   };
 
   const careNetwrokRemove = (value) => {
-    console.log(value,"remove")
-    let c = TRY.filter((item) => item!== value);
-    setTRY(c)
+    console.log(value, "remove");
+    let c = TRY.filter((item) => item !== value);
+    setTRY(c);
     // setCareNetwork(c);
   };
-console.log(TRY,"TRYTRY")
   // const careNetworkCreate = () => {
   //   let arr = Array.from(careNetwork);
   //   arr.push({ text: "", id: `k${Date.now()}` });
@@ -115,21 +115,20 @@ console.log(TRY,"TRYTRY")
     if (apiUpdate) {
       const token = appSlice.userToken;
       var joinGroup = "";
-      if (networkRef.current.value) {
-        console.log("可可夜總會")
-        setTRY([...TRY,networkRef.current.value])
-      }
+
       const careNetworkCount = TRY.length;
-      console.log(TRY,"TRY",networkRef.current.value)
+      console.log(TRY, "TRY", networkRef.current.value);
       TRY.forEach((item, index) => {
         joinGroup += item;
         if (index + 1 < careNetworkCount) {
           joinGroup += "$";
         }
       });
-      // joinGroup=joinGroup+$`{networkRef.current.value}`
+      if (networkRef.current.value) {
+        joinGroup = joinGroup + `$${networkRef.current.value}`;
+      }
 
-      console.log(joinGroup,"e04e04e040e40e40404040");
+      console.log(joinGroup, "e04e04e040e40e40404040");
       apiClinicUpdate(
         token,
         id,
@@ -312,7 +311,7 @@ console.log(TRY,"TRYTRY")
                 type="email"
                 className="form-control"
                 id="callMode"
-                placeholder=""
+                placeholder="無"
                 defaultValue={callNumberWay}
                 onChange={(e) => {
                   setCallNumberWay(e.target.value);
@@ -442,7 +441,7 @@ console.log(TRY,"TRYTRY")
                 type="text"
                 className="form-control form-control-sm"
                 id="doctorGroup"
-                placeholder=""
+                placeholder="無"
                 defaultValue={careGroup}
                 onChange={(e) => {
                   setCareGroup(e.target.value);
@@ -455,7 +454,10 @@ console.log(TRY,"TRYTRY")
           <div className="w-100 d-flex inform-radio1">
             <div className="w-100 pe-4  ">
               <label className="form-label">
-                最新拜訪狀態: <span className="px-3">{clinicStatus}</span>
+                最新拜訪狀態:{" "}
+                <span className="px-3">
+                  {clinicStatus ? clinicStatus : "無"}
+                </span>
               </label>
             </div>
           </div>
@@ -539,7 +541,7 @@ console.log(TRY,"TRYTRY")
                   Small
                 </InputGroup.Text> */}
                 <Form.Control
-                ref={networkRef}
+                  ref={networkRef}
                   aria-label="Small"
                   aria-describedby="inputGroup-sizing-sm"
                   // onChange={(e)=>careNetworkHandler(e.target.value)}
