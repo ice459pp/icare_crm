@@ -72,6 +72,7 @@ const ClinicEditModal = (props) => {
   const [visitDatetime, setVisitDatetime] = useState(item.isVisit_datetime);
 
   const [apiUpdate, setApiUpdate] = useState(false);
+  const [isOtherHis, setisOtherHis] = useState(false);
 
   const careNetworkHandler = (data) => {
     let preString = data.previous;
@@ -133,9 +134,16 @@ const ClinicEditModal = (props) => {
       );
     }
   }, [apiUpdate]);
-
   const apiUpdateHandler = () => {
     setApiUpdate(true);
+  };
+  const setHisHandler = (value) => {
+    if (value === "其他") {
+      setisOtherHis(true)
+    } else {
+      setisOtherHis(false)
+      setHis(value);
+    }
   };
 
   useEffect(() => {
@@ -251,7 +259,7 @@ const ClinicEditModal = (props) => {
                 aria-label="Default select example"
                 defaultValue={his}
                 onChange={(e) => {
-                  setHis(e.target.value);
+                  setHisHandler(e.target.value);
                 }}
               >
                 <option value="">無使用</option>
@@ -259,6 +267,19 @@ const ClinicEditModal = (props) => {
                 <option value="耀聖">耀聖</option>
                 <option value="其他">其他</option>
               </select>
+              {isOtherHis && (
+                <input
+                  type="text"
+                  className="form-control mt-2"
+                  id="otherHis"
+                  // size={"sm"}
+                  placeholder="必填(His)"
+                  defaultValue={""}
+                  onChange={(e) => {
+                    setHis(e.target.value);
+                  }}
+                />
+              )}
             </div>
             <div className="w-100 ">
               <label htmlFor="callMode" className="form-label">
@@ -451,19 +472,19 @@ const ClinicEditModal = (props) => {
                   否
                 </label>
               </div>
-              {visitDatetime && (
+              
                 <div className=" input-group-sm ">
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="時間"
+                    placeholder="時間備註"
                     defaultValue={visitDatetime}
                     onChange={(e) => {
                       setVisitDatetime(e.target.value);
                     }}
                   />
                 </div>
-              )}
+              
             </div>
           </div>
         </section>
