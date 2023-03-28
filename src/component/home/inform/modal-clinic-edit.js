@@ -36,6 +36,13 @@ const optionTrim = (option) => {
 const ClinicEditModal = (props) => {
   let { item } = props;
   console.log(item, "item");
+  let { care_network } = item;
+  let care_network_select = [];
+  if (care_network) {
+    care_network_select = care_network.split("$");
+    console.log(care_network_select, "arrraytetyi");
+  }
+
   // let {
   //   call_number_way,
   //   care_group,
@@ -71,14 +78,10 @@ const ClinicEditModal = (props) => {
   const [clinicStatus, setClinicStatus] = useState(item.clinic_status);
   const [TRY, setTRY] = useState([]);
 
-  // const [careNetwork, setCareNetwork] = useState(
-  //   // item.care_network === ""
-  //   //   ? []
-  //   //   : item.care_network.split("$").map((item, index) => {
-  //   //       return { text: item, id: index };
-  //   //     })
-  //   careNetworkArr
-  // );
+  const [careNetwork, setCareNetwork] = useState(
+    item.care_network === "" ? [] : item.care_network.split("$")
+    // careNetworkArr
+  );
   const [isDecided, setIsDecided] = useState(item.isDecided);
   const [isUseVideo, setIsUseVideo] = useState(item.isUse_video);
   const [visitDatetime, setVisitDatetime] = useState(item.isVisit_datetime);
@@ -100,35 +103,44 @@ const ClinicEditModal = (props) => {
   };
 
   const careNetwrokRemove = (value) => {
-    console.log(value, "remove");
-    let c = TRY.filter((item) => item !== value);
-    setTRY(c);
-    // setCareNetwork(c);
+    // console.log(value, "remove");
+    let c = careNetwork.filter((item) => item !== value);
+    // setTRY(c);
+    setCareNetwork(c);
   };
   // const careNetworkCreate = () => {
   //   let arr = Array.from(careNetwork);
   //   arr.push({ text: "", id: `k${Date.now()}` });
   //   setCareNetwork(arr);
   // };
+  const addCare_network = (item) => {
+    if (!item) {
+      item = "";
+      // setCareNetwork([...careNetwork, item]);
+      // return
+    }
+    let isRepeat = careNetwork.includes(item);
+    if (!isRepeat) {
+      setCareNetwork([...careNetwork, item]);
+    }
+  };
 
   useEffect(() => {
     if (apiUpdate) {
       const token = appSlice.userToken;
       var joinGroup = "";
 
-      const careNetworkCount = TRY.length;
-      console.log(TRY, "TRY", networkRef.current.value);
-      TRY.forEach((item, index) => {
+      const careNetworkCount = careNetwork.length;
+      // console.log(TRY, "TRY", networkRef.current.value);
+      careNetwork.forEach((item, index) => {
         joinGroup += item;
         if (index + 1 < careNetworkCount) {
           joinGroup += "$";
         }
       });
-      if (networkRef.current.value) {
-        joinGroup = joinGroup + `$${networkRef.current.value}`;
-      }
-
-      console.log(joinGroup, "e04e04e040e40e40404040");
+      // if (networkRef.current.value) {
+      //   joinGroup = joinGroup + `$${networkRef.current.value}`;
+      // }
       apiClinicUpdate(
         token,
         id,
@@ -522,13 +534,33 @@ const ClinicEditModal = (props) => {
             /> */}
           </label>
           <div className="d-flex align-items-center flex-wrap">
-            {/* <div className="form-check py-2  pe-5">
-              <Button variant="secondary" onClick={careNetworkCreate}>
-                新增
+            <div className="form-check py-2  pe-5">
+              <Button
+                className="me-2"
+                size="sm"
+                variant="secondary"
+                onClick={() => addCare_network()}
+              >
+                備註
               </Button>
-            </div> */}
+              {careNetworkArr.map((item, index) => (
+                <Button
+                  className="mx-2 "
+                  size="sm"
+                  key={index}
+                  // variant={
+                  //   selectedCareNetworks.includes(item)
+                  //     ? "primary"
+                  //     : "outline-primary"
+                  // }
+                  onClick={() => addCare_network(item)}
+                >
+                  {item}
+                </Button>
+              ))}
+            </div>
             <div className="form-check CareNetwork">
-              {careNetworkArr.map((item) => (
+              {careNetwork.map((item) => (
                 <InputCheckText
                   key={item}
                   text={item}
@@ -536,17 +568,17 @@ const ClinicEditModal = (props) => {
                   onRemove={careNetwrokRemove}
                 />
               ))}
-              <InputGroup size="sm" className="mx-2 my-2">
-                {/* <InputGroup.Text id="inputGroup-sizing-sm">
+              {/* <InputGroup size="sm" className="mx-2 my-2">
+                <InputGroup.Text id="inputGroup-sizing-sm">
                   Small
-                </InputGroup.Text> */}
+                </InputGroup.Text>
                 <Form.Control
                   ref={networkRef}
                   aria-label="Small"
                   aria-describedby="inputGroup-sizing-sm"
-                  // onChange={(e)=>careNetworkHandler(e.target.value)}
+                  onChange={(e)=>careNetworkHandler(e.target.value)}
                 />
-              </InputGroup>
+              </InputGroup> */}
             </div>
           </div>
         </section>
