@@ -74,11 +74,33 @@ function App() {
 
         <div className="bg-light h-100 flex-wrap  RouterWidth">
           <Switch>
-            <Route exact path="/login" component={UserLogin}></Route>
-            <Route exact path="/" component={Home}></Route>
-            <Route path="/clinic/:id" component={ClinicDetail} />
-            <Route path="/approved" component={Approved} />
-            <Route path="/approved/:id" component={Approved} />
+            <Route
+              exact
+              path="/login"
+              onEnter={() => window.scrollTo(0, 0)}
+              component={UserLogin}
+            ></Route>
+            <Route
+              exact
+              path="/"
+              onEnter={() => window.scrollTo(0, 0)}
+              component={Home}
+            ></Route>
+            <Route
+              path="/clinic/:id"
+              onEnter={() => window.scrollTo(0, 0)}
+              component={ClinicDetail}
+            />
+            <Route
+              path="/approved"
+              onEnter={() => window.scrollTo(0, 0)}
+              component={Approved}
+            />
+            <Route
+              path="/approved/:id"
+              onEnter={() => window.scrollTo(0, 0)}
+              component={Approved}
+            />
             {/* 核可 */}
             {/* 核可細節 */}
             {/* 搜尋細節 */}

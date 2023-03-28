@@ -207,7 +207,7 @@ const ClinicDetail = () => {
                     clinicInfo.clinic_status ? "text-dark" : "text-danger"
                   }`}
                 >
-                  {clinicInfo.clinic_status ? "有" : "無"}
+                  {clinicInfo.clinic_status ? clinicInfo.clinic_status : "無"}
                 </div>
               </div>
               <div className="card-item">
@@ -221,7 +221,9 @@ const ClinicDetail = () => {
                     clinicInfo.call_number_way ? "text-dark" : "text-danger"
                   }`}
                 >
-                  {clinicInfo.call_number_way ? "有" : "無"}
+                  {clinicInfo.call_number_way
+                    ? clinicInfo.call_number_way
+                    : "無"}
                 </div>
               </div>
             </section>

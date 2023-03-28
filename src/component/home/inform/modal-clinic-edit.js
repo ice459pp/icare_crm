@@ -35,13 +35,13 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
-  console.log(item, "item");
-  let { care_network } = item;
-  let care_network_select = [];
-  if (care_network) {
-    care_network_select = care_network.split("$");
-    console.log(care_network_select, "arrraytetyi");
-  }
+  // console.log(item, "item");
+  // let { care_network } = item;
+  // let care_network_select = [];
+  // if (care_network) {
+  //   care_network_select = care_network.split("$");
+  //   console.log(care_network_select, "arrraytetyi");
+  // }
 
   // let {
   //   call_number_way,
@@ -76,7 +76,6 @@ const ClinicEditModal = (props) => {
   const [callNumberWay, setCallNumberWay] = useState(item.call_number_way);
   const [careGroup, setCareGroup] = useState(item.care_group);
   const [clinicStatus, setClinicStatus] = useState(item.clinic_status);
-  const [TRY, setTRY] = useState([]);
 
   const [careNetwork, setCareNetwork] = useState(
     item.care_network === "" ? [] : item.care_network.split("$")
@@ -90,34 +89,24 @@ const ClinicEditModal = (props) => {
   const [isOtherHis, setisOtherHis] = useState(false);
   // console.log("careNetwork",careNetwork)
   const careNetworkHandler = (data) => {
-    console.log("careNetwork", data, "addd");
-    let arr = [];
-    arr = [...TRY, data];
-    setTRY(arr);
-    // let preString = data.previous;
-    // let nowString = data.now.replace("$", "");
-    // let arr = Array.from(careNetwork);
-    // let find = arr.find((item) => item.text === preString);
-    // find.text = nowString;
-    // setCareNetwork(arr);
+    let preString = data.previous;
+    let nowString = data.now.replace("$", "");
+    let arr = Array.from(careNetwork);
+
+    arr = arr.map((value) =>
+      value === preString ? nowString : value
+    );
+    setCareNetwork(arr);
   };
 
   const careNetwrokRemove = (value) => {
-    // console.log(value, "remove");
     let c = careNetwork.filter((item) => item !== value);
-    // setTRY(c);
+
     setCareNetwork(c);
   };
-  // const careNetworkCreate = () => {
-  //   let arr = Array.from(careNetwork);
-  //   arr.push({ text: "", id: `k${Date.now()}` });
-  //   setCareNetwork(arr);
-  // };
   const addCare_network = (item) => {
     if (!item) {
       item = "";
-      // setCareNetwork([...careNetwork, item]);
-      // return
     }
     let isRepeat = careNetwork.includes(item);
     if (!isRepeat) {
@@ -131,6 +120,7 @@ const ClinicEditModal = (props) => {
       var joinGroup = "";
 
       const careNetworkCount = careNetwork.length;
+      console.log(careNetwork, "careNetworkcareNetwork");
       // console.log(TRY, "TRY", networkRef.current.value);
       careNetwork.forEach((item, index) => {
         joinGroup += item;
@@ -138,9 +128,6 @@ const ClinicEditModal = (props) => {
           joinGroup += "$";
         }
       });
-      // if (networkRef.current.value) {
-      //   joinGroup = joinGroup + `$${networkRef.current.value}`;
-      // }
       apiClinicUpdate(
         token,
         id,
@@ -180,9 +167,9 @@ const ClinicEditModal = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   console.log(careNetwork);
-  // }, [careNetwork]);
+  useEffect(() => {
+    console.log(careNetwork);
+  }, [careNetwork]);
 
   return (
     <Fragment>
