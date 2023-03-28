@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../scss/home.scss";
-import { Button } from "react-bootstrap";
+import { Button, Dropdown } from "react-bootstrap";
 import SearchFilter from "../component/home/search-filter";
 import ClinicListItem from "../component/home/clinic-list-item";
 import Pagination from "../component/home/Pagination";
 import { apiClinicList } from "../api/api-clinic-list";
 import { appAction } from "../store/app-slice";
+import { filterAction } from "../store/filter-slice";
 
 const Home = () => {
   const appSlice = useSelector((state) => state.appSlice);
@@ -26,37 +27,61 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
+  const [permutations, setPermutations] = useState(
+    "Dnew"
+    // sessionStorage.getItem("permutations") ? "Dnew" : "Dnew"
+  );
 
   const statusChangeHandler = (value) => {
+    dispatch(filterAction.onClinicStatus(value));
     setFilterStatus(value);
   };
 
   const cityChangeHangle = (value) => {
+    dispatch(filterAction.onCity(value));
+
     setFilterCity(value);
     if (!value) {
+      dispatch(filterAction.onCity(""));
+
       setFilterDictrict("");
     }
   };
 
   const districtChangeHandler = (value) => {
+    dispatch(filterAction.onDistrict(value));
     setFilterDictrict(value);
   };
 
   const searchTextHandler = (value) => {
+    dispatch(filterAction.onsearchText(value));
+
     setSearchText(value);
   };
 
-  const dateSortHandler = () => {
-    const sort = !dateSort;
-    setDateSort(sort);
-  };
+  // const dateSortHandler = () => {
+  //   const sort = !dateSort;
+  //   setDateSort(sort);
+  // };
 
   const pageChangeHandler = (value) => {
+    // console.log(value, "vaaaaa");
+    dispatch(filterAction.onPage(value));
     setPage(value);
   };
 
   const logoutHandler = () => {
     dispatch(appAction.logout());
+  };
+  const mutationHandler = (value) => {
+    if (!value) {
+      value="Dnew"
+    }
+    dispatch(filterAction.onPermutations(value));
+    setPermutations(value);
+  };
+  const departmentHandler = (value) => {
+    console.log(value);
   };
 
   // this is for login status
@@ -71,7 +96,7 @@ const Home = () => {
         filterCity,
         filterDistrict,
         searchText,
-        dateSort,
+        permutations,
         filterStatus,
         (err) => {
           alert(err);
@@ -92,7 +117,7 @@ const Home = () => {
     filterCity,
     filterDistrict,
     searchText,
-    dateSort,
+    permutations,
     filterStatus,
   ]);
 
@@ -104,6 +129,8 @@ const Home = () => {
           onCityChange={cityChangeHangle}
           onDistrictChange={districtChangeHandler}
           onSearchText={searchTextHandler}
+          onDepartmentChange={departmentHandler}
+          onMutationHandler={mutationHandler}
         />
       </div>
       <div className="w-100 padding-RWD mt-3">
@@ -112,14 +139,60 @@ const Home = () => {
           <div className="me-3 text-dark fw-bold">
             {`${page} / ${totalPage}`} 頁 ，共{totalCount}筆
           </div>
-          <Button variant="secondary" onClick={dateSortHandler} size="sm">
+          {/* <Button variant="secondary" onClick={dateSortHandler} size="sm">
             日期排序
             {dateSort ? (
               <FontAwesomeIcon className="ms-2" icon="fas fa-arrow-down" />
             ) : (
               <FontAwesomeIcon className="ms-2" icon="fas fa-arrow-up" />
             )}{" "}
-          </Button>{" "}
+          </Button>{" "} */}
+          <Dropdown>
+            <Dropdown.Toggle
+              size="sm"
+              variant="secondary"
+              className="text-white"
+              id="dropdown-basic"
+            >
+              <FontAwesomeIcon icon="fa-solid fa-arrow-up-short-wide" />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu className="text-center">
+              <Dropdown.Item
+                as="button"
+                className={permutations === "Dnew" ? "active" : ""}
+                onClick={() => mutationHandler("Dnew")}
+              >
+                日期排序
+                <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-down" />
+              </Dropdown.Item>
+              <Dropdown.Item
+                as="button"
+                className={permutations === "Dold" ? "active" : ""}
+                onClick={() => mutationHandler("Dold")}
+              >
+                日期排序
+                <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-up" />
+              </Dropdown.Item>
+
+              <Dropdown.Item
+                as="button"
+                className={permutations === "Asmall" ? "active" : ""}
+                onClick={() => mutationHandler("Asmall")}
+              >
+                地名排序
+                <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-down" />
+              </Dropdown.Item>
+              <Dropdown.Item
+                as="button"
+                className={permutations === "Abig" ? "active" : ""}
+                onClick={() => mutationHandler("Abig")}
+              >
+                地名排序
+                <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-up" />
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
         <table className="table table-striped table-hover table-bordered  border-dark table-rwd">
           <thead>

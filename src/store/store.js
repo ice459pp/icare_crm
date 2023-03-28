@@ -2,11 +2,12 @@ import {configureStore } from "@reduxjs/toolkit";
 // import { Value } from "sass";
 import log_writingSlice from "./log-writing-slice"
 import appSlice from "./app-slice"
-
+import filterSlice from "./filter-slice";
 const store=configureStore({
     reducer:{
         log_writingSlice:log_writingSlice,
-        appSlice: appSlice
+        appSlice: appSlice,
+        filterSlice:filterSlice
     }
 })
 

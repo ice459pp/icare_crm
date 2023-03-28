@@ -6,22 +6,36 @@ import {
   DropdownButton,
   Form,
   Button,
-  Modal
+  Modal,
 } from "react-bootstrap";
 // import TWzipcode from "react-twzipcode";
 import jsonData from "../../twzipcode.json";
+import { filterAction } from "../../store/filter-slice";
+import { useDispatch } from "react-redux";
+
 const styles = {
   borderRadius: `10px 0 0 10px`,
 };
 
 const SearchFilter = (props) => {
+  let dispatch = useDispatch();
   let clinicNameRef = useRef(null);
-  const [clinicStatus, setClinicStatus] = useState("");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [clinicStatus, setClinicStatus] = useState(
+    sessionStorage.getItem("clinic_status")
+  );
+  const [selectedCity, setSelectedCity] = useState(
+    sessionStorage.getItem("city")
+  );
+  const [selectedDistrict, setSelectedDistrict] = useState(
+    sessionStorage.getItem("district")
+  );
   const [districts, setDistricts] = useState([]);
   const [isSelect, setIsSelect] = useState(false);
-
+  useEffect(() => {
+    if (sessionStorage.length) {
+      setIsSelect(true);
+    }
+  }, [sessionStorage.length]);
   useEffect(() => {
     if (selectedCity) {
       setDistricts(Object.keys(jsonData[selectedCity]));
@@ -32,11 +46,16 @@ const SearchFilter = (props) => {
   const clinicStatusHandler = (e) => {
     let value = e.target.value;
     props.onStatusChange(value);
+    // dispatch(filterAction.onClinicStatus(value));
     setIsSelect(true);
   };
   const searchTextHandler = () => {
+    if (!clinicNameRef.current.value) {
+      return;
+    }
     let value = clinicNameRef.current.value || "";
     props.onSearchText(value);
+    // dispatch(filterAction.onsearchText(value));
     setIsSelect(true);
   };
   const cityChangeHandler = (e) => {
@@ -44,6 +63,7 @@ const SearchFilter = (props) => {
     let value = e.target.value;
     setSelectedCity(value);
     setIsSelect(true);
+    // dispatch(filterAction.onCity(value));
     props.onCityChange(value);
   };
   const districtChangeHandler = (e) => {
@@ -51,10 +71,13 @@ const SearchFilter = (props) => {
     let value = e.target.value;
     setSelectedDistrict(value);
     setIsSelect(true);
+    // dispatch(filterAction.onDistrict(value));
     props.onDistrictChange(value);
   };
   const resetHandler = () => {
     props.onStatusChange("");
+    setClinicStatus("");
+    props.onMutationHandler("")
     clinicNameRef.current.value = "";
     props.onSearchText("");
     setSelectedCity("");
@@ -62,7 +85,9 @@ const SearchFilter = (props) => {
     setSelectedDistrict("");
     props.onDistrictChange("");
     setIsSelect(false);
+    dispatch(filterAction.resetState());
   };
+
   return (
     <Fragment>
       <form className="p-3 search">
@@ -73,10 +98,18 @@ const SearchFilter = (props) => {
             className="widthRWD-40 "
             onChange={clinicStatusHandler}
           >
-            <option value="">全部</option>
-            <option value="可回訪">可回訪</option>
-            <option value="可電訪">可電訪</option>
-            <option value="結案">結案</option>
+            <option value="" selected={clinicStatus === ""}>
+              全部
+            </option>
+            <option value="可回訪" selected={clinicStatus === "可回訪"}>
+              可回訪
+            </option>
+            <option value="可電訪" selected={clinicStatus === "可電訪"}>
+              可電訪
+            </option>
+            <option value="結案" selected={clinicStatus === "結案"}>
+              結案
+            </option>
           </Form.Select>
         </div>
         <div className="d-flex align-items-center mb-2 search-clinicStatus">
@@ -126,6 +159,7 @@ const SearchFilter = (props) => {
             placeholder="搜尋地址、道路名稱、診所名稱"
             aria-label="Recipient's username"
             aria-describedby="basic-addon2"
+            defaultValue={sessionStorage.getItem("searchText")}
             ref={clinicNameRef}
           />
           <button
@@ -180,8 +214,9 @@ const SearchFilter = (props) => {
           >
             新增紀錄
           </Button>
-          <Button variant="secondary" 
-          // onClick={closeLogListModalHandler}
+          <Button
+            variant="secondary"
+            // onClick={closeLogListModalHandler}
           >
             取消
           </Button>
