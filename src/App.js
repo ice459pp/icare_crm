@@ -2,7 +2,7 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import Navbar from "./component/navbar";
 import Home from "./pages/home";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import ClinicDetail from "./component/home/clinic-detail";
 import Approved from "./pages/approved";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,7 +22,7 @@ function App() {
   const [height, setHeight] = useState(initHeight);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-
+// let useHistory()
   let headNavbarRef = useRef();
   const style = {
     height: `${height}px`,
@@ -31,6 +31,9 @@ function App() {
   const menuHandler = () => {
     setMenuIsShow(!menuIsShow);
   };
+  const goHome=()=>{
+
+  }
 
   useEffect(() => {
     const headNavbarRefDOM = headNavbarRef.current;
@@ -50,7 +53,7 @@ function App() {
         ref={headNavbarRef}
         className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
       >
-        <div className="h4 m-0">診所管理系統</div>
+        <div className="h4 m-0" onClick={goHome}>診所管理系統</div>
         {!menuIsShow && (
           <div onClick={menuHandler} className="m-0 menu">
             <FontAwesomeIcon icon="fas fa-bars" />

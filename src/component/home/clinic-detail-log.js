@@ -18,7 +18,6 @@ const ClinicDetailLog = (props) => {
 
   const [showModal, setShowModal] = useState(false);
   const handleModal = () => {
-    console.log(item, "itttemm");
     // 撈出redux LOG 資料的值，然後post給API 記得重製
 
     // TODOＡＰＩ　ＰＯＳＴ　ｅｄｉｔＬＯＧ

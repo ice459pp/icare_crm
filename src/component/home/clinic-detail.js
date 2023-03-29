@@ -336,13 +336,6 @@ const ClinicDetail = () => {
               )}
             </InputGroup>
           </div>
-          <div className="d-flex justify-content-center mt-4">
-            <Pagination
-              page={page}
-              totalPage={totalPage}
-              onPageChange={pageChangeHandler}
-            ></Pagination>
-          </div>
           {listData.map((item) => (
             <ClinicDetailLog
               key={item.id}
@@ -351,13 +344,15 @@ const ClinicDetail = () => {
               onLogClick={editLogClickHandler}
             ></ClinicDetailLog>
           ))}
-          <div className="d-flex justify-content-center mt-4">
-            <Pagination
-              page={page}
-              totalPage={totalPage}
-              onPageChange={pageChangeHandler}
-            ></Pagination>
-          </div>
+          {totalCount > 0 && (
+            <div className="d-flex justify-content-center mt-4">
+              <Pagination
+                page={page}
+                totalPage={totalPage}
+                onPageChange={pageChangeHandler}
+              ></Pagination>
+            </div>
+          )}
         </div>
       </div>
       {/* 編輯診所 */}
