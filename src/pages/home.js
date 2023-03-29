@@ -34,9 +34,9 @@ const Home = () => {
     // sessionStorage.getItem("permutations") ? "Dnew" : "Dnew"
   );
   const [department, setDepartment] = useState(filterSlice.department);
-  useEffect(() => {
-    setDepartment(filterSlice.department);
-  }, [filterSlice.department]);
+  // useEffect(() => {
+  //   setDepartment(filterSlice.department);
+  // }, [department]);
   const statusChangeHandler = (value) => {
     dispatch(filterAction.onClinicStatus(value));
     // setPage(1);

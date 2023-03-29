@@ -78,10 +78,8 @@ const SearchFilter = (props) => {
   //   // sessionStorage.getItem("clinic_status")
   // );
   useEffect(() => {
-    console.log("123")
-    if (department>0) {
-      setIsSelect(true)
-    }
+    console.log("isSelect", isSelect, department);
+    setIsSelect(department.length > 0 );
   }, [department]);
   useEffect(() => {
     if (selectedCity) {
@@ -121,8 +119,6 @@ const SearchFilter = (props) => {
     // dispatch(filterAction.onDistrict(value));
     props.onDistrictChange(value);
   };
-
-
 
   const resetHandler = () => {
     // 診所進度
