@@ -17,6 +17,7 @@ const styles = {
   borderRadius: `10px 0 0 10px`,
 };
 let departmentArr = [
+  "不分科",
   "職業醫學科",
   "臨床病理科",
   "整形外科",
@@ -50,7 +51,6 @@ let departmentArr = [
   "牙周病科",
   "內科",
   "中醫一般科",
-  "不分科",
   "口腔顎面外科",
 ];
 
@@ -58,53 +58,31 @@ const SearchFilter = (props) => {
   let dispatch = useDispatch();
   let filterSlice = useSelector((state) => state.filterSlice);
   let { clinic_status, department, city, district, searchText } = filterSlice;
-  console.log(filterSlice, "fffff");
   let clinicNameRef = useRef(null);
   const [clinicStatus, setClinicStatus] = useState(
-    sessionStorage.getItem("clinic_status")
+    clinic_status
+    // sessionStorage.getItem("clinic_status")
   );
   const [selectedCity, setSelectedCity] = useState(
-    sessionStorage.getItem("city")
+    city
+    // sessionStorage.getItem("city")
   );
   const [selectedDistrict, setSelectedDistrict] = useState(
-    sessionStorage.getItem("district")
+    district
+    // sessionStorage.getItem("district")
   );
   const [districts, setDistricts] = useState([]);
   const [isSelect, setIsSelect] = useState(false);
-  // let department =
-  //   useSelector((state) => state.filterSlice.department) || [];
-  // if (sessionStorage.getItem("department")) {
-  //   department = [...sessionStorage.getItem("department")];
-  // }
-  // if (clinic_status || department || city || district || searchText) {
-  //   setIsSelect(true)
-
-  // }
-  useEffect(() => {
-    if (clinic_status || department || city || district || searchText) {
-      setIsSelect(true);
-    }
-    console.log(department, "department");
-  }, [filterSlice]);
-
+  const [departmentState, setDepartmentState] = useState(
+    department
+    // sessionStorage.getItem("clinic_status")
+  );
   // useEffect(() => {
-  //   // if (sessionStorage.length) {
-  //   //   setIsSelect(true);
-  //   // }
-  //   if (
-  //     selectedDistrict ||
-  //     selectedCity ||
-  //     clinicStatus ||
-  //     clinicNameRef.current.value
-  //   ) {
-  //     setIsSelect(true);
+  //   if (!departmentState) {
+  //     console.log(departmentState,"deeeee")
+  //     setIsSelect(false)
   //   }
-  // }, [
-  //   selectedDistrict,
-  //   selectedCity,
-  //   clinicStatus,
-  //   clinicNameRef.current.value,
-  // ]);
+  // }, [departmentState]);
   useEffect(() => {
     if (selectedCity) {
       setDistricts(Object.keys(jsonData[selectedCity]));
@@ -143,6 +121,9 @@ const SearchFilter = (props) => {
     // dispatch(filterAction.onDistrict(value));
     props.onDistrictChange(value);
   };
+
+
+  
   const resetHandler = () => {
     // 診所進度
     props.onStatusChange("");
@@ -152,20 +133,16 @@ const SearchFilter = (props) => {
     // props.onMutationHandler("");
 
     // 科別
-    props.onDepartmentChange("reset")
-
-
+    props.onDepartmentChange("reset");
 
     // 搜尋欄位
     clinicNameRef.current.value = "";
     props.onSearchText("");
 
-
     // 城市
     setSelectedCity("");
     props.onCityChange("");
 
-    
     // 地區
     setSelectedDistrict("");
     props.onDistrictChange("");
@@ -186,13 +163,6 @@ const SearchFilter = (props) => {
   const addDepartmentHandler = (e) => {
     props.onDepartmentChange(e);
   };
-  // useEffect(() => {
-  //   console.log(
-  //     clinicStatus,
-  //     "clinicStatus",
-  //     sessionStorage.getItem("clinic_status")
-  //   );
-  // }, [clinicStatus]);
   return (
     <Fragment>
       <form className="p-3 search">
@@ -202,7 +172,6 @@ const SearchFilter = (props) => {
             aria-label="Default select example"
             className="widthRWD-40 "
             onChange={(e) => clinicStatusHandler(e)}
-            // defaultValue={clinicStatus}
             value={clinicStatus}
           >
             <option value="" selected={clinicStatus === ""}>
@@ -302,7 +271,7 @@ const SearchFilter = (props) => {
               id="button-addon2"
               onClick={resetHandler}
             >
-              <FontAwesomeIcon className="" icon="fa-solid fa-xmark" />{" "}
+              <FontAwesomeIcon className="" icon="fa-solid fa-xmark" />
             </button>
           )}
         </InputGroup>
@@ -365,11 +334,11 @@ const SearchFilter = (props) => {
             className="text-white w-25"
             onClick={showDepartmentModal}
           >
-            送出
+            確定
           </Button>
-          <Button variant="secondary" onClick={closeDepartmentModal}>
+          {/* <Button variant="secondary" onClick={closeDepartmentModal}>
             取消
-          </Button>
+          </Button> */}
         </Modal.Footer>
       </Modal>
     </Fragment>

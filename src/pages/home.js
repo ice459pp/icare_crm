@@ -14,6 +14,7 @@ import { filterAction } from "../store/filter-slice";
 const Home = () => {
   const appSlice = useSelector((state) => state.appSlice);
   const filterSlice = useSelector((state) => state.filterSlice);
+  // console.log(filterSlice,"filterSlice")
   // get token
   const dispatch = useDispatch();
   const navigate = useHistory();
@@ -25,11 +26,11 @@ const Home = () => {
   const [searchText, setSearchText] = useState("");
   // normal and reserve
   const [dateSort, setDateSort] = useState(false);
-  const [page, setPage] = useState(Number(sessionStorage.getItem("page")) || 1);
+  const [page, setPage] = useState(filterSlice.page);
   const [totalPage, setTotalPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [permutations, setPermutations] = useState(
-    "Dnew"
+    filterSlice.permutations
     // sessionStorage.getItem("permutations") ? "Dnew" : "Dnew"
   );
   const [department, setDepartment] = useState([]);
@@ -45,7 +46,6 @@ const Home = () => {
     setFilterCity(value);
     if (!value) {
       dispatch(filterAction.onCity(""));
-
       setFilterDictrict("");
     }
   };
@@ -61,11 +61,6 @@ const Home = () => {
     setPage(1);
     setSearchText(value);
   };
-
-  // const dateSortHandler = () => {
-  //   const sort = !dateSort;
-  //   setDateSort(sort);
-  // };
 
   const pageChangeHandler = (value) => {
     // console.log(value, "vaaaaa");
@@ -90,7 +85,6 @@ const Home = () => {
   const submitDepartment = () => {
     // ????
     let { department } = filterSlice;
-    console.log(department, "department");
     setDepartment([...department]);
     // sessionStorage.setItem("department",department);
   };
@@ -98,8 +92,8 @@ const Home = () => {
   // this is for login status
   useEffect(() => {
     // check app is login
-    console.log(permutations,"permutations")
-    return
+    // console.log(permutations,"permutations")
+    // return
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
       apiClinicList(
@@ -128,7 +122,6 @@ const Home = () => {
       navigate.push("/login");
     }
   }, [
-    // department,
     appSlice.isLogin,
     page,
     filterCity,
