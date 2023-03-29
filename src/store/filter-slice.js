@@ -41,6 +41,7 @@ const filterSlice = createSlice({
       } else {
         state.department.push(value);
       }
+      
       // sessionStorage.setItem("department", state.department);
     },
     onCity(state, action) {

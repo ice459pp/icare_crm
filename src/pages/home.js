@@ -14,16 +14,15 @@ import { filterAction } from "../store/filter-slice";
 const Home = () => {
   const appSlice = useSelector((state) => state.appSlice);
   const filterSlice = useSelector((state) => state.filterSlice);
-  // console.log(filterSlice,"filterSlice")
   // get token
   const dispatch = useDispatch();
   const navigate = useHistory();
 
   const [clinicList, setClinicList] = useState([]);
-  const [filterStatus, setFilterStatus] = useState("");
-  const [filterCity, setFilterCity] = useState("");
-  const [filterDistrict, setFilterDictrict] = useState("");
-  const [searchText, setSearchText] = useState("");
+  const [filterStatus, setFilterStatus] = useState(filterSlice.clinic_status);
+  const [filterCity, setFilterCity] = useState(filterSlice.city);
+  const [filterDistrict, setFilterDictrict] = useState(filterSlice.district);
+  const [searchText, setSearchText] = useState(filterSlice.searchText);
   // normal and reserve
   const [dateSort, setDateSort] = useState(false);
   const [page, setPage] = useState(filterSlice.page);
@@ -34,9 +33,12 @@ const Home = () => {
     // sessionStorage.getItem("permutations") ? "Dnew" : "Dnew"
   );
   const [department, setDepartment] = useState(filterSlice.department);
-  // useEffect(() => {
-  //   setDepartment(filterSlice.department);
-  // }, [department]);
+  // useEffect(()=>{
+
+  // },[])
+  useEffect(() => {
+    setDepartment(filterSlice.department);
+  }, [filterSlice.department]);
   const statusChangeHandler = (value) => {
     dispatch(filterAction.onClinicStatus(value));
     // setPage(1);
@@ -66,7 +68,6 @@ const Home = () => {
   };
 
   const pageChangeHandler = (value) => {
-    // console.log(value, "vaaaaa");
     dispatch(filterAction.onPage(value));
     setPage(value);
   };
@@ -82,15 +83,14 @@ const Home = () => {
     setPermutations(value);
   };
   const departmentHandler = (value) => {
-    // ???
     dispatch(filterAction.onDepartment(value));
-    setDepartment();
+    // setDepartment();
   };
 
   useEffect(() => {
-
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
+      console.log(permutations,"pepepepepepe")
       apiClinicList(
         token,
         page,
@@ -144,7 +144,8 @@ const Home = () => {
         <h4 className="text-center fw-bolder text-dark">診所列表</h4>
         <div className="d-flex align-items-end tableSort mb-2">
           <div className="me-3 text-dark fw-bold">
-            {`${page} / ${totalPage}`} 頁 ，共{totalCount}筆
+            {`${totalPage === 0 ? 0 : page} / ${totalPage}`} 頁 ，共{totalCount}
+            筆
           </div>
           {/* <Button variant="secondary" onClick={dateSortHandler} size="sm">
             日期排序
@@ -221,13 +222,15 @@ const Home = () => {
           </tbody>
         </table>
       </div>
-      <div className="d-flex justify-content-center w-100">
-        <Pagination
-          page={page}
-          totalPage={totalPage}
-          onPageChange={pageChangeHandler}
-        ></Pagination>
-      </div>
+      {totalPage > 0 && (
+        <div className="d-flex justify-content-center w-100">
+          <Pagination
+            page={page}
+            totalPage={totalPage}
+            onPageChange={pageChangeHandler}
+          ></Pagination>
+        </div>
+      )}
     </Fragment>
   );
 

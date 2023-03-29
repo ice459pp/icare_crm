@@ -78,9 +78,15 @@ const SearchFilter = (props) => {
   //   // sessionStorage.getItem("clinic_status")
   // );
   useEffect(() => {
-    console.log("isSelect", isSelect, department);
-    setIsSelect(department.length > 0 );
-  }, [department]);
+    if (searchText) {
+      clinicNameRef.current.value = searchText;
+    }
+    if (department.length || searchText || clinic_status || city || district) {
+      setIsSelect(true);
+      return;
+    }
+    setIsSelect(false);
+  }, [department, searchText, city, clinic_status, district]);
   useEffect(() => {
     if (selectedCity) {
       setDistricts(Object.keys(jsonData[selectedCity]));
