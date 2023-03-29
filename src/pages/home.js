@@ -33,16 +33,19 @@ const Home = () => {
     filterSlice.permutations
     // sessionStorage.getItem("permutations") ? "Dnew" : "Dnew"
   );
-  const [department, setDepartment] = useState([]);
+  const [department, setDepartment] = useState(filterSlice.department);
+  useEffect(() => {
+    setDepartment(filterSlice.department);
+  }, [filterSlice.department]);
   const statusChangeHandler = (value) => {
     dispatch(filterAction.onClinicStatus(value));
-    setPage(1);
+    // setPage(1);
     setFilterStatus(value);
   };
 
   const cityChangeHangle = (value) => {
     dispatch(filterAction.onCity(value));
-    setPage(1);
+    // setPage(1);
     setFilterCity(value);
     if (!value) {
       dispatch(filterAction.onCity(""));
@@ -52,13 +55,13 @@ const Home = () => {
 
   const districtChangeHandler = (value) => {
     dispatch(filterAction.onDistrict(value));
-    setPage(1);
+    // setPage(1);
     setFilterDictrict(value);
   };
 
   const searchTextHandler = (value) => {
     dispatch(filterAction.onsearchText(value));
-    setPage(1);
+    // setPage(1);
     setSearchText(value);
   };
 
@@ -81,19 +84,11 @@ const Home = () => {
   const departmentHandler = (value) => {
     // ???
     dispatch(filterAction.onDepartment(value));
-  };
-  const submitDepartment = () => {
-    // ????
-    let { department } = filterSlice;
-    setDepartment([...department]);
-    // sessionStorage.setItem("department",department);
+    setDepartment();
   };
 
-  // this is for login status
   useEffect(() => {
-    // check app is login
-    // console.log(permutations,"permutations")
-    // return
+
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
       apiClinicList(
@@ -142,7 +137,7 @@ const Home = () => {
           onSearchText={searchTextHandler}
           onDepartmentChange={departmentHandler}
           onMutationHandler={mutationHandler}
-          onSubmitDepartment={submitDepartment}
+          // onSubmitDepartment={submitDepartment}
         />
       </div>
       <div className="w-100 padding-RWD mt-3">

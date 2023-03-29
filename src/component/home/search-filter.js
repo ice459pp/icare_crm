@@ -73,16 +73,16 @@ const SearchFilter = (props) => {
   );
   const [districts, setDistricts] = useState([]);
   const [isSelect, setIsSelect] = useState(false);
-  const [departmentState, setDepartmentState] = useState(
-    department
-    // sessionStorage.getItem("clinic_status")
-  );
-  // useEffect(() => {
-  //   if (!departmentState) {
-  //     console.log(departmentState,"deeeee")
-  //     setIsSelect(false)
-  //   }
-  // }, [departmentState]);
+  // const [departmentState, setDepartmentState] = useState(
+  //   department
+  //   // sessionStorage.getItem("clinic_status")
+  // );
+  useEffect(() => {
+    console.log("123")
+    if (department>0) {
+      setIsSelect(true)
+    }
+  }, [department]);
   useEffect(() => {
     if (selectedCity) {
       setDistricts(Object.keys(jsonData[selectedCity]));
@@ -123,7 +123,7 @@ const SearchFilter = (props) => {
   };
 
 
-  
+
   const resetHandler = () => {
     // 診所進度
     props.onStatusChange("");
@@ -153,7 +153,7 @@ const SearchFilter = (props) => {
   const [departmentIsShow, setDepartmentIsShow] = useState(false);
 
   const showDepartmentModal = () => {
-    props.onSubmitDepartment();
+    // props.onSubmitDepartment();
     setDepartmentIsShow(!departmentIsShow);
   };
   const closeDepartmentModal = () => {
