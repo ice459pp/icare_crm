@@ -114,3 +114,23 @@
     }
   }
 }
+.departmentModal {
+  .title {
+    font-size: large;
+    color: cadetblue;
+    border-bottom: 1px gainsboro solid;
+  }
+  button {
+    position: relative;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    // border-radius: 20px;
+    .x-mark {
+      font-size: large;
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+      border-radius: 50%;
+    }
+  }
+}

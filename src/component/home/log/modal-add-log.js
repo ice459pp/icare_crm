@@ -90,9 +90,9 @@ const ModalAddLog = (props) => {
       : currentDateTime()
   );
 
-  useEffect(() => {
-    console.log(log);
-  }, []);
+  // useEffect(() => {
+  //   console.log(log);
+  // }, []);
 
   const statusChangeHandler = (event) => {
     const value = event.target.value;

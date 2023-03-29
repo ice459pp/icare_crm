@@ -3,8 +3,8 @@ import Pagination from "react-bootstrap/Pagination";
 
 const PaginationUI = (props) => {
   const { page, totalPage } = props;
-  const [pages, setPages] = useState([]);
 
+  const [pages, setPages] = useState([]);
   useEffect(() => {
     let pageArr = [];
     if (totalPage <= 10) {

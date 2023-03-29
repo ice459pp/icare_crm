@@ -18,7 +18,7 @@ const nowTodayChange = () => {
 };
 const ClinicListItem = (props) => {
   let { item } = props;
-  console.log(item,"iteeeeeem")
+  // console.log(item,"iteeeeeem")
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
 
@@ -80,7 +80,7 @@ const ClinicListItem = (props) => {
         "",
         (err) => {},
         (list, total, totalPage) => {
-          console.log(list)
+          // console.log(list)
           setListData(list);
           setRefreshLog(false);
         }

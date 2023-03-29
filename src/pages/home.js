@@ -13,6 +13,7 @@ import { filterAction } from "../store/filter-slice";
 
 const Home = () => {
   const appSlice = useSelector((state) => state.appSlice);
+  const filterSlice = useSelector((state) => state.filterSlice);
   // get token
   const dispatch = useDispatch();
   const navigate = useHistory();
@@ -24,22 +25,23 @@ const Home = () => {
   const [searchText, setSearchText] = useState("");
   // normal and reserve
   const [dateSort, setDateSort] = useState(false);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(Number(sessionStorage.getItem("page")) || 1);
   const [totalPage, setTotalPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [permutations, setPermutations] = useState(
     "Dnew"
     // sessionStorage.getItem("permutations") ? "Dnew" : "Dnew"
   );
-
+  const [department, setDepartment] = useState([]);
   const statusChangeHandler = (value) => {
     dispatch(filterAction.onClinicStatus(value));
+    setPage(1);
     setFilterStatus(value);
   };
 
   const cityChangeHangle = (value) => {
     dispatch(filterAction.onCity(value));
-
+    setPage(1);
     setFilterCity(value);
     if (!value) {
       dispatch(filterAction.onCity(""));
@@ -50,12 +52,13 @@ const Home = () => {
 
   const districtChangeHandler = (value) => {
     dispatch(filterAction.onDistrict(value));
+    setPage(1);
     setFilterDictrict(value);
   };
 
   const searchTextHandler = (value) => {
     dispatch(filterAction.onsearchText(value));
-
+    setPage(1);
     setSearchText(value);
   };
 
@@ -75,21 +78,30 @@ const Home = () => {
   };
   const mutationHandler = (value) => {
     if (!value) {
-      value="Dnew"
+      value = "Dnew";
     }
     dispatch(filterAction.onPermutations(value));
     setPermutations(value);
   };
   const departmentHandler = (value) => {
-    console.log(value);
+    // ???
+    dispatch(filterAction.onDepartment(value));
+  };
+  const submitDepartment = () => {
+    // ????
+    let { department } = filterSlice;
+    console.log(department, "department");
+    setDepartment([...department]);
+    // sessionStorage.setItem("department",department);
   };
 
   // this is for login status
   useEffect(() => {
     // check app is login
+    console.log(permutations,"permutations")
+    return
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
-
       apiClinicList(
         token,
         page,
@@ -98,9 +110,13 @@ const Home = () => {
         searchText,
         permutations,
         filterStatus,
-        (err) => {
-          alert(err);
-          logoutHandler();
+        department,
+        (err, code) => {
+          if (code === 601) {
+            logoutHandler();
+          } else {
+            alert(code);
+          }
         },
         (list, total, totalPage) => {
           setTotalCount(total);
@@ -112,6 +128,7 @@ const Home = () => {
       navigate.push("/login");
     }
   }, [
+    // department,
     appSlice.isLogin,
     page,
     filterCity,
@@ -119,6 +136,7 @@ const Home = () => {
     searchText,
     permutations,
     filterStatus,
+    department,
   ]);
 
   return (
@@ -131,6 +149,7 @@ const Home = () => {
           onSearchText={searchTextHandler}
           onDepartmentChange={departmentHandler}
           onMutationHandler={mutationHandler}
+          onSubmitDepartment={submitDepartment}
         />
       </div>
       <div className="w-100 padding-RWD mt-3">

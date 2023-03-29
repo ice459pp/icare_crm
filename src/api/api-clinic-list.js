@@ -6,8 +6,9 @@ export const apiClinicList = async (
   filter_city = "", 
   filter_district = "", 
   filter_name = "", 
-  filter_datetime = false,
+  filter_permutations = "Dnew",
   filter_clinic_status = "",
+  filter_department="",
   onError = () => {}, 
   onComplete = () => {}
 ) => {
@@ -25,10 +26,16 @@ export const apiClinicList = async (
       urlParams.append("filter_name", filter_name)
     }
 
-    urlParams.append("filter_datetime", filter_datetime ? "reserve" : "normal")
+    if (filter_permutations) {
+      urlParams.append("Permutations", filter_permutations)
+    }
 
     if (filter_clinic_status) {
       urlParams.append("filter_clinic_status", filter_clinic_status)
+    }
+
+    if (filter_department) {
+      urlParams.append("Department", filter_department)
     }
     const queryString = urlParams.toString()
     const apiUrl = `${appConfig.url}/clinic/list/${page}?${queryString}`
@@ -50,7 +57,7 @@ export const apiClinicList = async (
       const totalpage = data.totalpage
       onComplete(list, total, totalpage)
     } else {
-      onError(json.error)
+      onError(json.error, json.code)
     }
 
   } catch(error) {
