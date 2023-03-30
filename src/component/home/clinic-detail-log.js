@@ -7,6 +7,7 @@ import Modal_AddLog from "./log/modal-add-log";
 
 const ClinicDetailLog = (props) => {
   let { item, readonly } = props;
+  console.log(item,"item in clinicLOG")
   if (readonly) {
     // 不能編輯只能看
     item.isApproval = false;
@@ -25,7 +26,7 @@ const ClinicDetailLog = (props) => {
   };
   return (
     <Fragment>
-      <div onClick={() => {props.onLogClick(item)}}>
+      <div  onClick={() => {props.onLogClick(item)}}>
         <section data-id={item.id} className="bg-white text-dark logCard">
           <div className="logCard_title">
             <div data-id={item.visitor_id}>{item.visitor_name}</div>
@@ -36,7 +37,7 @@ const ClinicDetailLog = (props) => {
               </button>
             </div>
             <div className="logCard_title_dateStatus_PD">
-              <button className="btn btn-success text-white status">
+              <button className="btn btn-success text-white status cursor-default">
                 {item.visit_category}
               </button>
             </div>

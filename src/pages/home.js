@@ -90,7 +90,6 @@ const Home = () => {
   useEffect(() => {
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
-      console.log(permutations,"pepepepepepe")
       apiClinicList(
         token,
         page,

@@ -23,6 +23,8 @@ function App() {
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 // let useHistory()
+const goPath =useHistory();//設常數接收useHistory()回傳的物件
+
   let headNavbarRef = useRef();
   const style = {
     height: `${height}px`,
@@ -32,7 +34,7 @@ function App() {
     setMenuIsShow(!menuIsShow);
   };
   const goHome=()=>{
-
+    goPath.push(`/`)
   }
 
   useEffect(() => {
@@ -53,7 +55,7 @@ function App() {
         ref={headNavbarRef}
         className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
       >
-        <div className="h4 m-0" onClick={goHome}>診所管理系統</div>
+        <div className="h4 m-0 cursor-pointer" onClick={goHome}>診所管理系統</div>
         {!menuIsShow && (
           <div onClick={menuHandler} className="m-0 menu">
             <FontAwesomeIcon icon="fas fa-bars" />

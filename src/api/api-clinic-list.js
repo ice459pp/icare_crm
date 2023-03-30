@@ -38,7 +38,6 @@ export const apiClinicList = async (
       urlParams.append("Department", filter_department);
     }
     const queryString = urlParams.toString();
-    console.log(queryString,"qqaqw")
     const apiUrl = `${appConfig.url}/clinic/list/${page}?${queryString}`;
     const response = await fetch(apiUrl, {
       method: "GET",

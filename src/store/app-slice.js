@@ -4,6 +4,7 @@ const KEY_TOKEN = "user-token"
 const appState = {
   isLogin: window.localStorage.getItem(KEY_TOKEN) !== null, 
   userToken: window.localStorage.getItem(KEY_TOKEN), 
+  userId:""
   
 }
 

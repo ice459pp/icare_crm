@@ -37,12 +37,13 @@ let clinicData = {
 };
 
 const ClinicDetail = () => {
+  // detail+logList
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
   const params = useParams();
   const id = params.id;
 
-  const [listData, setListData] = useState([]);
+  const [logList, setlogList] = useState([]);
   const [refreshLog, setRefreshLog] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0);
@@ -124,7 +125,7 @@ const ClinicDetail = () => {
         (list, total, totalPage) => {
           setTotalCount(total);
           setTotalPage(totalPage);
-          setListData(list);
+          setlogList(list);
           setRefreshLog(false);
         }
       );
@@ -323,9 +324,6 @@ const ClinicDetail = () => {
                 onChange={(e) => {
                   logSearchHandler(e.target.value);
                 }}
-                // onBlur={(e) => {
-                //   logSearchHandler(e.target.value)
-                // }}
               />
               {logSearch !== "" && (
                 <FontAwesomeIcon
@@ -336,7 +334,7 @@ const ClinicDetail = () => {
               )}
             </InputGroup>
           </div>
-          {listData.map((item) => (
+          {logList.map((item) => (
             <ClinicDetailLog
               key={item.id}
               item={item}
