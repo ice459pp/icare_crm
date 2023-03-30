@@ -41,9 +41,10 @@ const UserLogin = () => {
   // const [email, setEmail] = useState("");
   return (
     <div className="container h-100 d-flex justify-content-center align-items-center">
-      <form className="w-25" onSubmit={submitHandler}>
+      <form className="w-50" onSubmit={submitHandler}>
+        <div className="text-center fw-bolder text-secondary h2 mb-5">診所管理系統</div>
         <div className="mb-3">
-          <label className="form-label">帳號</label>
+          <label className="form-label text-dark fw-bold h5">帳號:</label>
           <input
             ref={emailRef}
             type="email"
@@ -56,7 +57,7 @@ const UserLogin = () => {
           </div>
         </div>
         <div className="mb-3">
-          <label className="form-label">密碼</label>
+          <label className="form-label text-dark fw-bold h5">密碼:</label>
           <input
             ref={passwordRef}
             type="password"

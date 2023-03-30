@@ -128,6 +128,9 @@ const Home = () => {
 
   return (
     <Fragment>
+              {/* <div className="h-100 Navbar" style={menuIsShow ? NavbarWidth : {}}>
+          <Navbar showMenu={(e) => menuHandler()}></Navbar>
+        </div> */}
       <div className="w-100 mt-3 padding-RWD">
         <SearchFilter
           onStatusChange={statusChangeHandler}

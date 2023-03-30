@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import UserLogin from "./pages/login";
 import "./scss/App.scss";
+import { useSelector } from "react-redux";
 const NavbarWidth = {
   left: `0`,
   // overflow: "unset"
@@ -18,12 +19,18 @@ const RouterWidth = {
   overflowY: `scroll`,
 };
 function App() {
+  let appSlice = useSelector((state) => state.appSlice);
+  let isLogin_store = appSlice.isLogin;
   const initHeight = `${window.innerHeight}`;
   const [height, setHeight] = useState(initHeight);
   const [menuIsShow, setMenuIsShow] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-// let useHistory()
-const goPath =useHistory();//設常數接收useHistory()回傳的物件
+  const [isLogin, setIsLogin] = useState(isLogin_store);
+  useEffect(() => {
+    setIsLogin(isLogin_store);
+  }, [isLogin_store]);
+  console.log(isLogin, "islogin");
+  // let useHistory()
+  const goPath = useHistory(); //設常數接收useHistory()回傳的物件
 
   let headNavbarRef = useRef();
   const style = {
@@ -33,9 +40,9 @@ const goPath =useHistory();//設常數接收useHistory()回傳的物件
   const menuHandler = () => {
     setMenuIsShow(!menuIsShow);
   };
-  const goHome=()=>{
-    goPath.push(`/`)
-  }
+  const goHome = () => {
+    goPath.push(`/`);
+  };
 
   useEffect(() => {
     const headNavbarRefDOM = headNavbarRef.current;
@@ -49,13 +56,25 @@ const goPath =useHistory();//設常數接收useHistory()回傳的物件
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  // if (!isLogin) {
+  //   return (
+  //     <Route
+  //       exact
+  //       path="/login"
+  //       onEnter={() => window.scrollTo(0, 0)}
+  //       component={UserLogin}
+  //     ></Route>
+  //   );
+  // }
   return (
     <Fragment>
       <div
         ref={headNavbarRef}
         className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
       >
-        <div className="h4 m-0 cursor-pointer" onClick={goHome}>診所管理系統</div>
+        <div className="h4 m-0 cursor-pointer" onClick={goHome}>
+          診所管理系統
+        </div>
         {!menuIsShow && (
           <div onClick={menuHandler} className="m-0 menu">
             <FontAwesomeIcon icon="fas fa-bars" />
@@ -73,11 +92,12 @@ const goPath =useHistory();//設常數接收useHistory()回傳的物件
           <div className="navbar-background" onClick={menuHandler}></div>
         )}
 
-        <div className="h-100 Navbar" style={menuIsShow ? NavbarWidth : {}}>
-          <Navbar showMenu={(e) => menuHandler()}></Navbar>
-        </div>
+          <div className="h-100 Navbar " style={menuIsShow ? NavbarWidth : {}}>
+            <Navbar showMenu={(e) => menuHandler()}></Navbar>
+          </div>
+        
 
-        <div className="bg-light h-100 flex-wrap  RouterWidth">
+        <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
           <Switch>
             <Route
               exact
@@ -106,9 +126,6 @@ const goPath =useHistory();//設常數接收useHistory()回傳的物件
               onEnter={() => window.scrollTo(0, 0)}
               component={Approved}
             />
-            {/* 核可 */}
-            {/* 核可細節 */}
-            {/* 搜尋細節 */}
           </Switch>
         </div>
       </div>
