@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserLogin from "./pages/login";
 import "./scss/App.scss";
 import { useSelector } from "react-redux";
+// import { is } from "immer/dist/internal";
 const NavbarWidth = {
   left: `0`,
   // overflow: "unset"
@@ -28,11 +29,10 @@ function App() {
   useEffect(() => {
     setIsLogin(isLogin_store);
   }, [isLogin_store]);
-  console.log(isLogin, "islogin");
-  // let useHistory()
   const goPath = useHistory(); //設常數接收useHistory()回傳的物件
 
-  let headNavbarRef = useRef();
+  let headNavbarRef = useRef() || "";
+  console.log(headNavbarRef, "headNavbarRef");
   const style = {
     height: `${height}px`,
     position: `relative`,
@@ -56,79 +56,80 @@ function App() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  // if (!isLogin) {
-  //   return (
-  //     <Route
-  //       exact
-  //       path="/login"
-  //       onEnter={() => window.scrollTo(0, 0)}
-  //       component={UserLogin}
-  //     ></Route>
-  //   );
-  // }
   return (
     <Fragment>
-      <div
-        ref={headNavbarRef}
-        className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
-      >
-        <div className="h4 m-0 cursor-pointer" onClick={goHome}>
-          診所管理系統
+      {!isLogin ? (
+        <div ref={headNavbarRef}></div>
+      ) : (
+        <div
+          ref={headNavbarRef}
+          className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
+        >
+          <div className="h4 m-0 cursor-pointer" onClick={goHome}>
+            診所管理系統
+          </div>
+          {!menuIsShow && (
+            <div onClick={menuHandler} className="m-0 menu">
+              <FontAwesomeIcon icon="fas fa-bars" />
+            </div>
+          )}
+          {menuIsShow && (
+            <div onClick={menuHandler} className="m-0 menu">
+              <FontAwesomeIcon icon="fas fa-times" />
+            </div>
+          )}
         </div>
-        {!menuIsShow && (
-          <div onClick={menuHandler} className="m-0 menu">
-            <FontAwesomeIcon icon="fas fa-bars" />
-          </div>
-        )}
-        {menuIsShow && (
-          <div onClick={menuHandler} className="m-0 menu">
-            <FontAwesomeIcon icon="fas fa-times" />
-          </div>
-        )}
-      </div>
+      )}
 
-      <div className="w-100 d-flex " style={style}>
-        {menuIsShow && (
-          <div className="navbar-background" onClick={menuHandler}></div>
-        )}
-
-          <div className="h-100 Navbar " style={menuIsShow ? NavbarWidth : {}}>
-            <Navbar showMenu={(e) => menuHandler()}></Navbar>
-          </div>
-        
-
-        <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
-          <Switch>
+      {!isLogin && (
+        <div className="w-100 d-flex " style={style}>
+          <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
             <Route
               exact
               path="/login"
               onEnter={() => window.scrollTo(0, 0)}
               component={UserLogin}
             ></Route>
-            <Route
-              exact
-              path="/"
-              onEnter={() => window.scrollTo(0, 0)}
-              component={Home}
-            ></Route>
-            <Route
-              path="/clinic/:id"
-              onEnter={() => window.scrollTo(0, 0)}
-              component={ClinicDetail}
-            />
-            <Route
-              path="/approved"
-              onEnter={() => window.scrollTo(0, 0)}
-              component={Approved}
-            />
-            <Route
-              path="/approved/:id"
-              onEnter={() => window.scrollTo(0, 0)}
-              component={Approved}
-            />
-          </Switch>
+          </div>
         </div>
-      </div>
+      )}
+      {isLogin && (
+        <div className="w-100 d-flex " style={style}>
+          {menuIsShow && (
+            <div className="navbar-background" onClick={menuHandler}></div>
+          )}
+
+          <div className="h-100 Navbar " style={menuIsShow ? NavbarWidth : {}}>
+            <Navbar showMenu={(e) => menuHandler()}></Navbar>
+          </div>
+
+          <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
+            <Switch>
+              <Route
+                exact
+                path="/"
+                onEnter={() => window.scrollTo(0, 0)}
+                component={Home}
+              ></Route>
+              <Route
+                path="/clinic/:id"
+                onEnter={() => window.scrollTo(0, 0)}
+                component={ClinicDetail}
+              />
+              <Route
+                path="/approved"
+                onEnter={() => window.scrollTo(0, 0)}
+                component={Approved}
+              />
+              <Route
+                path="/approved/:id"
+                onEnter={() => window.scrollTo(0, 0)}
+                component={Approved}
+              />
+            </Switch>
+          </div>
+        </div>
+      )}
     </Fragment>
   );
 }

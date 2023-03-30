@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Route, useHistory } from "react-router-dom";
 import { apiLogin } from "../api/api-login";
 import { appAction } from "../store/app-slice";
-
+import "../scss/login.scss"
+const style={
+  "letterSpacing":"0.5rem"
+}
 const UserLogin = () => {
   let dispatch = useDispatch()
   let appSlice = useSelector(state => state.appSlice)
@@ -40,9 +43,11 @@ const UserLogin = () => {
 
   // const [email, setEmail] = useState("");
   return (
-    <div className="container h-100 d-flex justify-content-center align-items-center">
-      <form className="w-50" onSubmit={submitHandler}>
-        <div className="text-center fw-bolder text-secondary h2 mb-5">診所管理系統</div>
+    <div className="container h-100 d-flex justify-content-center align-items-center login">
+      <form className="from" onSubmit={submitHandler}>
+        <div className="text-center fw-bolder text-secondary h2 mb-5"
+        style={style}
+        >診所管理系統</div>
         <div className="mb-3">
           <label className="form-label text-dark fw-bold h5">帳號:</label>
           <input

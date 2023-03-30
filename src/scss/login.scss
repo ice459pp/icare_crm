@@ -1,0 +1,13 @@
+.login {
+    padding: 0;
+  .from {
+    width: 50%;
+    @media (max-width: 996px) {
+      width: 75%;
+    }
+    @media (max-width: 576px) {
+        width: 100%;
+        margin: 0 1rem;
+      }
+  }
+}
