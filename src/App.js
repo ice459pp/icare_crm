@@ -32,7 +32,6 @@ function App() {
   const goPath = useHistory(); //設常數接收useHistory()回傳的物件
 
   let headNavbarRef = useRef() || "";
-  console.log(headNavbarRef, "headNavbarRef");
   const style = {
     height: `${height}px`,
     position: `relative`,

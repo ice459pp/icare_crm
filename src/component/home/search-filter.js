@@ -172,7 +172,6 @@ const SearchFilter = (props) => {
           <label className="">診所進度:</label>
           <Form.Select
             aria-label="Default select example"
-            className="widthRWD-40 "
             onChange={(e) => clinicStatusHandler(e)}
             value={clinicStatus}
           >
@@ -200,7 +199,7 @@ const SearchFilter = (props) => {
           <label className="">選擇科別:</label>
           <Button
             onClick={showDepartmentModal}
-            className="btn-sm w-25 text-light"
+            className="btn-sm w-100 text-light"
             variant="primary"
           >
             科別
@@ -219,7 +218,7 @@ const SearchFilter = (props) => {
             </Button>
           ))}
         </div>
-        <div className="d-flex align-items-center pb-2 ">
+        <div className="d-flex align-items-center pb-2 filter-address ">
           <div className="d-flex align-items-center widthRWD">
             <div>
               <select
@@ -321,14 +320,6 @@ const SearchFilter = (props) => {
               />
             </Button>
           ))}
-          {/* {listData.map((item) => (
-            <ClinicDetailLog
-              key={item.id}
-              item={item}
-              readonly={true}
-            ></ClinicDetailLog>
-          ))} */}
-          {/* <Modal_AddLog action={"new"}></Modal_AddLog> */}
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -338,9 +329,6 @@ const SearchFilter = (props) => {
           >
             確定
           </Button>
-          {/* <Button variant="secondary" onClick={closeDepartmentModal}>
-            取消
-          </Button> */}
         </Modal.Footer>
       </Modal>
     </Fragment>

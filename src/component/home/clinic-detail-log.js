@@ -40,12 +40,12 @@ const ClinicDetailLog = (props) => {
               <div data-id={item.visitor_id}>{item.visitor_name}</div>
               <div className="logCard_title_dateStatus_PC">
                 <div className="date">{item.visit_datetime}</div>
-                <button className="btn btn-success text-white status  cursor-default">
+                <button className="btn btn-success text-white status fw-bolder  cursor-default">
                   {item.visit_category}
                 </button>
               </div>
               <div className="logCard_title_dateStatus_PD">
-                <button className="btn btn-success text-white status cursor-default">
+                <button className="btn btn-success text-white status fw-bolder cursor-default">
                   {item.visit_category}
                 </button>
               </div>

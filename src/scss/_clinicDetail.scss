@@ -1,56 +1,4 @@
-.search {
-  border: 2px solid gray;
-  background-color: whitesmoke;
-  border-radius: 10px;
-  .search-clinicStatus {
-    label {
-      min-width: 80px;
-    }
-    .widthRWD-40 {
-      width: 40%;
-      @media (max-width: 996px) {
-        width: 100%;
-      }
-    }
-  }
-  .filter-department-zone {
-    button {
-      position: relative;
-      margin: 0.5rem 1rem 0.5rem 0;
-      // border-radius: 20px;
-      .x-mark {
-        font-size: large;
-        position: absolute;
-        top: 0;
-        right: 0;
-        transform: translate(50%, -50%);
-        border-radius: 50%;
-      }
-    }
-  }
-  .filter-reset-icon {
-    color: #ee6991;
-    cursor: pointer;
-    &:hover {
-      color: #ff004c;
-    }
-  }
-  .widthRWD {
-    width: 50%;
-
-    @media (max-width: 996px) {
-      width: 100%;
-    }
-  }
-
-  .input-group-textSearch {
-    width: 50%;
-
-    @media (max-width: 996px) {
-      width: 100%;
-    }
-  }
-}
+@import "./sort";
 .tableSort {
   justify-content: end;
   @media (max-width: 996px) {
@@ -553,6 +501,8 @@ section {
           }
         }
         .status {
+          border: none !important;
+          background-color: #7dd1f0 !important ;
           // padding-left: 35px;
           // padding-right: 35px;
           max-width: 200px;
@@ -569,6 +519,8 @@ section {
           display: flex;
         }
         .status {
+          border: none !important;
+          background-color: #7dd1f0 !important;
           padding: 2px 15px;
         }
       }

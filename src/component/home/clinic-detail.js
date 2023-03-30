@@ -377,7 +377,7 @@ const ClinicDetail = () => {
         </Modal.Body>
       </Modal>
       <div className="log_button">
-        <Button variant="primary" size="lg" onClick={createLogClickHandler}>
+        <Button variant="warning" className="text-light" size="lg" onClick={createLogClickHandler}>
           建立紀錄
         </Button>{" "}
       </div>

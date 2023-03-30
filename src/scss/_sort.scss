@@ -1,0 +1,56 @@
+.search {
+  border: 2px solid gray;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  .search-clinicStatus {
+    width: 50%;
+    @media (max-width: 996px) {
+      width: 100%;
+    }
+    label {
+      min-width: 80px;
+    }
+  }
+  .filter-department-zone {
+    button {
+      position: relative;
+      margin: 0.5rem 1rem 0.5rem 0;
+      // border-radius: 20px;
+      .x-mark {
+        font-size: large;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+        border-radius: 50%;
+      }
+    }
+  }
+  .filter-reset-icon {
+    color: #ee6991;
+    cursor: pointer;
+    &:hover {
+      color: #ff004c;
+    }
+  }
+  .filter-address {
+    .district-sel {
+      margin: 0;
+    }
+    .widthRWD {
+      width: 50%;
+
+      @media (max-width: 996px) {
+        width: 100%;
+      }
+    }
+  }
+
+  .input-group-textSearch {
+    width: 50%;
+
+    @media (max-width: 996px) {
+      width: 100%;
+    }
+  }
+}

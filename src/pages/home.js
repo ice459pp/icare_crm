@@ -128,10 +128,10 @@ const Home = () => {
 
   return (
     <Fragment>
-              {/* <div className="h-100 Navbar" style={menuIsShow ? NavbarWidth : {}}>
+      {/* <div className="h-100 Navbar" style={menuIsShow ? NavbarWidth : {}}>
           <Navbar showMenu={(e) => menuHandler()}></Navbar>
         </div> */}
-      <div className="w-100 mt-3 padding-RWD">
+      <div className="w-100 mt-3 padding-RWD ">
         <SearchFilter
           onStatusChange={statusChangeHandler}
           onCityChange={cityChangeHangle}
@@ -143,7 +143,7 @@ const Home = () => {
         />
       </div>
       <div className="w-100 padding-RWD mt-3">
-        <h4 className="text-center fw-bolder text-dark">診所列表</h4>
+        <h4 className="text-center fw-bolder ">診所列表</h4>
         <div className="d-flex align-items-end tableSort mb-2">
           <div className="me-3 text-dark fw-bold">
             {`${totalPage === 0 ? 0 : page} / ${totalPage}`} 頁 ，共{totalCount}
