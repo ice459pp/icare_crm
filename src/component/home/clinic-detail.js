@@ -150,9 +150,9 @@ const ClinicDetail = () => {
     }
   }, [fetchClinicInfo]);
 
-  useEffect(()=>{
-    console.log(clinicInfo.his ,"clinicInfo.his ")
-  },[clinicInfo.his])
+  // useEffect(()=>{
+  //   console.log(clinicInfo.his ,"clinicInfo.his ")
+  // },[clinicInfo.his])
   return (
     <Fragment>
       <div className="w-100 padding-RWD">

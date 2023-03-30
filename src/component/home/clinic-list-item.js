@@ -18,7 +18,6 @@ const nowTodayChange = () => {
 };
 const ClinicListItem = (props) => {
   let { item } = props;
-  // console.log(item,"iteeeeeem")
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
 

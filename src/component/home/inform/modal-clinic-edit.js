@@ -35,7 +35,7 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
-  console.log(item, "iteeem");
+
   let networkRef = useRef();
   const appSlice = useSelector((state) => state.appSlice);
 
@@ -61,8 +61,10 @@ const ClinicEditModal = (props) => {
 
   const [apiUpdate, setApiUpdate] = useState(false);
   const [isOtherHis, setisOtherHis] = useState(
-    item.his !== "展望" || item.his !== "耀聖" ? false : true
+    item.his === "展望" || item.his === "耀聖" || item.his === "" ? false :true
   );
+
+  console.log(item.his, "itemHIS");
   // console.log("careNetwork",careNetwork)
   const careNetworkHandler = (data) => {
     let preString = data.previous;
@@ -94,8 +96,6 @@ const ClinicEditModal = (props) => {
       var joinGroup = "";
 
       const careNetworkCount = careNetwork.length;
-      console.log(careNetwork, "careNetworkcareNetwork");
-      // console.log(TRY, "TRY", networkRef.current.value);
       careNetwork.forEach((item, index) => {
         joinGroup += item;
         if (index + 1 < careNetworkCount) {
@@ -135,6 +135,7 @@ const ClinicEditModal = (props) => {
   const setHisHandler = (value) => {
     if (value === "其他") {
       setisOtherHis(true);
+      setHis("");
     } else {
       setisOtherHis(false);
       setHis(value);
@@ -252,10 +253,10 @@ const ClinicEditModal = (props) => {
                 id="HIS-system"
                 className="form-select"
                 aria-label="Default select example"
-                // defaultValue={
-                //   his !== "展望" || his !== "耀聖" || his !== "" ? "其他" : his
-                // }
-                defaultValue={his}
+                defaultValue={
+                  item.his === "展望" || item.his === "耀聖" || item.his === "" ? his : "其他"
+                }
+                // defaultValue={his}
                 onChange={(e) => {
                   setHisHandler(e.target.value);
                 }}
