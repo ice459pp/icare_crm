@@ -35,33 +35,8 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
-  // console.log(item, "item");
-  // let { care_network } = item;
-  // let care_network_select = [];
-  // if (care_network) {
-  //   care_network_select = care_network.split("$");
-  //   console.log(care_network_select, "arrraytetyi");
-  // }
-
-  // let {
-  //   call_number_way,
-  //   care_group,
-  //   care_network,
-  //   city,
-  //   district,
-  //   experience,
-  //   his,
-  //   id,
-  //   isDecided,
-  //   isUse_video,
-  //   isVisit_datetime,
-  //   name,
-  //   people,
-  //   phone,
-  //   road,
-  // } = item;
+  console.log(item, "iteeem");
   let networkRef = useRef();
-  // console.log(networkRef.current.value,"aaaaaa")
   const appSlice = useSelector((state) => state.appSlice);
 
   const [name, setName] = useState(item.name);
@@ -79,23 +54,22 @@ const ClinicEditModal = (props) => {
 
   const [careNetwork, setCareNetwork] = useState(
     item.care_network === "" ? [] : item.care_network.split("$")
-    // careNetworkArr
   );
   const [isDecided, setIsDecided] = useState(item.isDecided);
   const [isUseVideo, setIsUseVideo] = useState(item.isUse_video);
   const [visitDatetime, setVisitDatetime] = useState(item.isVisit_datetime);
 
   const [apiUpdate, setApiUpdate] = useState(false);
-  const [isOtherHis, setisOtherHis] = useState(false);
+  const [isOtherHis, setisOtherHis] = useState(
+    item.his !== "展望" || item.his !== "耀聖" ? false : true
+  );
   // console.log("careNetwork",careNetwork)
   const careNetworkHandler = (data) => {
     let preString = data.previous;
     let nowString = data.now.replace("$", "");
     let arr = Array.from(careNetwork);
 
-    arr = arr.map((value) =>
-      value === preString ? nowString : value
-    );
+    arr = arr.map((value) => (value === preString ? nowString : value));
     setCareNetwork(arr);
   };
 
@@ -168,8 +142,8 @@ const ClinicEditModal = (props) => {
   };
 
   useEffect(() => {
-    console.log(careNetwork);
-  }, [careNetwork]);
+    console.log(isOtherHis, "isOtherHisisOtherHis");
+  }, [isOtherHis]);
 
   return (
     <Fragment>
@@ -278,6 +252,9 @@ const ClinicEditModal = (props) => {
                 id="HIS-system"
                 className="form-select"
                 aria-label="Default select example"
+                // defaultValue={
+                //   his !== "展望" || his !== "耀聖" || his !== "" ? "其他" : his
+                // }
                 defaultValue={his}
                 onChange={(e) => {
                   setHisHandler(e.target.value);
@@ -293,9 +270,10 @@ const ClinicEditModal = (props) => {
                   type="text"
                   className="form-control mt-2"
                   id="otherHis"
+                  // required
                   // size={"sm"}
                   placeholder="必填(His)"
-                  defaultValue={""}
+                  defaultValue={his}
                   onChange={(e) => {
                     setHis(e.target.value);
                   }}

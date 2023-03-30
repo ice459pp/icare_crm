@@ -523,6 +523,10 @@ section {
     @media (max-width: 576px) {
       padding: 10px 15px;
     }
+    &.readonly {
+      cursor: default;
+      padding: 10px 15px;
+    }
     .logCard_title {
       font-size: 1.25rem;
       display: flex;

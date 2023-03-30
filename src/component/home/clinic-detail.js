@@ -51,7 +51,6 @@ const ClinicDetail = () => {
   const [logSearch, setLogSearch] = useState("");
 
   const pageChangeHandler = (value) => {
-    console.log(value);
     setPage(value);
   };
 
@@ -151,6 +150,9 @@ const ClinicDetail = () => {
     }
   }, [fetchClinicInfo]);
 
+  useEffect(()=>{
+    console.log(clinicInfo.his ,"clinicInfo.his ")
+  },[clinicInfo.his])
   return (
     <Fragment>
       <div className="w-100 padding-RWD">
@@ -338,7 +340,7 @@ const ClinicDetail = () => {
             <ClinicDetailLog
               key={item.id}
               item={item}
-              readonly={true}
+              readonly={false}
               onLogClick={editLogClickHandler}
             ></ClinicDetailLog>
           ))}
