@@ -22,6 +22,7 @@ import InputCheckText from "./input-check-text";
 // people: 3;
 // phone: "0921231434";
 // road: "瑞光路4段18號5-5";
+
 const careNetworkArr = [
   "BC肝",
   "氣喘",
@@ -61,10 +62,10 @@ const ClinicEditModal = (props) => {
 
   const [apiUpdate, setApiUpdate] = useState(false);
   const [isOtherHis, setisOtherHis] = useState(
-    item.his === "展望" || item.his === "耀聖" || item.his === "" ? false :true
+    item.his === "展望" || item.his === "耀聖" || item.his === "" ? false : true
   );
 
-  console.log(item.his, "itemHIS");
+  console.log(item.isVisit_datetime, "item.isVisit_datetime");
   // console.log("careNetwork",careNetwork)
   const careNetworkHandler = (data) => {
     let preString = data.previous;
@@ -254,9 +255,10 @@ const ClinicEditModal = (props) => {
                 className="form-select"
                 aria-label="Default select example"
                 defaultValue={
-                  item.his === "展望" || item.his === "耀聖" || item.his === "" ? his : "其他"
+                  item.his === "展望" || item.his === "耀聖" || item.his === ""
+                    ? his
+                    : "其他"
                 }
-                // defaultValue={his}
                 onChange={(e) => {
                   setHisHandler(e.target.value);
                 }}
@@ -446,9 +448,12 @@ const ClinicEditModal = (props) => {
             <div className="d-flex align-items-center flex-wrap overflow-hidden ">
               <div className="form-check py-2 pe-5">
                 <input
+                  // onChange={(e) => {
+                  //   const date = new Date();
+                  //   setVisitDatetime(`${date.getHours()}:${date.getMinutes()}`);
+                  // }}
                   onChange={(e) => {
-                    const date = new Date();
-                    setVisitDatetime(`${date.getHours()}:${date.getMinutes()}`);
+                    setVisitDatetime(visitDatetime);
                   }}
                   className="form-check-input"
                   type="radio"
@@ -534,17 +539,6 @@ const ClinicEditModal = (props) => {
                   onRemove={careNetwrokRemove}
                 />
               ))}
-              {/* <InputGroup size="sm" className="mx-2 my-2">
-                <InputGroup.Text id="inputGroup-sizing-sm">
-                  Small
-                </InputGroup.Text>
-                <Form.Control
-                  ref={networkRef}
-                  aria-label="Small"
-                  aria-describedby="inputGroup-sizing-sm"
-                  onChange={(e)=>careNetworkHandler(e.target.value)}
-                />
-              </InputGroup> */}
             </div>
           </div>
         </section>
