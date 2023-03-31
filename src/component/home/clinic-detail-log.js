@@ -24,7 +24,7 @@ const ClinicDetailLog = (props) => {
             }}
           >
             <div className="logCard_title">
-              <div data-id={item.visitor_id}>{item.visitor_name}</div>
+              <div className="text-primary" data-id={item.visitor_id}>{item.visitor_name}</div>
               <div className="logCard_title_dateStatus_PC">
                 <div className="date">{item.visit_datetime}</div>
                 <button className="btn btn-success text-white status fw-bolder  cursor-default">
@@ -47,7 +47,8 @@ const ClinicDetailLog = (props) => {
           <section
             data-id={item.id}
             className={
-              "bg-white text-dark logCard " + (readonly ? "readonly" : "")
+              "bg-white text-dark logCard cursor-default " +
+              (readonly ? "readonly" : "")
             }
           >
             <div className="logCard_title">
