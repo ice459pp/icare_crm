@@ -70,7 +70,7 @@ const PaginationUI = (props) => {
 
   return (
     <Fragment>
-      <Pagination variant="secondary">
+      <Pagination className="mx-3 my-3" variant="secondary">
         {page - 4 >= 0 && (
           <Pagination.First onClick={() => pageNumHandler(1)} />
         )}

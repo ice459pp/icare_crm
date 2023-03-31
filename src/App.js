@@ -51,9 +51,11 @@ function App() {
   useEffect(() => {
     const headNavbarRefDOM = headNavbarRef.current;
     const height = headNavbarRefDOM.clientHeight;
-    setHeight(window.innerHeight - height);
+    const calculatedHeight = window.innerHeight - height ; // 加上50px
+    setHeight(calculatedHeight);
     const handleResize = () => {
-      setHeight(window.innerHeight - height);
+      const calculatedHeight = window.innerHeight - height ; // 加上50px
+      setHeight(calculatedHeight);
     };
     window.addEventListener("resize", handleResize);
     return () => {
