@@ -61,6 +61,7 @@ const statusArr = [
 ];
 const ModalAddLog = (props) => {
   let { action, clinic_id, log } = props;
+  console.log(log,"lloggogogogog")
   const appSlice = useSelector((state) => state.appSlice);
 
   const currentDateTime = () => {
@@ -160,12 +161,6 @@ const ModalAddLog = (props) => {
         <Modal.Title>{log ? "編輯拜訪紀錄" : "新增拜訪紀錄"}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* <ModalAddLog
-            clinic_id={id}
-            action={"create"}
-            onClose={closeAddLogModalHandler}
-            onRefresh={refreshLogHandler}
-          /> */}
         <Fragment>
           <div className="py-2">
             <div className="form-floating">

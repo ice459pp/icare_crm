@@ -290,10 +290,7 @@ const SearchFilter = (props) => {
             <Button
               onClick={() => addDepartmentHandler(item)}
               className={`mx-1 mt-2 fs-6  border-0 ${selected[item] ? "bg-warning" : "bg-primary"}`}
-              // className="mx-1 mt-2 fs-6"
-              // className={`mx-1 mt-2 fs-6`}
               key={item}
-              // variant="primary"
               size="sm"
             >
               {item}

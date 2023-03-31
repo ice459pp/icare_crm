@@ -80,8 +80,11 @@ const ClinicDetail = () => {
 
   const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
   const [clinicInfo, setClinicInfo] = useState(clinicData);
+  const [logAction, setLogAction] = useState("add");
 
-  const createLogClickHandler = () => {
+  const createLogClickHandler = (item, status) => {
+    setLogAction(status);
+    setLog(item);
     setShowAddLogModal(true);
   };
 
@@ -102,7 +105,8 @@ const ClinicDetail = () => {
 
   const [log, setLog] = useState(null);
 
-  const editLogClickHandler = (logItem) => {
+  const editLogClickHandler = (logItem, status) => {
+    setLogAction(status);
     setLog(logItem);
     setShowAddLogModal(true);
   };
@@ -341,7 +345,7 @@ const ClinicDetail = () => {
               key={item.id}
               item={item}
               readonly={false}
-              onLogClick={editLogClickHandler}
+              onLogClick={() => editLogClickHandler(item, "edit")}
             ></ClinicDetailLog>
           ))}
           {totalCount > 0 && (
@@ -377,15 +381,20 @@ const ClinicDetail = () => {
         </Modal.Body>
       </Modal>
       <div className="log_button">
-        <Button variant="success" className="text-light" size="lg" onClick={createLogClickHandler}>
+        <Button
+          variant="success"
+          className="text-light"
+          size="lg"
+          onClick={() => createLogClickHandler(null, "add")}
+        >
           建立紀錄
         </Button>{" "}
       </div>
       {/* 新增log */}
-      {log === null && showAddLogModal && (
+      {logAction === "add" && showAddLogModal && (
         <ModalAddLog
           clinic_id={id}
-          action="add"
+          action={logAction}
           log={null}
           showMoadl={showAddLogModal}
           onClose={closeAddLogModalHandler}
@@ -393,10 +402,10 @@ const ClinicDetail = () => {
         />
       )}
 
-      {log && showAddLogModal && (
+      {logAction === "edit" && showAddLogModal && (
         <ModalAddLog
           clinic_id={id}
-          action="edit"
+          action={logAction}
           log={log}
           showMoadl={showAddLogModal}
           onClose={closeAddLogModalHandler}
