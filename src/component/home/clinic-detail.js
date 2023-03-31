@@ -290,11 +290,14 @@ const ClinicDetail = () => {
                   {!clinicInfo.care_network && `無`}
                   {clinicInfo.care_network && (
                     <Fragment>
-                      {clinicInfo.care_network.split("$").map((item) => (
-                        <div key={item} className="sick_btn">
-                          {item}
-                        </div>
-                      ))}
+                      {clinicInfo.care_network
+                        .split("$")
+                        .filter((item) => item !== "")
+                        .map((item) => (
+                          <div key={item} className="sick_btn">
+                            {item}
+                          </div>
+                        ))}
                     </Fragment>
                   )}
                 </div>

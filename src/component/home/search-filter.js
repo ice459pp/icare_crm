@@ -59,7 +59,6 @@ const SearchFilter = (props) => {
   let filterSlice = useSelector((state) => state.filterSlice);
   let { clinic_status, department, city, district, searchText } = filterSlice;
   let clinicNameRef = useRef(null);
-  console.log(city, "city", "district", district);
   const [clinicStatus, setClinicStatus] = useState(clinic_status);
   const [selectedCity, setSelectedCity] = useState(city);
   const [selectedDistrict, setSelectedDistrict] = useState(district);
@@ -139,13 +138,14 @@ const SearchFilter = (props) => {
     props.onDistrictChange("");
 
     setIsSelect(false);
+    setSelected([]);
     dispatch(filterAction.resetState());
   };
   const [departmentIsShow, setDepartmentIsShow] = useState(false);
   const [selected, setSelected] = useState({});
-
+  
   const showDepartmentModal = () => {
-    // props.onSubmitDepartment();
+
     setDepartmentIsShow(!departmentIsShow);
   };
   const closeDepartmentModal = () => {
@@ -289,7 +289,9 @@ const SearchFilter = (props) => {
           {departmentArr.map((item) => (
             <Button
               onClick={() => addDepartmentHandler(item)}
-              className={`mx-1 mt-2 fs-6  border-0 ${selected[item] ? "bg-warning" : "bg-primary"}`}
+              className={`mx-1 mt-2 fs-6  border-0 ${
+                selected[item] ? "bg-warning" : "bg-primary"
+              }`}
               key={item}
               size="sm"
             >
