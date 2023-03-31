@@ -36,35 +36,47 @@ const Home = () => {
   // useEffect(()=>{
 
   // },[])
+  // console.log(filterCity, "filterCity", filterDistrict, "filterDistrict");
+  useEffect(() => {
+    setPage(filterSlice.page);
+  }, [filterSlice.page]);
+  useEffect(() => {
+    setFilterDictrict(filterSlice.district);
+  }, [filterSlice.district]);
   useEffect(() => {
     setDepartment(filterSlice.department);
   }, [filterSlice.department]);
   const statusChangeHandler = (value) => {
     dispatch(filterAction.onClinicStatus(value));
-    // setPage(1);
+    dispatch(filterAction.onPage(1));
     setFilterStatus(value);
   };
 
   const cityChangeHangle = (value) => {
+    // console.log(value, "value", filterSlice.city, "filterSlice.city");
     dispatch(filterAction.onCity(value));
+    dispatch(filterAction.onDistrict(""));
     // setPage(1);
     setFilterCity(value);
     if (!value) {
       dispatch(filterAction.onCity(""));
       setFilterDictrict("");
     }
+    dispatch(filterAction.onPage(1));
   };
 
   const districtChangeHandler = (value) => {
     dispatch(filterAction.onDistrict(value));
     // setPage(1);
     setFilterDictrict(value);
+    dispatch(filterAction.onPage(1));
   };
 
   const searchTextHandler = (value) => {
     dispatch(filterAction.onsearchText(value));
     // setPage(1);
     setSearchText(value);
+    dispatch(filterAction.onPage(1));
   };
 
   const pageChangeHandler = (value) => {
@@ -81,10 +93,12 @@ const Home = () => {
     }
     dispatch(filterAction.onPermutations(value));
     setPermutations(value);
+    dispatch(filterAction.onPage(1));
   };
   const departmentHandler = (value) => {
     dispatch(filterAction.onDepartment(value));
     // setDepartment();
+    dispatch(filterAction.onPage(1));
   };
 
   useEffect(() => {

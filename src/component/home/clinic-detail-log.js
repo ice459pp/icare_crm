@@ -83,35 +83,6 @@ const ClinicDetailLog = (props) => {
           </section>
         )}
       </div>
-      {/* <Modal
-        className="radio-custom"
-        show={showModal}
-        onHide={handleModal}
-        centered
-        backdrop="static"
-        keyboard={false}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-      >
-        <Modal.Header className="bg-secondary text-white" closeButton>
-          <Modal.Title>編輯log123</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Modal_AddLog readonly={false} action={"edit"}></Modal_AddLog>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="success"
-            className="text-white w-25"
-            onClick={handleModal}
-          >
-            送出
-          </Button>
-          <Button variant="secondary" onClick={handleModal}>
-            取消
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
     </Fragment>
   );
 };

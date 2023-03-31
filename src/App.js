@@ -89,6 +89,7 @@ function App() {
               onEnter={() => window.scrollTo(0, 0)}
               component={UserLogin}
             ></Route>
+            <Redirect to="/login" />
           </div>
         </div>
       )}
@@ -104,6 +105,8 @@ function App() {
 
           <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
             <Switch>
+              <Route path="/login" component={UserLogin} />
+
               <Route
                 exact
                 path="/"

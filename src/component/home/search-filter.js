@@ -59,24 +59,13 @@ const SearchFilter = (props) => {
   let filterSlice = useSelector((state) => state.filterSlice);
   let { clinic_status, department, city, district, searchText } = filterSlice;
   let clinicNameRef = useRef(null);
-  const [clinicStatus, setClinicStatus] = useState(
-    clinic_status
-    // sessionStorage.getItem("clinic_status")
-  );
-  const [selectedCity, setSelectedCity] = useState(
-    city
-    // sessionStorage.getItem("city")
-  );
-  const [selectedDistrict, setSelectedDistrict] = useState(
-    district
-    // sessionStorage.getItem("district")
-  );
+  console.log(city, "city", "district", district);
+  const [clinicStatus, setClinicStatus] = useState(clinic_status);
+  const [selectedCity, setSelectedCity] = useState(city);
+  const [selectedDistrict, setSelectedDistrict] = useState(district);
   const [districts, setDistricts] = useState([]);
   const [isSelect, setIsSelect] = useState(false);
-  // const [departmentState, setDepartmentState] = useState(
-  //   department
-  //   // sessionStorage.getItem("clinic_status")
-  // );
+
   useEffect(() => {
     if (searchText) {
       clinicNameRef.current.value = searchText;
@@ -94,6 +83,9 @@ const SearchFilter = (props) => {
       setDistricts([]);
     }
   }, [selectedCity]);
+  useEffect(() => {
+    setSelectedDistrict(district);
+  }, [district]);
   const clinicStatusHandler = (e) => {
     let value = e.target.value;
     props.onStatusChange(value);
@@ -106,7 +98,6 @@ const SearchFilter = (props) => {
     }
     let value = clinicNameRef.current.value || "";
     props.onSearchText(value);
-    // dispatch(filterAction.onsearchText(value));
     setIsSelect(true);
   };
   const cityChangeHandler = (e) => {
@@ -114,7 +105,6 @@ const SearchFilter = (props) => {
     let value = e.target.value;
     setSelectedCity(value);
     setIsSelect(true);
-    // dispatch(filterAction.onCity(value));
     props.onCityChange(value);
   };
   const districtChangeHandler = (e) => {
@@ -122,7 +112,6 @@ const SearchFilter = (props) => {
     let value = e.target.value;
     setSelectedDistrict(value);
     setIsSelect(true);
-    // dispatch(filterAction.onDistrict(value));
     props.onDistrictChange(value);
   };
 
@@ -153,6 +142,7 @@ const SearchFilter = (props) => {
     dispatch(filterAction.resetState());
   };
   const [departmentIsShow, setDepartmentIsShow] = useState(false);
+  const [selected, setSelected] = useState({});
 
   const showDepartmentModal = () => {
     // props.onSubmitDepartment();
@@ -161,9 +151,12 @@ const SearchFilter = (props) => {
   const closeDepartmentModal = () => {
     setDepartmentIsShow(false);
   };
-
-  const addDepartmentHandler = (e) => {
-    props.onDepartmentChange(e);
+  const addDepartmentHandler = (item) => {
+    setSelected((prev) => ({
+      ...prev,
+      [item]: !prev[item],
+    }));
+    props.onDepartmentChange(item);
   };
   return (
     <Fragment>
@@ -296,9 +289,11 @@ const SearchFilter = (props) => {
           {departmentArr.map((item) => (
             <Button
               onClick={() => addDepartmentHandler(item)}
-              className="mx-1 mt-2 fs-6"
+              className={`mx-1 mt-2 fs-6  border-0 ${selected[item] ? "bg-warning" : "bg-primary"}`}
+              // className="mx-1 mt-2 fs-6"
+              // className={`mx-1 mt-2 fs-6`}
               key={item}
-              variant="primary"
+              // variant="primary"
               size="sm"
             >
               {item}
