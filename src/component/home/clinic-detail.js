@@ -1,16 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Search from "../component/home/search";
 import { useHistory, useParams } from "react-router-dom";
-
 import ClinicDetailLog from "./clinic-detail-log";
 import ClinicEditModal from "./inform/modal-clinic-edit";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import HomeIcon from "../icon/Home_icon";
 import PhoneIcon from "../icon/Phone_icon";
-import Modal_AddLog from "./log/modal-add-log";
-import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Pagination from "./Pagination";
 import { apiClinicInfo } from "../../api/api-clinic-info";
