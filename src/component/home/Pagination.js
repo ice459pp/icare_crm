@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import "../../scss/pagination.scss"
 import { useViewport } from "../../useViewport";
 
 const PaginationUI = (props) => {
@@ -70,7 +71,7 @@ const PaginationUI = (props) => {
 
   return (
     <Fragment>
-      <Pagination className="mx-3 my-3" variant="secondary">
+      <Pagination className="" variant="secondary">
         {page - 4 >= 0 && (
           <Pagination.First onClick={() => pageNumHandler(1)} />
         )}

@@ -185,14 +185,14 @@
           }
         }
       }
-      .care_network_block{
+      .care_network_block {
         padding: 0.5rem 3rem 0.5rem 0;
         width: 100%;
         @media (max-width: 996px) {
           padding: 0.25rem 0;
         }
-        button{
-          margin-right:0.5rem;
+        button {
+          margin-right: 0.5rem;
           @media (max-width: 996px) {
             margin-top: 0.25rem;
             margin-right: 0.25rem;
@@ -451,6 +451,9 @@ textarea {
   position: absolute;
   bottom: 1%;
   right: 1%;
+  @media (max-width: 576px) {
+    bottom: 15%;
+  }
   .btn-lg {
     background-color: #27bbb3 !important;
     @media (max-width: 996px) {
