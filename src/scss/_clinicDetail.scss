@@ -185,6 +185,21 @@
           }
         }
       }
+      .care_network_block{
+        padding: 0.5rem 3rem 0.5rem 0;
+        width: 100%;
+        @media (max-width: 996px) {
+          padding: 0.25rem 0;
+        }
+        button{
+          margin-right:0.5rem;
+          @media (max-width: 996px) {
+            margin-top: 0.25rem;
+            margin-right: 0.25rem;
+            margin-bottom: 0.25rem;
+          }
+        }
+      }
     }
 
     &.inform-radio2 {

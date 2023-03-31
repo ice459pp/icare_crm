@@ -505,9 +505,9 @@ const ClinicEditModal = (props) => {
             /> */}
           </label>
           <div className="d-flex align-items-center flex-wrap">
-            <div className="form-check py-2  pe-5">
+            <div className="form-check  care_network_block">
               <Button
-                className="me-2"
+                className=""
                 size="sm"
                 variant="secondary"
                 onClick={() => addCare_network()}
@@ -516,7 +516,7 @@ const ClinicEditModal = (props) => {
               </Button>
               {careNetworkArr.map((item, index) => (
                 <Button
-                  className="mx-2 "
+                  className=""
                   size="sm"
                   key={index}
                   // variant={

@@ -1,31 +1,52 @@
 import React, { Fragment, useEffect, useState } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import { useViewport } from "../../useViewport";
 
 const PaginationUI = (props) => {
   const { page, totalPage } = props;
-
+  const { width, height } = useViewport();
   const [pages, setPages] = useState([]);
+  const [isRwd, setIsRwd] = useState(false);
+  useEffect(() => {
+    if (width < 576) {
+      setIsRwd(true);
+    } else {
+      setIsRwd(false);
+    }
+  }, [width]);
   useEffect(() => {
     let pageArr = [];
-    if (totalPage <= 10) {
+    if (totalPage <= 5) {
       for (let i = 1; i <= totalPage; i++) {
         pageArr.push(i);
       }
-    } else if (page < 6) {
-      for (let i = 1; i <= 10; i++) {
-        pageArr.push(i);
-      }
-    } else if (page > totalPage - 5) {
-      for (let i = totalPage - 9; i <= totalPage; i++) {
+    } else if (isRwd) {
+      const startIndex = page - 2;
+      for (let i = startIndex; i < startIndex + 5; i++) {
         pageArr.push(i);
       }
     } else {
-      for (let i = page - 5; i <= page + 4; i++) {
+      let startPage, endPage;
+      if (totalPage <= 10) {
+        startPage = 1;
+        endPage = totalPage;
+      } else if (page <= 6) {
+        startPage = 1;
+        endPage = 10;
+      } else if (page + 4 >= totalPage) {
+        startPage = totalPage - 9;
+        endPage = totalPage;
+      } else {
+        startPage = page - 5;
+        endPage = page + 4;
+      }
+      for (let i = startPage; i <= endPage; i++) {
         pageArr.push(i);
       }
     }
+    pageArr = pageArr.filter((pageNum) => pageNum > 0 && pageNum <= totalPage);
     setPages(pageArr);
-  }, [page, totalPage]);
+  }, [page, totalPage, isRwd]);
 
   const pageNumHandler = (pageNumber) => {
     props.onPageChange(pageNumber);
@@ -53,7 +74,7 @@ const PaginationUI = (props) => {
         {page - 4 >= 0 && (
           <Pagination.First onClick={() => pageNumHandler(1)} />
         )}
-        <Pagination.Prev onClick={pagePrevHandler} />
+        {isRwd ? null : <Pagination.Prev onClick={pagePrevHandler} />}{" "}
         {pages.map((pageNum) => (
           <Pagination.Item
             active={pageNum === page}
@@ -63,7 +84,7 @@ const PaginationUI = (props) => {
             {pageNum}
           </Pagination.Item>
         ))}
-        <Pagination.Next onClick={pageNextHandler} />
+        {isRwd ? null : <Pagination.Next onClick={pageNextHandler} />}{" "}
         {page + 4 < totalPage && (
           <Pagination.Last onClick={() => pageNumHandler(totalPage)} />
         )}

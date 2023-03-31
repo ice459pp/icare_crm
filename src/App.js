@@ -10,6 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserLogin from "./pages/login";
 import "./scss/App.scss";
 import { useSelector } from "react-redux";
+
+import { useViewport } from "./useViewport";
+
 // import { is } from "immer/dist/internal";
 const NavbarWidth = {
   left: `0`,
@@ -22,10 +25,12 @@ const RouterWidth = {
 function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let isLogin_store = appSlice.isLogin;
+  // const { width, height } = useViewport();
   const initHeight = `${window.innerHeight}`;
   const [height, setHeight] = useState(initHeight);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
+
   useEffect(() => {
     setIsLogin(isLogin_store);
   }, [isLogin_store]);

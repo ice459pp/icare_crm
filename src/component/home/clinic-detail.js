@@ -51,10 +51,11 @@ const ClinicDetail = () => {
   };
 
   const logSearchHandler = (value) => {
-    const timer = setInterval(() => {
-      clearInterval(timer);
-      setLogSearch(value.trim());
-    }, 1300);
+    setLogSearch(value.trim());
+    // const timer = setInterval(() => {
+    //   clearInterval(timer);
+    //   setLogSearch(value.trim());
+    // }, 1300);
   };
 
   const clearSearchHandler = () => {
@@ -300,9 +301,11 @@ const ClinicDetail = () => {
               查詢結果({totalCount}筆):
               <input
                 type="text"
+                // ref={logSearchRef}
                 className="form-control"
                 placeholder="內容紀錄查詢"
-                defaultValue=""
+                // defaultValue={""}
+                value={logSearch}
                 onChange={(e) => {
                   logSearchHandler(e.target.value);
                 }}
