@@ -156,7 +156,7 @@ const ClinicListItem = (props) => {
             新增紀錄
           </Button>
           <Button variant="secondary" onClick={closeLogListModalHandler}>
-            取消
+            離開
           </Button>
         </Modal.Footer>
       </Modal>
