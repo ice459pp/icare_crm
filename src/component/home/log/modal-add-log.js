@@ -1,12 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Modal, Form, InputGroup } from "react-bootstrap";
-
 import { useSelector } from "react-redux";
 import InputRadio from "./input-radio";
 import ErrorText from "../error-text";
 import { apiLogCreate } from "../../../api/api-clinic-log";
-import { faL } from "@fortawesome/free-solid-svg-icons";
-
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
 
@@ -61,15 +58,12 @@ const statusArr = [
 ];
 const ModalAddLog = (props) => {
   let { action, clinic_id, log } = props;
-  console.log(log,"lloggogogogog")
   const appSlice = useSelector((state) => state.appSlice);
 
   const currentDateTime = () => {
     var tzoffset = new Date().getTimezoneOffset() * 60000;
     return new Date(Date.now() - tzoffset).toISOString().slice(0, -8);
   };
-
-  // console.log(item, "in ModalAddLog", action, "action");
   const style = {
     height: `300px`,
   };
@@ -78,23 +72,24 @@ const ModalAddLog = (props) => {
   const [apiStart, setApiStart] = useState(false);
 
   // 初訪 回訪 電訪 教育訓練
-  const [category, setCategory] = useState(log ? log.visit_category : "初訪");
+  const [category, setCategory] = useState(
+    action === "edit" ? log.visit_category : "初訪"
+  );
 
   // 可回訪 可電訪 結案
-  const [status, setStatus] = useState(log ? log.clinic_status : "可回訪");
+  const [status, setStatus] = useState(
+    action === "edit" ? log.clinic_status : "可回訪"
+  );
 
-  const [description, setDiscription] = useState(log ? log.content : "");
+  const [description, setDiscription] = useState(
+    action === "edit" ? log.content : ""
+  );
 
   const [visitDate, setVisitDate] = useState(
-    log
+    action === "edit"
       ? log.visit_datetime.replaceAll("/", "-").replace(" ", "T")
       : currentDateTime()
   );
-
-  // useEffect(() => {
-  //   console.log(log);
-  // }, []);
-
   const statusChangeHandler = (event) => {
     const value = event.target.value;
     setStatus(value);
@@ -122,7 +117,6 @@ const ModalAddLog = (props) => {
   const closeModalHandler = () => {
     props.onClose();
   };
-
   useEffect(() => {
     if (apiStart) {
       const token = appSlice.userToken;
@@ -134,7 +128,7 @@ const ModalAddLog = (props) => {
         status,
         formatDate(visitDate),
         description,
-        log ? "edit" : "add",
+        action,
         (err) => {
           setErrorText(err);
         },
@@ -145,7 +139,6 @@ const ModalAddLog = (props) => {
       );
     }
   }, [apiStart]);
-
   return (
     <Modal
       className="radio-custom"
@@ -158,7 +151,9 @@ const ModalAddLog = (props) => {
       aria-labelledby="contained-modal-title-vcenter"
     >
       <Modal.Header className="bg-secondary text-white" closeButton>
-        <Modal.Title>{log ? "編輯拜訪紀錄" : "新增拜訪紀錄"}</Modal.Title>
+        <Modal.Title>
+          {action === "edit" ? "編輯拜訪紀錄" : "新增拜訪紀錄"}
+        </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Fragment>
@@ -166,7 +161,6 @@ const ModalAddLog = (props) => {
             <div className="form-floating">
               <div className="input-group  px-2 ps-3 py-2 radio-custom inputRadio">
                 <div className="pe-3">拜訪類別:</div>
-
                 {categoryArr.map((item) => {
                   return (
                     <InputRadio

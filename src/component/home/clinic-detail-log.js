@@ -1,10 +1,4 @@
 import React, { Fragment, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Search from "../component/home/search";
-import { useParams } from "react-router-dom";
-import { Button, Modal, Form } from "react-bootstrap";
-import Modal_AddLog from "./log/modal-add-log";
-
 const ClinicDetailLog = (props) => {
   let { item, readonly } = props;
   let isEditFormal = false;
@@ -17,13 +11,6 @@ const ClinicDetailLog = (props) => {
       isEditFormal = false;
     }
   }
-  const [showModal, setShowModal] = useState(false);
-  const handleModal = () => {
-    // 撈出redux LOG 資料的值，然後post給API 記得重製
-
-    // TODOＡＰＩ　ＰＯＳＴ　ｅｄｉｔＬＯＧ
-    setShowModal(!showModal);
-  };
   return (
     <Fragment>
       <div>

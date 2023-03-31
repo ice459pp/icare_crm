@@ -30,13 +30,9 @@ const Home = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [permutations, setPermutations] = useState(
     filterSlice.permutations
-    // sessionStorage.getItem("permutations") ? "Dnew" : "Dnew"
   );
   const [department, setDepartment] = useState(filterSlice.department);
-  // useEffect(()=>{
 
-  // },[])
-  // console.log(filterCity, "filterCity", filterDistrict, "filterDistrict");
   useEffect(() => {
     setPage(filterSlice.page);
   }, [filterSlice.page]);
@@ -53,10 +49,9 @@ const Home = () => {
   };
 
   const cityChangeHangle = (value) => {
-    // console.log(value, "value", filterSlice.city, "filterSlice.city");
     dispatch(filterAction.onCity(value));
     dispatch(filterAction.onDistrict(""));
-    // setPage(1);
+  
     setFilterCity(value);
     if (!value) {
       dispatch(filterAction.onCity(""));
@@ -67,23 +62,18 @@ const Home = () => {
 
   const districtChangeHandler = (value) => {
     dispatch(filterAction.onDistrict(value));
-    // setPage(1);
     setFilterDictrict(value);
     dispatch(filterAction.onPage(1));
   };
-
   const searchTextHandler = (value) => {
     dispatch(filterAction.onsearchText(value));
-    // setPage(1);
     setSearchText(value);
     dispatch(filterAction.onPage(1));
   };
-
   const pageChangeHandler = (value) => {
     dispatch(filterAction.onPage(value));
     setPage(value);
   };
-
   const logoutHandler = () => {
     dispatch(appAction.logout());
   };
@@ -97,7 +87,6 @@ const Home = () => {
   };
   const departmentHandler = (value) => {
     dispatch(filterAction.onDepartment(value));
-    // setDepartment();
     dispatch(filterAction.onPage(1));
   };
 
@@ -142,9 +131,7 @@ const Home = () => {
 
   return (
     <Fragment>
-      {/* <div className="h-100 Navbar" style={menuIsShow ? NavbarWidth : {}}>
-          <Navbar showMenu={(e) => menuHandler()}></Navbar>
-        </div> */}
+
       <div className="w-100 mt-3 padding-RWD ">
         <SearchFilter
           onStatusChange={statusChangeHandler}
@@ -153,7 +140,6 @@ const Home = () => {
           onSearchText={searchTextHandler}
           onDepartmentChange={departmentHandler}
           onMutationHandler={mutationHandler}
-          // onSubmitDepartment={submitDepartment}
         />
       </div>
       <div className="w-100 padding-RWD mt-3">
@@ -163,14 +149,6 @@ const Home = () => {
             {`${totalPage === 0 ? 0 : page} / ${totalPage}`} 頁 ，共{totalCount}
             筆
           </div>
-          {/* <Button variant="secondary" onClick={dateSortHandler} size="sm">
-            日期排序
-            {dateSort ? (
-              <FontAwesomeIcon className="ms-2" icon="fas fa-arrow-down" />
-            ) : (
-              <FontAwesomeIcon className="ms-2" icon="fas fa-arrow-up" />
-            )}{" "}
-          </Button>{" "} */}
           <Dropdown>
             <Dropdown.Toggle
               size="sm"
@@ -249,7 +227,5 @@ const Home = () => {
       )}
     </Fragment>
   );
-
-  // list listItem
 };
 export default Home;
