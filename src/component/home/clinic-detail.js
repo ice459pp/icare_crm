@@ -1,16 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import Search from "../component/home/search";
 import { useHistory, useParams } from "react-router-dom";
-
 import ClinicDetailLog from "./clinic-detail-log";
 import ClinicEditModal from "./inform/modal-clinic-edit";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import HomeIcon from "../icon/Home_icon";
 import PhoneIcon from "../icon/Phone_icon";
-import Modal_AddLog from "./log/modal-add-log";
-import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Pagination from "./Pagination";
 import { apiClinicInfo } from "../../api/api-clinic-info";
@@ -81,9 +77,9 @@ const ClinicDetail = () => {
   const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
   const [clinicInfo, setClinicInfo] = useState(clinicData);
   const [logAction, setLogAction] = useState("add");
-
-  const createLogClickHandler = (item, status) => {
-    setLogAction(status);
+  const [log, setLog] = useState(null);
+  const createLogClickHandler = (item, action) => {
+    setLogAction(action);
     setLog(item);
     setShowAddLogModal(true);
   };
@@ -93,21 +89,9 @@ const ClinicDetail = () => {
     setShowAddLogModal(false);
   };
 
-  // for detail log editing
-  /**
-   * 
-   * logId={logId}
-        category={logCategory}
-        datetime={logDatetime}
-        description={logDescription}
-        status={logStatus}} logId 
-   */
-
-  const [log, setLog] = useState(null);
-
-  const editLogClickHandler = (logItem, status) => {
-    setLogAction(status);
-    setLog(logItem);
+  const editLogClickHandler = (item, action) => {
+    setLogAction(action);
+    setLog(item);
     setShowAddLogModal(true);
   };
 
@@ -153,10 +137,6 @@ const ClinicDetail = () => {
       navigate.push("/login");
     }
   }, [fetchClinicInfo]);
-
-  // useEffect(()=>{
-  //   console.log(clinicInfo.his ,"clinicInfo.his ")
-  // },[clinicInfo.his])
   return (
     <Fragment>
       <div className="w-100 padding-RWD">
@@ -188,7 +168,6 @@ const ClinicDetail = () => {
             <section className=" card">
               <div className="card-item">
                 <div className="card-item-title">HIS系統</div>
-                {/* <div className="card-item-content">{clinicInfo.his}</div> */}
                 <div
                   className={`card-item-content ${
                     clinicInfo.his ? "text-dark" : "text-danger"
@@ -319,12 +298,6 @@ const ClinicDetail = () => {
             <div>Log:</div>
             <InputGroup size="sm" className="">
               查詢結果({totalCount}筆):
-              {/* <Form.Control
-                onBlur={(e) => logSearchHandler(e.target.value)}
-                value={logSearch}
-                aria-label="Small"
-                aria-describedby="inputGroup-sizing-sm"
-              /> */}
               <input
                 type="text"
                 className="form-control"
@@ -398,7 +371,7 @@ const ClinicDetail = () => {
         <ModalAddLog
           clinic_id={id}
           action={logAction}
-          log={null}
+          log={log}
           showMoadl={showAddLogModal}
           onClose={closeAddLogModalHandler}
           onRefresh={refreshHandler}
@@ -417,7 +390,5 @@ const ClinicDetail = () => {
       )}
     </Fragment>
   );
-
-  // list listItem
 };
 export default ClinicDetail;

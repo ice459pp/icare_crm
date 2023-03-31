@@ -29,6 +29,8 @@ const ClinicListItem = (props) => {
   const [showAddLogModal, setShowAddLogModal] = useState(false);
   const [showLogListModal, setShowLogListModal] = useState(false);
   const [refreshLog, setRefreshLog] = useState(false);
+  // const [logAction, setLogAction] = useState("add");
+  // const [log, setLog] = useState(null);
   const [page, setPage] = useState(1);
 
   const handleAddLogModal1 = () => {
@@ -44,15 +46,13 @@ const ClinicListItem = (props) => {
     // TODO  POST API LOG (new)
     setShowAddLogModal(!showAddLogModal);
   };
-
-  const showAddLogModalHandler = () => {
+  const showAddLogModalHandler = (item, action) => {
     setShowAddLogModal(true);
   };
 
   const closeAddLogModalHandler = () => {
     setShowAddLogModal(false);
   };
-
   const showLogListModalHandler = () => {
     setShowLogListModal(true);
   };
@@ -151,23 +151,26 @@ const ClinicListItem = (props) => {
           <Button
             variant="success"
             className="text-white w-25"
-            onClick={showAddLogModalHandler}
+            onClick={() => showAddLogModalHandler(null, "add")}
           >
             新增紀錄
           </Button>
           <Button variant="secondary" onClick={closeLogListModalHandler}>
-            取消
+            離開
           </Button>
         </Modal.Footer>
       </Modal>
       {/* 新增log */}
-      <ModalAddLog
-        clinic_id={item.id}
-        action={"add"}
-        showMoadl={showAddLogModal}
-        onClose={closeAddLogModalHandler}
-        onRefresh={refreshMoadlHandler}
-      />
+      {showAddLogModal && (
+        <ModalAddLog
+          clinic_id={item.id}
+          action={"add"}
+          log={null}
+          showMoadl={showAddLogModal}
+          onClose={closeAddLogModalHandler}
+          onRefresh={refreshMoadlHandler}
+        />
+      )}
     </Fragment>
   );
 

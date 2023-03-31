@@ -26,9 +26,6 @@ const log_writingSlice = createSlice({
       state.clinic_id = value;
     },
     onSalesChange(state, action) {
-      //   let { id, name } = action.payload;
-      //   state.salesName = name;
-      //   state.sales_id = id;
       let value = action.payload;
       state.token = value;
     },
@@ -39,7 +36,6 @@ const log_writingSlice = createSlice({
     onContentChange(state, action) {
       let value = action.payload;
       state.content = value;
-      // console.log(value,"valueeeee")
     },
     onVisitDateTimeChange(state, action) {
       let value = action.payload;
