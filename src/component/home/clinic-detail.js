@@ -48,21 +48,15 @@ const ClinicDetail = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [logSearch, setLogSearch] = useState("");
   const divRef = useRef(null);
+  const [scrollAdjust, setScrollAdjust] = useState(false)
   const pageChangeHandler = (value) => {
-    console.log(value, "vvaa");
-    window.scrollTo(0, 0); // 將滾動條移動到頁面頂部
-
-    // window.scrollTo({ top: 0, behavior: "smooth" });
+    setScrollAdjust(true)
     setPage(value);
-    divRef.current.scrollIntoView({ behavior: 'smooth' });
+  
   };
 
   const logSearchHandler = (value) => {
     setLogSearch(value.trim());
-    // const timer = setInterval(() => {
-    //   clearInterval(timer);
-    //   setLogSearch(value.trim());
-    // }, 1300);
   };
 
   const clearSearchHandler = () => {
@@ -103,9 +97,13 @@ const ClinicDetail = () => {
     setLog(item);
     setShowAddLogModal(true);
   };
+  // this will be trigger when scrollAdjust and list change
   useEffect(() => {
-    console.log(clinicInfo, "clinicInfo");
-  }, [clinicInfo]);
+    if (scrollAdjust && logList) {
+      divRef.current.scrollIntoView({ behavior: "smooth" });
+      setScrollAdjust(false)
+    }
+  }, [logList, scrollAdjust])
   // this will be trigger when show log modal
   useEffect(() => {
     // this is important.

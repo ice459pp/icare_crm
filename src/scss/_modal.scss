@@ -114,6 +114,12 @@
     }
   }
 }
+.addRecord{
+  width: 25%;
+  @media (max-width: 996px) {
+    width: auto;
+  }
+}
 .departmentModal {
   .title {
     font-weight: 900;

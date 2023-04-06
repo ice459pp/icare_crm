@@ -150,7 +150,7 @@ const ClinicListItem = (props) => {
         <Modal.Footer>
           <Button
             variant="warning"
-            className="text-white w-25"
+            className="text-white addRecord"
             onClick={() => showAddLogModalHandler(null, "add")}
           >
             新增紀錄

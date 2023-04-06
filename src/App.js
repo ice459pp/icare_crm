@@ -23,8 +23,7 @@ const RouterWidth = {
 function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let isLogin_store = appSlice.isLogin;
-  // const { width, height } = useViewport();
-  const initHeight = `${window.innerHeight}`;
+  const { initWidth, initHeight } = useViewport();
   const [height, setHeight] = useState(initHeight);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
@@ -61,7 +60,7 @@ function App() {
     setElementHeight();
     window.addEventListener("resize", setElementHeight);
     return () => window.removeEventListener("resize", setElementHeight);
-  }, [height]);
+  }, [initHeight,initWidth,height]);
   return (
     <Fragment>
       {/* navbar */}
