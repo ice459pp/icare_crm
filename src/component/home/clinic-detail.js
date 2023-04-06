@@ -13,6 +13,7 @@ import { apiClinicInfo } from "../../api/api-clinic-info";
 import { useSelector } from "react-redux";
 import ModalAddLog from "./log/modal-add-log";
 import { apiLogList } from "../../api/api-clinic-log";
+import { useRef } from "react";
 let clinicData = {
   id: "", // clinic id
   name: "", // clinic name
@@ -34,6 +35,7 @@ let clinicData = {
 
 const ClinicDetail = () => {
   // detail+logList
+  
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
   const params = useParams();
@@ -45,9 +47,14 @@ const ClinicDetail = () => {
   const [totalPage, setTotalPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const [logSearch, setLogSearch] = useState("");
-
+  const divRef = useRef(null);
   const pageChangeHandler = (value) => {
+    console.log(value, "vvaa");
+    window.scrollTo(0, 0); // 將滾動條移動到頁面頂部
+
+    // window.scrollTo({ top: 0, behavior: "smooth" });
     setPage(value);
+    divRef.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   const logSearchHandler = (value) => {
@@ -79,6 +86,7 @@ const ClinicDetail = () => {
   const [clinicInfo, setClinicInfo] = useState(clinicData);
   const [logAction, setLogAction] = useState("add");
   const [log, setLog] = useState(null);
+
   const createLogClickHandler = (item, action) => {
     setLogAction(action);
     setLog(item);
@@ -95,7 +103,9 @@ const ClinicDetail = () => {
     setLog(item);
     setShowAddLogModal(true);
   };
-
+  useEffect(() => {
+    console.log(clinicInfo, "clinicInfo");
+  }, [clinicInfo]);
   // this will be trigger when show log modal
   useEffect(() => {
     // this is important.
@@ -274,7 +284,10 @@ const ClinicDetail = () => {
                         .split("$")
                         .filter((item) => item !== "")
                         .map((item) => (
-                          <div key={item} className="sick_btn">
+                          <div
+                            key={Math.random().toString(36).substr(2, 9)}
+                            className="sick_btn"
+                          >
                             {item}
                           </div>
                         ))}
@@ -296,7 +309,7 @@ const ClinicDetail = () => {
         </div>
         <div className="py-2 w-100">
           <div className="h5 text-dark fw-bolder log_title">
-            <div>Log:</div>
+            <div  ref={divRef}>Log:</div>
             <InputGroup size="sm" className="">
               查詢結果({totalCount}筆):
               <input
@@ -328,7 +341,7 @@ const ClinicDetail = () => {
             ></ClinicDetailLog>
           ))}
           {totalCount > 0 && (
-            <div className="d-flex justify-content-center mt-4">
+            <div className="d-flex justify-content-center ">
               <Pagination
                 page={page}
                 totalPage={totalPage}

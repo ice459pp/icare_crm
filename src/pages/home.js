@@ -10,6 +10,7 @@ import Pagination from "../component/home/Pagination";
 import { apiClinicList } from "../api/api-clinic-list";
 import { appAction } from "../store/app-slice";
 import { filterAction } from "../store/filter-slice";
+import { useRef } from "react";
 
 const Home = () => {
   const appSlice = useSelector((state) => state.appSlice);
@@ -28,11 +29,9 @@ const Home = () => {
   const [page, setPage] = useState(filterSlice.page);
   const [totalPage, setTotalPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
-  const [permutations, setPermutations] = useState(
-    filterSlice.permutations
-  );
+  const [permutations, setPermutations] = useState(filterSlice.permutations);
   const [department, setDepartment] = useState(filterSlice.department);
-
+  const divRef = useRef(null);
   useEffect(() => {
     setPage(filterSlice.page);
   }, [filterSlice.page]);
@@ -51,7 +50,7 @@ const Home = () => {
   const cityChangeHangle = (value) => {
     dispatch(filterAction.onCity(value));
     dispatch(filterAction.onDistrict(""));
-  
+
     setFilterCity(value);
     if (!value) {
       dispatch(filterAction.onCity(""));
@@ -73,6 +72,7 @@ const Home = () => {
   const pageChangeHandler = (value) => {
     dispatch(filterAction.onPage(value));
     setPage(value);
+    divRef.current.scrollIntoView({ behavior: "smooth" });
   };
   const logoutHandler = () => {
     dispatch(appAction.logout());
@@ -128,10 +128,8 @@ const Home = () => {
     filterStatus,
     department,
   ]);
-
   return (
     <Fragment>
-
       <div className="w-100 mt-3 padding-RWD ">
         <SearchFilter
           onStatusChange={statusChangeHandler}
@@ -143,7 +141,9 @@ const Home = () => {
         />
       </div>
       <div className="w-100 padding-RWD mt-3">
-        <h4 className="text-center fw-bolder ">診所列表</h4>
+        <h4 className="text-center fw-bolder " ref={divRef}>
+          診所列表
+        </h4>
         <div className="d-flex align-items-end tableSort mb-2">
           <div className="me-3 text-dark fw-bold">
             {`${totalPage === 0 ? 0 : page} / ${totalPage}`} 頁 ，共{totalCount}

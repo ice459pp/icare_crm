@@ -24,17 +24,21 @@ const ClinicDetailLog = (props) => {
             }}
           >
             <div className="logCard_title">
-              <div className="text-primary" data-id={item.visitor_id}>{item.visitor_name}</div>
+              <div className="text-primary" data-id={item.visitor_id}>
+                {item.visitor_name}
+              </div>
               <div className="logCard_title_dateStatus_PC">
                 <div className="date">{item.visit_datetime}</div>
-                <button className="btn btn-success text-white status fw-bolder  cursor-default">
+                <div className=" status fw-bolder "> {item.visit_category}</div>
+                {/* <button className="btn btn-success text-white status fw-bolder  cursor-default">
                   {item.visit_category}
-                </button>
+                </button> */}
               </div>
               <div className="logCard_title_dateStatus_PD">
-                <button className="btn btn-success text-white status fw-bolder cursor-default">
+                <div className=" status fw-bolder "> {item.visit_category}</div>
+                {/* <button className="btn btn-success text-white status fw-bolder cursor-default">
                   {item.visit_category}
-                </button>
+                </button> */}
               </div>
             </div>
             <div className="date_PD">{item.visit_datetime}</div>
@@ -55,14 +59,18 @@ const ClinicDetailLog = (props) => {
               <div data-id={item.visitor_id}>{item.visitor_name}</div>
               <div className="logCard_title_dateStatus_PC">
                 <div className="date">{item.visit_datetime}</div>
-                <button className="btn btn-success text-white status  cursor-default">
+                <div className=" status fw-bolder "> {item.visit_category}</div>
+
+                {/* <button className="btn btn-success text-white status  cursor-default">
                   {item.visit_category}
-                </button>
+                </button> */}
               </div>
               <div className="logCard_title_dateStatus_PD">
-                <button className="btn btn-success text-white status cursor-default">
+              <div className=" status fw-bolder "> {item.visit_category}</div>
+
+                {/* <button className="btn btn-success text-white status cursor-default">
                   {item.visit_category}
-                </button>
+                </button> */}
               </div>
             </div>
             <div className="date_PD">{item.visit_datetime}</div>

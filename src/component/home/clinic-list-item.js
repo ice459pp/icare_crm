@@ -112,7 +112,7 @@ const ClinicListItem = (props) => {
             variant="success"
           >
             查看紀錄
-          </Button>{" "}
+          </Button>
         </td>
         <td className="buttonIcon table-more">
           <button
