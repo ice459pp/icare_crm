@@ -361,7 +361,7 @@ const ClinicDetail = () => {
       </Modal>
       <div className="log_button">
         <Button
-          variant="success"
+          variant="warning"
           className="text-light"
           size="lg"
           onClick={() => createLogClickHandler(null, "add")}

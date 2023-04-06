@@ -455,13 +455,13 @@ textarea {
     bottom: 15%;
   }
   .btn-lg {
-    background-color: #27bbb3 !important;
+    // background-color: #27bbb3 !important;
     @media (max-width: 996px) {
       font-size: 1rem;
     }
-    @media (max-width: 576px) {
-      font-size: 0.75rem;
-    }
+    // @media (max-width: 576px) {
+    //   font-size: 0.75rem;
+    // }
   }
   .log_button-addLogModal {
     width: 500px;

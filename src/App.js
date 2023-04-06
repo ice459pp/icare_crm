@@ -12,8 +12,6 @@ import "./scss/App.scss";
 import { useSelector } from "react-redux";
 
 import { useViewport } from "./useViewport";
-
-// import { is } from "immer/dist/internal";
 const NavbarWidth = {
   left: `0`,
   // overflow: "unset"
@@ -47,23 +45,26 @@ function App() {
   const goHome = () => {
     goPath.push(`/`);
   };
+  const elementRef = useRef(null);
 
   useEffect(() => {
-    const headNavbarRefDOM = headNavbarRef.current;
-    const height = headNavbarRefDOM.clientHeight;
-    const calculatedHeight = window.innerHeight - height ; // 加上50px
-    setHeight(calculatedHeight);
-    const handleResize = () => {
-      const calculatedHeight = window.innerHeight - height ; // 加上50px
-      setHeight(calculatedHeight);
+    const setElementHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      const navbarHeight = headNavbarRef.current.clientHeight;
+      const element = elementRef.current;
+      if (element) {
+        // element.style.height = `${100 * vh - navbarHeight}px`;
+        setHeight(100 * vh - navbarHeight);
+        // console.log(element.style.height, " element.style.height");
+      }
     };
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+    setElementHeight();
+    window.addEventListener("resize", setElementHeight);
+    return () => window.removeEventListener("resize", setElementHeight);
+  }, [height]);
   return (
     <Fragment>
+      {/* navbar */}
       {!isLogin ? (
         <div ref={headNavbarRef}></div>
       ) : (
@@ -86,10 +87,10 @@ function App() {
           )}
         </div>
       )}
-
+      {/* main */}
       {!isLogin && (
-        <div className="w-100 d-flex " style={style}>
-          <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
+        <div className="w-100 d-flex " ref={elementRef} style={style}>
+          <div className="bg-light h-100 w-100 flex-wrap  ">
             <Route
               exact
               path="/login"
@@ -101,7 +102,7 @@ function App() {
         </div>
       )}
       {isLogin && (
-        <div className="w-100 d-flex " style={style}>
+        <div className="w-100 d-flex " ref={elementRef} style={style}>
           {menuIsShow && (
             <div className="navbar-background" onClick={menuHandler}></div>
           )}

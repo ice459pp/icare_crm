@@ -149,7 +149,7 @@ const ClinicListItem = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="success"
+            variant="warning"
             className="text-white w-25"
             onClick={() => showAddLogModalHandler(null, "add")}
           >
