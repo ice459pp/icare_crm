@@ -35,7 +35,7 @@ let clinicData = {
 
 const ClinicDetail = () => {
   // detail+logList
-  
+
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
   const params = useParams();
@@ -48,11 +48,10 @@ const ClinicDetail = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [logSearch, setLogSearch] = useState("");
   const divRef = useRef(null);
-  const [scrollAdjust, setScrollAdjust] = useState(false)
+  const [scrollAdjust, setScrollAdjust] = useState(false);
   const pageChangeHandler = (value) => {
-    setScrollAdjust(true)
+    setScrollAdjust(true);
     setPage(value);
-  
   };
 
   const logSearchHandler = (value) => {
@@ -101,9 +100,9 @@ const ClinicDetail = () => {
   useEffect(() => {
     if (scrollAdjust && logList) {
       divRef.current.scrollIntoView({ behavior: "smooth" });
-      setScrollAdjust(false)
+      setScrollAdjust(false);
     }
-  }, [logList, scrollAdjust])
+  }, [logList, scrollAdjust]);
   // this will be trigger when show log modal
   useEffect(() => {
     // this is important.
@@ -306,8 +305,18 @@ const ClinicDetail = () => {
           </div>
         </div>
         <div className="py-2 w-100">
+          <div className="log_button">
+            <Button
+              variant="warning"
+              className="text-light addNewRecord"
+              size="lg"
+              onClick={() => createLogClickHandler(null, "add")}
+            >
+              建立紀錄
+            </Button>{" "}
+          </div>
           <div className="h5 text-dark fw-bolder log_title">
-            <div  ref={divRef}>Log:</div>
+            <div className=" log_title_name" ref={divRef}>Log:</div>
             <InputGroup size="sm" className="">
               查詢結果({totalCount}筆):
               <input
@@ -370,16 +379,6 @@ const ClinicDetail = () => {
           ></ClinicEditModal>
         </Modal.Body>
       </Modal>
-      <div className="log_button">
-        <Button
-          variant="warning"
-          className="text-light"
-          size="lg"
-          onClick={() => createLogClickHandler(null, "add")}
-        >
-          建立紀錄
-        </Button>{" "}
-      </div>
       {/* 新增log */}
       {logAction === "add" && showAddLogModal && (
         <ModalAddLog

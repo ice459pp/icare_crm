@@ -12,10 +12,10 @@ export const useViewport = () => {
 
     window.addEventListener("resize", handleResize);
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [innerWidth,innerHeight]);
+    // return () => {
+    //   window.removeEventListener("resize", handleResize);
+    // };
+  }, [innerWidth, innerHeight]);
 
   return { innerWidth, innerHeight };
 };

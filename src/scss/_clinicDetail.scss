@@ -451,17 +451,20 @@ textarea {
   position: absolute;
   bottom: 1%;
   right: 1%;
-  // @media (max-width: 576px) {
-  //   bottom: 1%;
-  // }
-  .btn-lg {
-    // background-color: #27bbb3 !important;
-    @media (max-width: 996px) {
-      font-size: 1.2rem;
+  @media (max-width: 576px) {
+    position: relative;
+    width: 100%;
+    margin: 0 0 0.5rem 0;
+    bottom: auto;
+    right: auto;
+
+    .addNewRecord {
+      width: 100%;
+      font-size: 1rem;
+      padding: 0.25rem 0;
+      border-radius: 50px;
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
-    // @media (max-width: 576px) {
-    //   font-size: 0.75rem;
-    // }
   }
   .log_button-addLogModal {
     width: 500px;
@@ -573,6 +576,15 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  @media (max-width: 576px) {
+    flex-direction: column;
+  }
+  .log_title_name{
+    @media (max-width: 576px) {
+      margin-bottom: 0.5rem;
+      width: 100%;
+    }
+  }
   .input-group {
     display: flex;
     align-items: center;
@@ -583,10 +595,14 @@ section {
       width: 50%;
     }
     @media (max-width: 576px) {
-      width: 75%;
+      width: 100%;
     }
     .form-control {
       margin: 0 1rem;
+      @media (max-width: 576px) {
+        margin: 0 0.25rem 0 1rem;
+        border-radius: 10px;
+      }
     }
   }
 }

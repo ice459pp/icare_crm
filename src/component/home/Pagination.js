@@ -5,16 +5,16 @@ import { useViewport } from "../../useViewport";
 
 const PaginationUI = (props) => {
   const { page, totalPage } = props;
-  const { width, height } = useViewport();
+  const { innerWidth} = useViewport();
   const [pages, setPages] = useState([]);
   const [isRwd, setIsRwd] = useState(false);
   useEffect(() => {
-    if (width < 576) {
+    if (innerWidth < 576) {
       setIsRwd(true);
     } else {
       setIsRwd(false);
     }
-  }, [width]);
+  }, [innerWidth]);
   useEffect(() => {
     let pageArr = [];
     if (totalPage <= 5) {

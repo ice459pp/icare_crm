@@ -29,8 +29,6 @@ const ClinicListItem = (props) => {
   const [showAddLogModal, setShowAddLogModal] = useState(false);
   const [showLogListModal, setShowLogListModal] = useState(false);
   const [refreshLog, setRefreshLog] = useState(false);
-  // const [logAction, setLogAction] = useState("add");
-  // const [log, setLog] = useState(null);
   const [page, setPage] = useState(1);
 
   const handleAddLogModal1 = () => {
@@ -79,7 +77,6 @@ const ClinicListItem = (props) => {
         "",
         (err) => {},
         (list, total, totalPage) => {
-          // console.log(list)
           setListData(list);
           setRefreshLog(false);
         }

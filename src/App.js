@@ -12,6 +12,7 @@ import "./scss/App.scss";
 import { useSelector } from "react-redux";
 
 import { useViewport } from "./useViewport";
+
 const NavbarWidth = {
   left: `0`,
   // overflow: "unset"
@@ -23,11 +24,10 @@ const RouterWidth = {
 function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let isLogin_store = appSlice.isLogin;
-  const { initWidth, initHeight } = useViewport();
-  const [height, setHeight] = useState(initHeight);
+  const { innerWidth, innerHeight } = useViewport();
+  const [height, setHeight] = useState(innerHeight);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
-
   useEffect(() => {
     setIsLogin(isLogin_store);
   }, [isLogin_store]);
@@ -52,15 +52,13 @@ function App() {
       const navbarHeight = headNavbarRef.current.clientHeight;
       const element = elementRef.current;
       if (element) {
-        // element.style.height = `${100 * vh - navbarHeight}px`;
         setHeight(100 * vh - navbarHeight);
-        // console.log(element.style.height, " element.style.height");
       }
     };
     setElementHeight();
     window.addEventListener("resize", setElementHeight);
-    return () => window.removeEventListener("resize", setElementHeight);
-  }, [initHeight,initWidth,height]);
+    // return () => window.removeEventListener("resize", setElementHeight);
+  }, [innerHeight, innerWidth]);
   return (
     <Fragment>
       {/* navbar */}
