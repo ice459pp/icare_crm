@@ -32,7 +32,7 @@ const Home = () => {
   const [permutations, setPermutations] = useState(filterSlice.permutations);
   const [department, setDepartment] = useState(filterSlice.department);
   const divRef = useRef(null);
-  const [scrollAdjust, setScrollAdjust] = useState(false)
+  const [scrollAdjust, setScrollAdjust] = useState(false);
   useEffect(() => {
     setPage(filterSlice.page);
   }, [filterSlice.page]);
@@ -73,16 +73,15 @@ const Home = () => {
   const pageChangeHandler = (value) => {
     dispatch(filterAction.onPage(value));
     setPage(value);
-    setScrollAdjust(true)
+    setScrollAdjust(true);
   };
 
-
   useEffect(() => {
-    if (scrollAdjust && clinicList) {
-      divRef.current.scrollIntoView({ behavior: "smooth" });
-      setScrollAdjust(false)
+    if (scrollAdjust && clinicList && divRef.current) {
+      divRef.current.scrollTop = 0; // 設定垂直捲動位置
+      setScrollAdjust(false);
     }
-  }, [clinicList, scrollAdjust])
+  }, [clinicList, scrollAdjust]);
   const logoutHandler = () => {
     dispatch(appAction.logout());
   };
@@ -150,7 +149,14 @@ const Home = () => {
         />
       </div>
       <div className="w-100 padding-RWD mt-3">
-        <h4 className="text-center fw-bolder " ref={divRef}>
+        <h4
+          className="text-center fw-bolder "
+          style={{
+            overflowY: "scroll",
+            transition: "all 0.3s ease-in-out",
+          }}
+          ref={divRef}
+        >
           診所列表
         </h4>
         <div className="d-flex align-items-end tableSort mb-2">

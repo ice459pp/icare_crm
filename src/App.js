@@ -36,9 +36,8 @@ function App() {
 
   let headNavbarRef = useRef() || "";
   const style = {
-    // height: `${100-45}px`,
-    // height: `calc(100vh - (45 + ${toolbarHeight}) px)`,
-    height: `calc(100vh - 45px - ${toolbarHeight}px)`,
+    height: `calc(100vh - 45px)`,
+    // height: `calc(100vh - 45px - ${toolbarHeight}px)`,
     // height:"100vh",
     position: `relative`,
   };
@@ -49,30 +48,10 @@ function App() {
     goPath.push(`/`);
   };
   const elementRef = useRef(null);
-  // const [height, setHeight] = useState(window.innerHeight);
-
   useEffect(() => {
     const toolbarHeight = window.outerHeight - window.innerHeight;
     setToolbarHeight(toolbarHeight);
-    // const contentHeight = window.innerHeight - toolbarHeight;
-    // console.log(toolbarHeight,contentHeight,"dsa")
   }, [toolbarHeight]);
-  // useEffect(() => {
-  //   console.log(innerHeight, innerWidth, "innerHeight, innerWidth");
-  //   const setElementHeight = () => {
-  //     const vh = window.innerHeight * 0.01;
-  //     const navbarHeight = headNavbarRef.current.clientHeight;
-  //     const element = elementRef.current;
-  //     // console.log(element,"element",(100 * vh - navbarHeight),"(100 * vh - navbarHeight)")
-  //     if (element) {
-  //       setHeight(100 * vh - navbarHeight);
-  //     }
-  //   };
-  //   setElementHeight();
-  //   window.addEventListener("resize", setElementHeight);
-  //   // return () => window.removeEventListener("resize", setElementHeight);
-  // }, [innerHeight, innerWidth]);
-
   return (
     <Fragment>
       {/* navbar */}
@@ -81,10 +60,10 @@ function App() {
       ) : (
         <div
           ref={headNavbarRef}
-          style={{ height: "45px" }}
+          style={{ height: "45px",borderBottom:"1px solid black" }}
           className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
         >
-          <div className="h4 m-0 cursor-pointer" onClick={goHome}>
+          <div className="h4 m-0 cursor-pointer " style={{fontFamily:"cursive"}} onClick={goHome}>
             診所管理系統
           </div>
           {!menuIsShow && (
