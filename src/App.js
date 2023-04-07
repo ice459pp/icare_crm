@@ -26,6 +26,7 @@ function App() {
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
   const [height, setHeight] = useState(innerHeight);
+  const [toolbarHeight, setToolbarHeight] = useState(0);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
   useEffect(() => {
@@ -35,8 +36,9 @@ function App() {
 
   let headNavbarRef = useRef() || "";
   const style = {
-    height: `${height-45}px`,
-    // height: `calc(100vh - 45px)`,
+    // height: `${100-45}px`,
+    // height: `calc(100vh - (45 + ${toolbarHeight}) px)`,
+    height: `calc(100vh - 45px - ${toolbarHeight}px)`,
     // height:"100vh",
     position: `relative`,
   };
@@ -50,10 +52,11 @@ function App() {
   // const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
-    const handleResize = () => setHeight(window.innerHeight);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    const toolbarHeight = window.outerHeight - window.innerHeight;
+    setToolbarHeight(toolbarHeight);
+    // const contentHeight = window.innerHeight - toolbarHeight;
+    // console.log(toolbarHeight,contentHeight,"dsa")
+  }, [toolbarHeight]);
   // useEffect(() => {
   //   console.log(innerHeight, innerWidth, "innerHeight, innerWidth");
   //   const setElementHeight = () => {
@@ -69,7 +72,6 @@ function App() {
   //   window.addEventListener("resize", setElementHeight);
   //   // return () => window.removeEventListener("resize", setElementHeight);
   // }, [innerHeight, innerWidth]);
-
 
   return (
     <Fragment>
