@@ -113,9 +113,9 @@ function App() {
       {/* main */}
       {!isLogin && (
         <div
-          className="w-100 d-flex heightSetting "
+          className="w-100 d-flex heightSetting h-100 "
           ref={elementRef}
-          style={style}
+          
         >
           <div className="bg-light h-100 w-100 flex-wrap  ">
             <Route
