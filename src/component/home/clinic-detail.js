@@ -51,8 +51,17 @@ const ClinicDetail = () => {
   const [logSearch, setLogSearch] = useState("");
   const divRef = useRef(null);
   const [scrollAdjust, setScrollAdjust] = useState(false);
+  const [editModalShow, setEditModalShow] = useState(false);
+  const closeEditModalHandler = () => setEditModalShow(false);
+  const showEditModalHandler = () => setEditModalShow(true);
+
+  const [showAddLogModal, setShowAddLogModal] = useState(false);
+
+  const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
+  const [clinicInfo, setClinicInfo] = useState(clinicData);
+  const [logAction, setLogAction] = useState("add");
+  const [log, setLog] = useState(null);
   const pageChangeHandler = (value) => {
-    setScrollAdjust(true);
     setPage(value);
   };
 
@@ -71,16 +80,7 @@ const ClinicDetail = () => {
     setRefreshLog(true);
   };
 
-  const [editModalShow, setEditModalShow] = useState(false);
-  const closeEditModalHandler = () => setEditModalShow(false);
-  const showEditModalHandler = () => setEditModalShow(true);
 
-  const [showAddLogModal, setShowAddLogModal] = useState(false);
-
-  const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
-  const [clinicInfo, setClinicInfo] = useState(clinicData);
-  const [logAction, setLogAction] = useState("add");
-  const [log, setLog] = useState(null);
 
   const createLogClickHandler = (item, action) => {
     setLogAction(action);
@@ -101,7 +101,6 @@ const ClinicDetail = () => {
   // this will be trigger when scrollAdjust and list change
   useEffect(() => {
     if (scrollAdjust && logList) {
-      console.log("ul9494", divRef.current.offsetTop);
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
       // const topPos = divRef.current.offsetTop;
@@ -137,6 +136,7 @@ const ClinicDetail = () => {
           setTotalPage(totalPage);
           setlogList(list);
           setRefreshLog(false);
+          setScrollAdjust(true);
         }
       );
     }

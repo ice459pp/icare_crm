@@ -73,6 +73,13 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0); // 回到页面顶部
   }, [location.pathname]); // 监听 pathname 变化，执行回到页面顶部操作
+  useEffect(() => {
+    if (window.screen.orientation && window.screen.orientation.lock) {
+      window.screen.orientation.lock("portrait").catch(function () {
+        console.log("Orientation lock failed.");
+      });
+    }
+  }, []);
   return (
     <Fragment>
       {/* navbar */}

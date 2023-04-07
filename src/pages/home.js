@@ -75,19 +75,11 @@ const Home = () => {
     setPage(value);
     setScrollAdjust(true);
   };
-
-  // useEffect(() => {
-  //   if (scrollAdjust && clinicList && divRef.current) {
-  //     divRef.current.scrollTop = 0; // 設定垂直捲動位置
-  //     setScrollAdjust(false);
-  //   }
-  // }, [clinicList, scrollAdjust]);
   useEffect(() => {
     if (scrollAdjust && divRef.current) {
-      // console.log(divRef.current, " divRef.current");
-      window.scrollTo(0, 0); // 回到页面顶部
+      console.log("qqwqwewef")
+      divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
-      // divRef.current.scrollTop = 200; // 設定垂直捲動位置
       setScrollAdjust(false);
     }
   }, [scrollAdjust]);
