@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import ModalAddLog from "./log/modal-add-log";
 import { apiLogList } from "../../api/api-clinic-log";
 import { useRef } from "react";
+import { animateScroll as scroll } from "react-scroll";
+
 let clinicData = {
   id: "", // clinic id
   name: "", // clinic name
@@ -97,12 +99,25 @@ const ClinicDetail = () => {
     setShowAddLogModal(true);
   };
   // this will be trigger when scrollAdjust and list change
-  // useEffect(() => {
-  //   if (scrollAdjust && logList) {
-  //     // divRef.current.scrollIntoView({ behavior: "smooth" });
-  //     setScrollAdjust(false);
-  //   }
-  // }, [logList, scrollAdjust]);
+  useEffect(() => {
+    if (scrollAdjust && logList) {
+      console.log("ul9494", divRef.current.offsetTop);
+      divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // const topPos = divRef.current.offsetTop;
+      // const listContainer = document.querySelector("#listContainer");
+      // if (listContainer) {
+      //   listContainer.scrollTo({
+      //     top: topPos,
+      //     left: 0,
+      //     behavior: "smooth",
+      //   });
+      // }
+
+
+      setScrollAdjust(false);
+    }
+  }, [logList, scrollAdjust]);
   // this will be trigger when show log modal
   useEffect(() => {
     // this is important.
@@ -293,7 +308,7 @@ const ClinicDetail = () => {
                 </div>
               </div>
             </section>
-            <section className="w-100 text-center  mt-4 mb-1">
+            <section  className="w-100 text-center  mt-4 mb-1">
               <Button
                 variant="success"
                 className="text-white edit_button"
@@ -316,7 +331,9 @@ const ClinicDetail = () => {
             </Button>{" "}
           </div>
           <div className="h5 text-dark fw-bolder log_title">
-            <div className=" log_title_name" ref={divRef}>Log:</div>
+            <div className=" log_title_name" ref={divRef}>
+              Log:
+            </div>
             <InputGroup size="sm" className="">
               查詢結果({totalCount}筆):
               <input

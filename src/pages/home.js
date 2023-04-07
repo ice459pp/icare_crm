@@ -83,11 +83,13 @@ const Home = () => {
   //   }
   // }, [clinicList, scrollAdjust]);
   useEffect(() => {
-    // if (scrollAdjust && divRef.current) {
-    //   console.log( divRef.current," divRef.current")
-    //   divRef.current.scrollTop = 200; // 設定垂直捲動位置
-    //   setScrollAdjust(false);
-    // }
+    if (scrollAdjust && divRef.current) {
+      // console.log(divRef.current, " divRef.current");
+      window.scrollTo(0, 0); // 回到页面顶部
+
+      // divRef.current.scrollTop = 200; // 設定垂直捲動位置
+      setScrollAdjust(false);
+    }
   }, [scrollAdjust]);
   const logoutHandler = () => {
     dispatch(appAction.logout());
@@ -156,10 +158,7 @@ const Home = () => {
         />
       </div>
       <div className="w-100 padding-RWD mt-3">
-        <h4
-          className="text-center fw-bolder "
-          ref={divRef}
-        >
+        <h4 className="text-center fw-bolder " ref={divRef}>
           診所列表
         </h4>
         <div className="d-flex align-items-end tableSort mb-2">

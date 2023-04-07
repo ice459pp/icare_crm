@@ -588,8 +588,9 @@ section {
   .input-group {
     display: flex;
     align-items: center;
-    width: 25%;
+    width: 40%;
     font-weight: normal;
+    min-width: 200px;
     font-size: 1rem;
     @media (max-width: 996px) {
       width: 50%;

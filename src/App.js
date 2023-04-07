@@ -2,7 +2,13 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import Navbar from "./component/navbar";
 import Home from "./pages/home";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import {
+  Switch,
+  Route,
+  Redirect,
+  useHistory,
+  useLocation,
+} from "react-router-dom";
 import ClinicDetail from "./component/home/clinic-detail";
 import Approved from "./pages/approved";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -52,17 +58,21 @@ function App() {
   useEffect(() => {
     const setBodyHeight = () => {
       const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
 
     setBodyHeight();
 
-    window.addEventListener('resize', setBodyHeight);
+    window.addEventListener("resize", setBodyHeight);
 
     return () => {
-      window.removeEventListener('resize', setBodyHeight);
-    }
-  }, [innerWidth,innerHeight])
+      window.removeEventListener("resize", setBodyHeight);
+    };
+  }, [innerWidth, innerHeight]);
+  const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0); // 回到页面顶部
+  }, [location.pathname]); // 监听 pathname 变化，执行回到页面顶部操作
   return (
     <Fragment>
       {/* navbar */}
@@ -71,10 +81,14 @@ function App() {
       ) : (
         <div
           ref={headNavbarRef}
-          style={{ height: "45px",borderBottom:"1px solid black" }}
+          style={{ height: "45px", borderBottom: "1px solid black" }}
           className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
         >
-          <div className="h4 m-0 cursor-pointer " style={{fontFamily:"cursive"}} onClick={goHome}>
+          <div
+            className="h4 m-0 cursor-pointer "
+            style={{ fontFamily: "cursive" }}
+            onClick={goHome}
+          >
             診所管理系統
           </div>
           {!menuIsShow && (
@@ -91,12 +105,16 @@ function App() {
       )}
       {/* main */}
       {!isLogin && (
-        <div className="w-100 d-flex heightSetting " ref={elementRef} style={style}>
+        <div
+          className="w-100 d-flex heightSetting "
+          ref={elementRef}
+          style={style}
+        >
           <div className="bg-light h-100 w-100 flex-wrap  ">
             <Route
               exact
               path="/login"
-              onEnter={() => window.scrollTo(0, 0)}
+              // onEnter={() => window.scrollTo(0, 0)}
               component={UserLogin}
             ></Route>
             <Redirect to="/login" />
@@ -120,22 +138,22 @@ function App() {
               <Route
                 exact
                 path="/"
-                onEnter={() => window.scrollTo(0, 0)}
+                // onEnter={() => window.scrollTo(0, 0)}
                 component={Home}
               ></Route>
               <Route
                 path="/clinic/:id"
-                onEnter={() => window.scrollTo(0, 0)}
+                // onEnter={() => window.scrollTo(0, 0)}
                 component={ClinicDetail}
               />
               <Route
                 path="/approved"
-                onEnter={() => window.scrollTo(0, 0)}
+                // onEnter={() => window.scrollTo(0, 0)}
                 component={Approved}
               />
               <Route
                 path="/approved/:id"
-                onEnter={() => window.scrollTo(0, 0)}
+                // onEnter={() => window.scrollTo(0, 0)}
                 component={Approved}
               />
             </Switch>
