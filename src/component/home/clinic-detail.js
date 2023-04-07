@@ -50,7 +50,7 @@ const ClinicDetail = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [logSearch, setLogSearch] = useState("");
   const divRef = useRef(null);
-  const [scrollAdjust, setScrollAdjust] = useState(false);
+  // const [scrollAdjust, setScrollAdjust] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const closeEditModalHandler = () => setEditModalShow(false);
   const showEditModalHandler = () => setEditModalShow(true);
@@ -100,7 +100,8 @@ const ClinicDetail = () => {
   };
   // this will be trigger when scrollAdjust and list change
   useEffect(() => {
-    if (scrollAdjust && logList) {
+    if (logList) {
+      console.log(logList,"loglist")
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
       // const topPos = divRef.current.offsetTop;
@@ -114,9 +115,9 @@ const ClinicDetail = () => {
       // }
 
 
-      setScrollAdjust(false);
+      // setScrollAdjust(false);
     }
-  }, [logList, scrollAdjust]);
+  }, [logList]);
   // this will be trigger when show log modal
   useEffect(() => {
     // this is important.
@@ -136,7 +137,7 @@ const ClinicDetail = () => {
           setTotalPage(totalPage);
           setlogList(list);
           setRefreshLog(false);
-          setScrollAdjust(true);
+          // setScrollAdjust(true);
         }
       );
     }
