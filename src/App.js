@@ -36,9 +36,10 @@ function App() {
 
   let headNavbarRef = useRef() || "";
   const style = {
-    height: `calc(100vh - 45px)`,
+    height: `calc(100% - 45px)`,
     // height: `calc(100vh - 45px - ${toolbarHeight}px)`,
     // height:"100vh",
+    // height:"100%",
     position: `relative`,
   };
   const menuHandler = () => {
@@ -49,9 +50,19 @@ function App() {
   };
   const elementRef = useRef(null);
   useEffect(() => {
-    const toolbarHeight = window.outerHeight - window.innerHeight;
-    setToolbarHeight(toolbarHeight);
-  }, [toolbarHeight]);
+    const setBodyHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+
+    setBodyHeight();
+
+    window.addEventListener('resize', setBodyHeight);
+
+    return () => {
+      window.removeEventListener('resize', setBodyHeight);
+    }
+  }, [innerWidth,innerHeight])
   return (
     <Fragment>
       {/* navbar */}
@@ -80,7 +91,7 @@ function App() {
       )}
       {/* main */}
       {!isLogin && (
-        <div className="w-100 d-flex " ref={elementRef} style={style}>
+        <div className="w-100 d-flex heightSetting " ref={elementRef} style={style}>
           <div className="bg-light h-100 w-100 flex-wrap  ">
             <Route
               exact

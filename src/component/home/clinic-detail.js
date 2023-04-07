@@ -97,12 +97,12 @@ const ClinicDetail = () => {
     setShowAddLogModal(true);
   };
   // this will be trigger when scrollAdjust and list change
-  useEffect(() => {
-    if (scrollAdjust && logList) {
-      divRef.current.scrollIntoView({ behavior: "smooth" });
-      setScrollAdjust(false);
-    }
-  }, [logList, scrollAdjust]);
+  // useEffect(() => {
+  //   if (scrollAdjust && logList) {
+  //     // divRef.current.scrollIntoView({ behavior: "smooth" });
+  //     setScrollAdjust(false);
+  //   }
+  // }, [logList, scrollAdjust]);
   // this will be trigger when show log modal
   useEffect(() => {
     // this is important.

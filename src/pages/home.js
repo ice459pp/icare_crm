@@ -76,12 +76,19 @@ const Home = () => {
     setScrollAdjust(true);
   };
 
+  // useEffect(() => {
+  //   if (scrollAdjust && clinicList && divRef.current) {
+  //     divRef.current.scrollTop = 0; // 設定垂直捲動位置
+  //     setScrollAdjust(false);
+  //   }
+  // }, [clinicList, scrollAdjust]);
   useEffect(() => {
-    if (scrollAdjust && clinicList && divRef.current) {
-      divRef.current.scrollTop = 0; // 設定垂直捲動位置
-      setScrollAdjust(false);
-    }
-  }, [clinicList, scrollAdjust]);
+    // if (scrollAdjust && divRef.current) {
+    //   console.log( divRef.current," divRef.current")
+    //   divRef.current.scrollTop = 200; // 設定垂直捲動位置
+    //   setScrollAdjust(false);
+    // }
+  }, [scrollAdjust]);
   const logoutHandler = () => {
     dispatch(appAction.logout());
   };
@@ -151,10 +158,6 @@ const Home = () => {
       <div className="w-100 padding-RWD mt-3">
         <h4
           className="text-center fw-bolder "
-          style={{
-            overflowY: "scroll",
-            transition: "all 0.3s ease-in-out",
-          }}
           ref={divRef}
         >
           診所列表

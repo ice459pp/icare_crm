@@ -1,3 +1,13 @@
 @import "./common";
 @import "./navbar";
-@import "./modal"
+@import "./modal";
+body {
+  height: 100vh;
+}
+
+/* 在iOS Safari上，您需要使用下面的CSS規則 */
+@media screen and (max-width: 996px) {
+  body {
+    height: calc(var(--vh, 1vh) * 100);
+  }
+}
