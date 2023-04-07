@@ -35,8 +35,8 @@ function App() {
 
   let headNavbarRef = useRef() || "";
   const style = {
-    // height: `${height}px`,
-    height: `calc(100vh - 45px)`,
+    height: `${height-45}px`,
+    // height: `calc(100vh - 45px)`,
     // height:"100vh",
     position: `relative`,
   };
@@ -47,8 +47,15 @@ function App() {
     goPath.push(`/`);
   };
   const elementRef = useRef(null);
+  // const [height, setHeight] = useState(window.innerHeight);
 
+  useEffect(() => {
+    const handleResize = () => setHeight(window.innerHeight);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   // useEffect(() => {
+  //   console.log(innerHeight, innerWidth, "innerHeight, innerWidth");
   //   const setElementHeight = () => {
   //     const vh = window.innerHeight * 0.01;
   //     const navbarHeight = headNavbarRef.current.clientHeight;
@@ -62,6 +69,8 @@ function App() {
   //   window.addEventListener("resize", setElementHeight);
   //   // return () => window.removeEventListener("resize", setElementHeight);
   // }, [innerHeight, innerWidth]);
+
+
   return (
     <Fragment>
       {/* navbar */}
@@ -70,7 +79,7 @@ function App() {
       ) : (
         <div
           ref={headNavbarRef}
-          style={{height:"45px"}}
+          style={{ height: "45px" }}
           className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
         >
           <div className="h4 m-0 cursor-pointer" onClick={goHome}>
