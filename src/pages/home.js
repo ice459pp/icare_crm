@@ -32,7 +32,7 @@ const Home = () => {
   const [permutations, setPermutations] = useState(filterSlice.permutations);
   const [department, setDepartment] = useState(filterSlice.department);
   const divRef = useRef(null);
-  const [scrollAdjust, setScrollAdjust] = useState(false);
+  // const [scrollAdjust, setScrollAdjust] = useState(false);
   useEffect(() => {
     setPage(filterSlice.page);
   }, [filterSlice.page]);
@@ -73,16 +73,12 @@ const Home = () => {
   const pageChangeHandler = (value) => {
     dispatch(filterAction.onPage(value));
     setPage(value);
-    setScrollAdjust(true);
   };
   useEffect(() => {
-    if (scrollAdjust && divRef.current) {
-      console.log("qqwqwewef")
+    if (clinicList.length>2) {
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-
-      setScrollAdjust(false);
     }
-  }, [scrollAdjust]);
+  }, [clinicList]);
   const logoutHandler = () => {
     dispatch(appAction.logout());
   };

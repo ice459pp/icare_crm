@@ -100,7 +100,7 @@ const ClinicDetail = () => {
   };
   // this will be trigger when scrollAdjust and list change
   useEffect(() => {
-    if (logList) {
+    if (logList.length>3) {
       console.log(logList,"loglist")
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
