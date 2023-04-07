@@ -35,7 +35,9 @@ function App() {
 
   let headNavbarRef = useRef() || "";
   const style = {
-    height: `${height}px`,
+    // height: `${height}px`,
+    height: `calc(100vh - 45px)`,
+    // height:"100vh",
     position: `relative`,
   };
   const menuHandler = () => {
@@ -46,19 +48,20 @@ function App() {
   };
   const elementRef = useRef(null);
 
-  useEffect(() => {
-    const setElementHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      const navbarHeight = headNavbarRef.current.clientHeight;
-      const element = elementRef.current;
-      if (element) {
-        setHeight(100 * vh - navbarHeight);
-      }
-    };
-    setElementHeight();
-    window.addEventListener("resize", setElementHeight);
-    // return () => window.removeEventListener("resize", setElementHeight);
-  }, [innerHeight, innerWidth]);
+  // useEffect(() => {
+  //   const setElementHeight = () => {
+  //     const vh = window.innerHeight * 0.01;
+  //     const navbarHeight = headNavbarRef.current.clientHeight;
+  //     const element = elementRef.current;
+  //     // console.log(element,"element",(100 * vh - navbarHeight),"(100 * vh - navbarHeight)")
+  //     if (element) {
+  //       setHeight(100 * vh - navbarHeight);
+  //     }
+  //   };
+  //   setElementHeight();
+  //   window.addEventListener("resize", setElementHeight);
+  //   // return () => window.removeEventListener("resize", setElementHeight);
+  // }, [innerHeight, innerWidth]);
   return (
     <Fragment>
       {/* navbar */}
@@ -67,6 +70,7 @@ function App() {
       ) : (
         <div
           ref={headNavbarRef}
+          style={{height:"45px"}}
           className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
         >
           <div className="h4 m-0 cursor-pointer" onClick={goHome}>
