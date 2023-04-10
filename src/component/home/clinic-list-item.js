@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { Button, Modal, Form, Accordion } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { Button, Modal  } from "react-bootstrap";
 import ModalAddLog from "./log/modal-add-log";
 import ClinicDetailLog from "./clinic-detail-log";
 
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import { apiLogList } from "../../api/api-clinic-log";
 const phoneFixHandler = (item) => {
   const phoneNumberArray = item.replace(/ /g, "").split("-");
@@ -14,16 +14,6 @@ const phoneFixHandler = (item) => {
     tel: parseInt(phoneNumberArray[1]),
   };
   return phoneObj;
-};
-const nowTodayChange = () => {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const date = String(now.getDate()).padStart(2, "0");
-  const hour = String(now.getHours()).padStart(2, "0");
-  const minute = String(now.getMinutes()).padStart(2, "0");
-
-  return `${year}/${month}/${date} ${hour}:${minute}`;
 };
 const ClinicListItem = (props) => {
   let { item } = props;
@@ -40,20 +30,6 @@ const ClinicListItem = (props) => {
   const [refreshLog, setRefreshLog] = useState(false);
   const [page, setPage] = useState(1);
   const phoneObj = phoneFixHandler(item.phone);
-  // console.log(,item.name,"item.phoneitem.phone")
-  const handleAddLogModal1 = () => {
-    // 新增log
-    // 診所列表上的LOG的延伸modal
-    // let nowToday = nowTodayChange();
-    // dispatch(setToday(nowToday));
-    // dispatch(setClinicID(item.id));
-    // let token = "撈cookies 的token";
-    // dispatch(onSalesChange(token));
-    // dispatch(resetState());
-
-    // TODO  POST API LOG (new)
-    setShowAddLogModal(!showAddLogModal);
-  };
   const showAddLogModalHandler = (item, action) => {
     setShowAddLogModal(true);
   };
@@ -73,8 +49,6 @@ const ClinicListItem = (props) => {
     setShowAddLogModal(false);
     setRefreshLog(true);
   };
-
-  // this will be trigger when show log modal
   useEffect(() => {
     // this is important.
     if (showLogListModal || refreshLog) {
@@ -141,7 +115,6 @@ const ClinicListItem = (props) => {
           </button>
         </td>
       </tr>
-      {/* log列表 */}
       <Modal
         className="radio-custom"
         show={showLogListModal}
@@ -163,7 +136,6 @@ const ClinicListItem = (props) => {
               readonly={true}
             ></ClinicDetailLog>
           ))}
-          {/* <Modal_AddLog action={"new"}></Modal_AddLog> */}
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -178,7 +150,6 @@ const ClinicListItem = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
-      {/* 新增log */}
       {showAddLogModal && (
         <ModalAddLog
           clinic_id={item.id}
@@ -191,7 +162,5 @@ const ClinicListItem = (props) => {
       )}
     </Fragment>
   );
-
-  // list listItem
 };
 export default ClinicListItem;

@@ -21,18 +21,11 @@ import { useViewport } from "./useViewport";
 
 const NavbarWidth = {
   left: `0`,
-  // overflow: "unset"
-};
-const RouterWidth = {
-  width: `80%`,
-  overflowY: `scroll`,
 };
 function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
-  const [height, setHeight] = useState(innerHeight);
-  const [toolbarHeight, setToolbarHeight] = useState(0);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
   useEffect(() => {

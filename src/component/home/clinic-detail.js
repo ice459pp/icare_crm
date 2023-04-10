@@ -14,8 +14,6 @@ import { useSelector } from "react-redux";
 import ModalAddLog from "./log/modal-add-log";
 import { apiLogList } from "../../api/api-clinic-log";
 import { useRef } from "react";
-import { animateScroll as scroll } from "react-scroll";
-
 let clinicData = {
   id: "", // clinic id
   name: "", // clinic name
@@ -36,8 +34,6 @@ let clinicData = {
 };
 
 const ClinicDetail = () => {
-  // detail+logList
-
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
   const params = useParams();
@@ -51,8 +47,6 @@ const ClinicDetail = () => {
   const [logSearch, setLogSearch] = useState("");
   const divRef = useRef(null);
   const headerRef = useRef(null);
-
-  // const [scrollAdjust, setScrollAdjust] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const closeEditModalHandler = () => setEditModalShow(false);
   const showEditModalHandler = () => setEditModalShow(true);
@@ -107,25 +101,19 @@ const ClinicDetail = () => {
     setLog(item);
     setShowAddLogModal(true);
   };
-  // this will be trigger when scrollAdjust and list change
   useEffect(() => {
     if (actionStatus === "page") {
-      // 如果list有值超過三 選頁數或是搜尋 他應該要停在log那一葉面
       if (logList.length > 3) {
         divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
-        // 什麼都不動
-        console.log("useSearch but length<3 no scroll");
+        console.log("logSearch but length<3, no scroll");
       }
       setActionStatus("");
     } else {
-      // 置頂最頂部
       headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [logList]);
-  // this will be trigger when show log modal
   useEffect(() => {
-    // this is important.
     if (appSlice.isLogin) {
       // fetch log api
       const token = appSlice.userToken;
@@ -172,8 +160,6 @@ const ClinicDetail = () => {
         );
       }
     }, 300);
-
-    // 清除定时器
     return () => {
       clearTimeout(timeoutId);
     };
@@ -383,10 +369,8 @@ const ClinicDetail = () => {
               查詢結果({totalCount}筆):
               <input
                 type="text"
-                // ref={logSearchRef}
                 className="form-control ms-2"
                 placeholder="內容紀錄查詢"
-                // defaultValue={""}
                 value={logSearch}
                 onChange={(e) => {
                   logSearchHandler(e.target.value);
@@ -418,7 +402,6 @@ const ClinicDetail = () => {
         className="text-secondary top-icon"
         icon="fa-solid fa-circle-arrow-up"
       />{" "}
-      {/* 編輯診所 */}
       <Modal
         show={editModalShow}
         onHide={closeEditModalHandler}
@@ -439,7 +422,6 @@ const ClinicDetail = () => {
           ></ClinicEditModal>
         </Modal.Body>
       </Modal>
-      {/* 新增log */}
       {logAction === "add" && showAddLogModal && (
         <ModalAddLog
           clinic_id={id}

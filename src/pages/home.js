@@ -15,17 +15,13 @@ import { useRef } from "react";
 const Home = () => {
   const appSlice = useSelector((state) => state.appSlice);
   const filterSlice = useSelector((state) => state.filterSlice);
-  // get token
   const dispatch = useDispatch();
   const navigate = useHistory();
-
   const [clinicList, setClinicList] = useState([]);
   const [filterStatus, setFilterStatus] = useState(filterSlice.clinic_status);
   const [filterCity, setFilterCity] = useState(filterSlice.city);
   const [filterDistrict, setFilterDictrict] = useState(filterSlice.district);
   const [searchText, setSearchText] = useState(filterSlice.searchText);
-  // normal and reserve
-  const [dateSort, setDateSort] = useState(false);
   const [page, setPage] = useState(filterSlice.page);
   const [totalPage, setTotalPage] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -236,7 +232,7 @@ const Home = () => {
         onClick={scrollTopHandler}
         className="text-secondary top-icon"
         icon="fa-solid fa-circle-arrow-up"
-      />{" "}
+      />
       {totalPage > 0 && (
         <div className="d-flex justify-content-center w-100">
           <Pagination

@@ -1,6 +1,6 @@
-import React, { Fragment, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Route, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import { apiLogin } from "../api/api-login";
 import { appAction } from "../store/app-slice";
 import "../scss/login.scss"
@@ -14,7 +14,6 @@ const UserLogin = () => {
   let emailRef = useRef();
   let passwordRef = useRef();
   const navigate = useHistory();
-
   const submitHandler = (event) => {
     event.preventDefault();
     let email = emailRef.current.value;
@@ -28,7 +27,6 @@ const UserLogin = () => {
       (err) => {
         setErr(err)
       }, (token) => {
-        // complete fetch token
         setErr("")
         dispatch(appAction.login(token))
       }
@@ -40,8 +38,6 @@ const UserLogin = () => {
       navigate.push('/')
     }
   }, [appSlice.isLogin])
-
-  // const [email, setEmail] = useState("");
   return (
     <div className="container h-100 d-flex justify-content-center align-items-center login">
       <form className="from" onSubmit={submitHandler}>
@@ -70,14 +66,6 @@ const UserLogin = () => {
             id="exampleInputPassword1"
           />
         </div>
-        {/* <div className="mb-3 form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="exampleCheck1"
-          />
-          <label className="form-check-label">Check me out</label>
-        </div> */}
         {err && <div><p style={{color: 'red'}}>{err}</p></div>}
         <button type="submit" className="btn btn-primary w-100">
           登入

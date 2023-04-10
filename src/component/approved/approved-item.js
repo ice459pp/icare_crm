@@ -1,30 +1,19 @@
 import React, { Fragment, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import "../scss/home.scss"
-
 import { Button, Modal, Form, Accordion } from 'react-bootstrap';
-// import Button from 'react-bootstrap/Button';
-// import Collapse from 'react-bootstrap/Collapse';
 const modalBorderStyle = {
     borderBottom: `2px dashed gray`
-}
-const tableBorderStyle = {
-    borderBottom: `2px dashed black`
 }
 function num(index) {
     if (index % 2 === 0) {
         return 'bg-light';
-        console.log("偶數")
     } else {
         return 'bg-warning';
-        console.log("基數數")
     }
 }
 const ApprovedItem = (props) => {
     let { item, index } = props
-    // console.log(index,"proppsa")
     const [showModal, setShowModal] = useState(false);
-    // const [isOpen, setIsOpen] = useState(true);
 
     const handleModal = () => {
         setShowModal(!showModal);

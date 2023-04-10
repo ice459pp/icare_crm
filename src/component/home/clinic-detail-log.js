@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment} from "react";
 const ClinicDetailLog = (props) => {
   let { item, readonly } = props;
   let isEditFormal = false;
@@ -14,7 +14,6 @@ const ClinicDetailLog = (props) => {
   return (
     <Fragment>
       <div>
-        {/* 可以修改 */}
         {isEditFormal && (
           <section
             data-id={item.id}
@@ -30,15 +29,9 @@ const ClinicDetailLog = (props) => {
               <div className="logCard_title_dateStatus_PC">
                 <div className="date">{item.visit_datetime}</div>
                 <div className=" status fw-bolder "> {item.visit_category}</div>
-                {/* <button className="btn btn-success text-white status fw-bolder  cursor-default">
-                  {item.visit_category}
-                </button> */}
               </div>
               <div className="logCard_title_dateStatus_PD">
                 <div className=" status fw-bolder "> {item.visit_category}</div>
-                {/* <button className="btn btn-success text-white status fw-bolder cursor-default">
-                  {item.visit_category}
-                </button> */}
               </div>
             </div>
             <div className="date_PD">{item.visit_datetime}</div>
@@ -46,7 +39,6 @@ const ClinicDetailLog = (props) => {
             <div className="logCard_footer">{item.now_datetime} 新增 </div>
           </section>
         )}
-        {/* 不可以修改 modal */}
         {!isEditFormal && (
           <section
             data-id={item.id}
@@ -60,17 +52,9 @@ const ClinicDetailLog = (props) => {
               <div className="logCard_title_dateStatus_PC">
                 <div className="date">{item.visit_datetime}</div>
                 <div className=" status fw-bolder "> {item.visit_category}</div>
-
-                {/* <button className="btn btn-success text-white status  cursor-default">
-                  {item.visit_category}
-                </button> */}
               </div>
               <div className="logCard_title_dateStatus_PD">
               <div className=" status fw-bolder "> {item.visit_category}</div>
-
-                {/* <button className="btn btn-success text-white status cursor-default">
-                  {item.visit_category}
-                </button> */}
               </div>
             </div>
             <div className="date_PD">{item.visit_datetime}</div>

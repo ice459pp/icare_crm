@@ -2,20 +2,15 @@ import React, { Fragment, useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   InputGroup,
-  Dropdown,
-  DropdownButton,
   Form,
   Button,
   Modal,
 } from "react-bootstrap";
-// import TWzipcode from "react-twzipcode";
+
 import jsonData from "../../twzipcode.json";
 import { filterAction } from "../../store/filter-slice";
 import { useDispatch, useSelector } from "react-redux";
 
-const styles = {
-  borderRadius: `10px 0 0 10px`,
-};
 let departmentArr = [
   "不分科",
   "職業醫學科",
@@ -115,25 +110,17 @@ const SearchFilter = (props) => {
   };
 
   const resetHandler = () => {
-    // 診所進度
     props.onStatusChange("");
     setClinicStatus("");
 
-    // 日期排序
-    // props.onMutationHandler("");
-
-    // 科別
     props.onDepartmentChange("reset");
 
-    // 搜尋欄位
     clinicNameRef.current.value = "";
     props.onSearchText("");
 
-    // 城市
     setSelectedCity("");
     props.onCityChange("");
 
-    // 地區
     setSelectedDistrict("");
     props.onDistrictChange("");
 
@@ -143,9 +130,8 @@ const SearchFilter = (props) => {
   };
   const [departmentIsShow, setDepartmentIsShow] = useState(false);
   const [selected, setSelected] = useState({});
-  
-  const showDepartmentModal = () => {
 
+  const showDepartmentModal = () => {
     setDepartmentIsShow(!departmentIsShow);
   };
   const closeDepartmentModal = () => {
@@ -168,24 +154,12 @@ const SearchFilter = (props) => {
             onChange={(e) => clinicStatusHandler(e)}
             value={clinicStatus}
           >
-            <option value="">
-              全部
-            </option>
-            <option value="可回訪" >
-              可回訪
-            </option>
-            <option value="可電訪" >
-              可電訪
-            </option>
-            <option value="結案" >
-              結案
-            </option>
-            <option value="成交" >
-              成交
-            </option>
-            <option value="棄用" >
-              棄用
-            </option>
+            <option value="">全部</option>
+            <option value="可回訪">可回訪</option>
+            <option value="可電訪">可電訪</option>
+            <option value="結案">結案</option>
+            <option value="成交">成交</option>
+            <option value="棄用">棄用</option>
           </Form.Select>
         </div>
         <div className="d-flex align-items-center mb-2 search-clinicStatus">
