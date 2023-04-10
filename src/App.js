@@ -53,6 +53,7 @@ function App() {
   };
   const goHome = () => {
     goPath.push(`/`);
+
   };
   const elementRef = useRef(null);
   useEffect(() => {
@@ -71,8 +72,8 @@ function App() {
   }, [innerWidth, innerHeight]);
   const location = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0); // 回到页面顶部
-  }, [location.pathname]); // 监听 pathname 变化，执行回到页面顶部操作
+    window.scrollTo(0, 0);
+  }, [location.pathname]); 
   useEffect(() => {
     if (window.screen.orientation && window.screen.orientation.lock) {
       window.screen.orientation.lock("portrait").catch(function () {
@@ -93,7 +94,6 @@ function App() {
         >
           <div
             className="h4 m-0 cursor-pointer "
-            style={{ fontFamily: "cursive" }}
             onClick={goHome}
           >
             診所管理系統

@@ -44,13 +44,12 @@ const Home = () => {
     setDepartment(filterSlice.department);
   }, [filterSlice.department]);
   useEffect(() => {
-    if (clinicList.length>2 && actionStatus==="page") {
+    if (clinicList.length > 2 && actionStatus === "page") {
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-      setActionStatus("")
-    }else{
+      setActionStatus("");
+    } else {
       headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-
-     }
+    }
   }, [clinicList]);
 
   const statusChangeHandler = (value) => {
@@ -82,7 +81,7 @@ const Home = () => {
     dispatch(filterAction.onPage(1));
   };
   const pageChangeHandler = (value) => {
-    setActionStatus("page")
+    setActionStatus("page");
     dispatch(filterAction.onPage(value));
     setPage(value);
   };
@@ -101,6 +100,10 @@ const Home = () => {
   const departmentHandler = (value) => {
     dispatch(filterAction.onDepartment(value));
     dispatch(filterAction.onPage(1));
+  };
+  const scrollTopHandler = (e) => {
+    e.preventDefault();
+    headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   useEffect(() => {
@@ -143,7 +146,7 @@ const Home = () => {
   ]);
   return (
     <Fragment>
-      <div className="w-100 mt-3 padding-RWD " ref={headerRef} >
+      <div className="w-100 mt-3 padding-RWD " ref={headerRef}>
         <SearchFilter
           onStatusChange={statusChangeHandler}
           onCityChange={cityChangeHangle}
@@ -229,6 +232,11 @@ const Home = () => {
           </tbody>
         </table>
       </div>
+      <FontAwesomeIcon
+        onClick={scrollTopHandler}
+        className="text-secondary top-icon"
+        icon="fa-solid fa-circle-arrow-up"
+      />{" "}
       {totalPage > 0 && (
         <div className="d-flex justify-content-center w-100">
           <Pagination

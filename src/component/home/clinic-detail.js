@@ -51,7 +51,7 @@ const ClinicDetail = () => {
   const [logSearch, setLogSearch] = useState("");
   const divRef = useRef(null);
   const headerRef = useRef(null);
-  
+
   // const [scrollAdjust, setScrollAdjust] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const closeEditModalHandler = () => setEditModalShow(false);
@@ -68,7 +68,7 @@ const ClinicDetail = () => {
     setActionStatus("page");
     setPage(value);
   };
-  
+
   const logSearchHandler = (value) => {
     setLogSearch(value.trim());
   };
@@ -92,6 +92,10 @@ const ClinicDetail = () => {
   const closeAddLogModalHandler = () => {
     setLog(null);
     setShowAddLogModal(false);
+  };
+  const scrollTopHandler = (e) => {
+    e.preventDefault();
+    headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const editLogClickHandler = (item, action) => {
@@ -127,11 +131,46 @@ const ClinicDetail = () => {
           setTotalPage(totalPage);
           setlogList(list);
           setRefreshLog(false);
-          // setScrollAdjust(true);
         }
       );
     }
-  }, [refreshLog, page, logSearch]);
+  }, [refreshLog, page]);
+
+  useEffect(() => {
+    let timeoutId = "";
+
+    // 清除上一次的 setTimeout
+    clearTimeout(timeoutId);
+
+    // 在 1500ms 后调用 API
+    timeoutId = setTimeout(() => {
+      // this is important.
+      if (appSlice.isLogin) {
+        // fetch log api
+        const token = appSlice.userToken;
+        apiLogList(
+          token,
+          page,
+          id,
+          logSearch,
+          (err) => {
+            alert(err);
+          },
+          (list, total, totalPage) => {
+            setTotalCount(total);
+            setTotalPage(totalPage);
+            setlogList(list);
+            setRefreshLog(false);
+          }
+        );
+      }
+    }, 500);
+
+    // 清除定时器
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [logSearch]);
 
   useEffect(() => {
     if (appSlice.isLogin) {
@@ -153,7 +192,7 @@ const ClinicDetail = () => {
   }, [fetchClinicInfo]);
   return (
     <Fragment>
-      <div className="w-100 padding-RWD"  ref={headerRef}>
+      <div className="w-100 padding-RWD" ref={headerRef}>
         <div className="py-2 w-100">
           <div className="w-100 bg-white  inform">
             <section className="clinicName">
@@ -366,6 +405,11 @@ const ClinicDetail = () => {
           )}
         </div>
       </div>
+      <FontAwesomeIcon
+        onClick={scrollTopHandler}
+        className="text-secondary top-icon"
+        icon="fa-solid fa-circle-arrow-up"
+      />{" "}
       {/* 編輯診所 */}
       <Modal
         show={editModalShow}
@@ -398,7 +442,6 @@ const ClinicDetail = () => {
           onRefresh={refreshHandler}
         />
       )}
-
       {logAction === "edit" && showAddLogModal && (
         <ModalAddLog
           clinic_id={id}
