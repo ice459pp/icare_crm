@@ -60,8 +60,10 @@ const ClinicDetail = () => {
   const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
   const [clinicInfo, setClinicInfo] = useState(clinicData);
   const [logAction, setLogAction] = useState("add");
+  const [actionStatus, setActionStatus] = useState("");
   const [log, setLog] = useState(null);
   const pageChangeHandler = (value) => {
+    setActionStatus("page")
     setPage(value);
   };
 
@@ -100,22 +102,11 @@ const ClinicDetail = () => {
   };
   // this will be trigger when scrollAdjust and list change
   useEffect(() => {
-    if (logList.length>3) {
-      console.log(logList,"loglist")
+    if (logList.length>3 && actionStatus==="page") {
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-
-      // const topPos = divRef.current.offsetTop;
-      // const listContainer = document.querySelector("#listContainer");
-      // if (listContainer) {
-      //   listContainer.scrollTo({
-      //     top: topPos,
-      //     left: 0,
-      //     behavior: "smooth",
-      //   });
-      // }
-
-
-      // setScrollAdjust(false);
+      setActionStatus("")
+    }else{
+      window.scrollTop = 0;   
     }
   }, [logList]);
   // this will be trigger when show log modal

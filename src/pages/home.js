@@ -31,8 +31,9 @@ const Home = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [permutations, setPermutations] = useState(filterSlice.permutations);
   const [department, setDepartment] = useState(filterSlice.department);
+  const [actionStatus, setActionStatus] = useState("");
+  
   const divRef = useRef(null);
-  // const [scrollAdjust, setScrollAdjust] = useState(false);
   useEffect(() => {
     setPage(filterSlice.page);
   }, [filterSlice.page]);
@@ -42,6 +43,15 @@ const Home = () => {
   useEffect(() => {
     setDepartment(filterSlice.department);
   }, [filterSlice.department]);
+  useEffect(() => {
+    if (clinicList.length>2 && actionStatus==="page") {
+      divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      setActionStatus("")
+    }else{
+      window.scrollTop = 0;   
+     }
+  }, [clinicList]);
+
   const statusChangeHandler = (value) => {
     dispatch(filterAction.onClinicStatus(value));
     dispatch(filterAction.onPage(1));
@@ -71,14 +81,11 @@ const Home = () => {
     dispatch(filterAction.onPage(1));
   };
   const pageChangeHandler = (value) => {
+    setActionStatus("page")
     dispatch(filterAction.onPage(value));
     setPage(value);
   };
-  useEffect(() => {
-    if (clinicList.length>2) {
-      divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [clinicList]);
+
   const logoutHandler = () => {
     dispatch(appAction.logout());
   };
