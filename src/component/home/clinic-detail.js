@@ -63,14 +63,17 @@ const ClinicDetail = () => {
   const [actionStatus, setActionStatus] = useState("");
   const [log, setLog] = useState(null);
   const pageChangeHandler = (value) => {
-    setActionStatus("page")
+    setActionStatus("page");
     setPage(value);
   };
+
+  // const logSearchHandler = (value) => {
+  //   setLogSearch(value.trim());
+  // };
 
   const logSearchHandler = (value) => {
     setLogSearch(value.trim());
   };
-
   const clearSearchHandler = () => {
     setLogSearch("");
   };
@@ -81,8 +84,6 @@ const ClinicDetail = () => {
     setFetchClinicInfo(true);
     setRefreshLog(true);
   };
-
-
 
   const createLogClickHandler = (item, action) => {
     setLogAction(action);
@@ -102,11 +103,11 @@ const ClinicDetail = () => {
   };
   // this will be trigger when scrollAdjust and list change
   useEffect(() => {
-    if (logList.length>3 && actionStatus==="page") {
+    if (logList.length > 3 && actionStatus === "page") {
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-      setActionStatus("")
-    }else{
-      window.scrollTop = 0;   
+      setActionStatus("");
+    } else {
+      window.scrollTop = 0;
     }
   }, [logList]);
   // this will be trigger when show log modal
@@ -300,7 +301,7 @@ const ClinicDetail = () => {
                 </div>
               </div>
             </section>
-            <section  className="w-100 text-center  mt-4 mb-1">
+            <section className="w-100 text-center  mt-4 mb-1">
               <Button
                 variant="success"
                 className="text-white edit_button"
