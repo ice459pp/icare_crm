@@ -6,6 +6,18 @@ import ClinicDetailLog from "./clinic-detail-log";
 
 import { useDispatch, useSelector } from "react-redux";
 import { apiLogList } from "../../api/api-clinic-log";
+const phoneFixHandler = (item) => {
+  // console.log(item.replace(/ /g, ""),"itemphoneFixHandler")
+  const phoneNumberArray = item.replace(/ /g, "").split("-");
+  phoneNumberArray[0] = phoneNumberArray[0].substring(1);
+  // console.log(phoneNumberArray,"ppp")
+  let phoneObj = {
+    areaCode: parseInt(phoneNumberArray[0]),
+    tel: parseInt(phoneNumberArray[1]),
+  };
+  console.log(phoneObj, "phoneOBJJJ");
+  return phoneObj;
+};
 const nowTodayChange = () => {
   const now = new Date();
   const year = now.getFullYear();
@@ -30,7 +42,8 @@ const ClinicListItem = (props) => {
   const [showLogListModal, setShowLogListModal] = useState(false);
   const [refreshLog, setRefreshLog] = useState(false);
   const [page, setPage] = useState(1);
-
+  const phoneObj = phoneFixHandler(item.phone);
+  // console.log(,item.name,"item.phoneitem.phone")
   const handleAddLogModal1 = () => {
     // 新增log
     // 診所列表上的LOG的延伸modal
@@ -91,14 +104,30 @@ const ClinicListItem = (props) => {
           <div>{item.id}</div>
         </th>
         <td className="td-address" data-th="地址:">
-          <section>
-            <div>
-              {item.city}/{item.district}
-            </div>
-            <div>{item.road}</div>
-          </section>
+          <a
+            className="address"
+            href={`https://www.google.com/maps/search/${item.city}/${item.district}/${item.road}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <section>
+              <div>
+                {item.city}/{item.district}
+              </div>
+              <div>{item.road}</div>
+            </section>
+          </a>
         </td>
-        <td data-th="電話:">{item.phone}</td>
+        <td data-th="電話:">
+          {" "}
+          <a href={`tel:+886-${phoneObj.areaCode}-${phoneObj.tel}`}>
+            {" "}
+            {item.phone}
+          </a>{" "}
+          <br></br>
+          <a href={`tel:+886-${2}-${26561818}`}> 愛管家電話</a> <br></br>
+          <a href="tel:+886-0931390916">我的電話</a>
+        </td>
         <td data-th="拜訪人:">{item.visitor_name}</td>
         <td data-th="狀態:">{item.clinic_status}</td>
         <td data-th="日期:">{item.visit_datetime}</td>

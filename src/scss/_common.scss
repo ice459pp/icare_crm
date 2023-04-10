@@ -35,3 +35,13 @@
     }
 
 }
+a{
+    text-decoration: none !important;
+    &.address{
+        color: #343a40 !important;
+        // font-weight: bolder;
+        &:hover{
+            color: black !important;
+        }
+    }
+}
