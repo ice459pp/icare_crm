@@ -70,9 +70,13 @@ const ClinicDetail = () => {
   };
 
   const logSearchHandler = (value) => {
+    setPage(1);
+    setActionStatus("page");
     setLogSearch(value.trim());
   };
   const clearSearchHandler = () => {
+    setPage(1);
+    setActionStatus("page");
     setLogSearch("");
   };
 
@@ -105,10 +109,17 @@ const ClinicDetail = () => {
   };
   // this will be trigger when scrollAdjust and list change
   useEffect(() => {
-    if (logList.length > 3 && actionStatus === "page") {
-      divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (actionStatus === "page") {
+      // 如果list有值超過三 選頁數或是搜尋 他應該要停在log那一葉面
+      if (logList.length > 3) {
+        divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        // 什麼都不動
+        console.log("useSearch but length<3 no scroll");
+      }
       setActionStatus("");
     } else {
+      // 置頂最頂部
       headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [logList]);
@@ -134,15 +145,11 @@ const ClinicDetail = () => {
         }
       );
     }
-  }, [refreshLog, page]);
+  }, [refreshLog]);
 
   useEffect(() => {
     let timeoutId = "";
-
-    // 清除上一次的 setTimeout
     clearTimeout(timeoutId);
-
-    // 在 1500ms 后调用 API
     timeoutId = setTimeout(() => {
       // this is important.
       if (appSlice.isLogin) {
@@ -164,13 +171,13 @@ const ClinicDetail = () => {
           }
         );
       }
-    }, 500);
+    }, 300);
 
     // 清除定时器
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [logSearch]);
+  }, [logSearch,page]);
 
   useEffect(() => {
     if (appSlice.isLogin) {
@@ -364,12 +371,20 @@ const ClinicDetail = () => {
             <div className=" log_title_name" ref={divRef}>
               Log:
             </div>
+
             <InputGroup size="sm" className="">
+              {logSearch !== "" && (
+                <FontAwesomeIcon
+                  onClick={clearSearchHandler}
+                  className="text-danger cursor-pointer fs-5 pe-1"
+                  icon="fa-solid fa-circle-xmark"
+                />
+              )}
               查詢結果({totalCount}筆):
               <input
                 type="text"
                 // ref={logSearchRef}
-                className="form-control"
+                className="form-control ms-2"
                 placeholder="內容紀錄查詢"
                 // defaultValue={""}
                 value={logSearch}
@@ -377,13 +392,6 @@ const ClinicDetail = () => {
                   logSearchHandler(e.target.value);
                 }}
               />
-              {logSearch !== "" && (
-                <FontAwesomeIcon
-                  onClick={clearSearchHandler}
-                  className="text-danger cursor-pointer fs-5"
-                  icon="fa-solid fa-circle-xmark"
-                />
-              )}
             </InputGroup>
           </div>
           {logList.map((item) => (
