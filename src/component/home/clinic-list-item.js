@@ -7,15 +7,12 @@ import ClinicDetailLog from "./clinic-detail-log";
 import { useDispatch, useSelector } from "react-redux";
 import { apiLogList } from "../../api/api-clinic-log";
 const phoneFixHandler = (item) => {
-  // console.log(item.replace(/ /g, ""),"itemphoneFixHandler")
   const phoneNumberArray = item.replace(/ /g, "").split("-");
   phoneNumberArray[0] = phoneNumberArray[0].substring(1);
-  // console.log(phoneNumberArray,"ppp")
   let phoneObj = {
     areaCode: parseInt(phoneNumberArray[0]),
     tel: parseInt(phoneNumberArray[1]),
   };
-  console.log(phoneObj, "phoneOBJJJ");
   return phoneObj;
 };
 const nowTodayChange = () => {

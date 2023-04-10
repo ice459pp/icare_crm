@@ -168,22 +168,22 @@ const SearchFilter = (props) => {
             onChange={(e) => clinicStatusHandler(e)}
             value={clinicStatus}
           >
-            <option value="" selected={clinicStatus === ""}>
+            <option value="">
               全部
             </option>
-            <option value="可回訪" selected={clinicStatus === "可回訪"}>
+            <option value="可回訪" >
               可回訪
             </option>
-            <option value="可電訪" selected={clinicStatus === "可電訪"}>
+            <option value="可電訪" >
               可電訪
             </option>
-            <option value="結案" selected={clinicStatus === "結案"}>
+            <option value="結案" >
               結案
             </option>
-            <option value="成交" selected={clinicStatus === "成交"}>
+            <option value="成交" >
               成交
             </option>
-            <option value="棄用" selected={clinicStatus === "棄用"}>
+            <option value="棄用" >
               棄用
             </option>
           </Form.Select>

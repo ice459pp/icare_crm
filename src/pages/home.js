@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../scss/home.scss";
-import { Button, Dropdown } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import SearchFilter from "../component/home/search-filter";
 import ClinicListItem from "../component/home/clinic-list-item";
 import Pagination from "../component/home/Pagination";
