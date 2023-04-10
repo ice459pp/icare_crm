@@ -106,7 +106,7 @@ const ClinicListItem = (props) => {
         <td className="td-address" data-th="地址:">
           <a
             className="address"
-            href={`https://www.google.com/maps/search/${item.city}/${item.district}/${item.road}`}
+            href={`https://www.google.com/maps/search/?api=1&query=${item.city}/${item.district}/${item.road}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -119,14 +119,9 @@ const ClinicListItem = (props) => {
           </a>
         </td>
         <td data-th="電話:">
-          {" "}
           <a href={`tel:+886-${phoneObj.areaCode}-${phoneObj.tel}`}>
-            {" "}
             {item.phone}
-          </a>{" "}
-          <br></br>
-          <a href={`tel:+886-${2}-${26561818}`}> 愛管家電話</a> <br></br>
-          <a href="tel:+886-0931390916">我的電話</a>
+          </a>
         </td>
         <td data-th="拜訪人:">{item.visitor_name}</td>
         <td data-th="狀態:">{item.clinic_status}</td>
