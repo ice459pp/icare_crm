@@ -50,6 +50,8 @@ const ClinicDetail = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [logSearch, setLogSearch] = useState("");
   const divRef = useRef(null);
+  const headerRef = useRef(null);
+  
   // const [scrollAdjust, setScrollAdjust] = useState(false);
   const [editModalShow, setEditModalShow] = useState(false);
   const closeEditModalHandler = () => setEditModalShow(false);
@@ -66,11 +68,7 @@ const ClinicDetail = () => {
     setActionStatus("page");
     setPage(value);
   };
-
-  // const logSearchHandler = (value) => {
-  //   setLogSearch(value.trim());
-  // };
-
+  
   const logSearchHandler = (value) => {
     setLogSearch(value.trim());
   };
@@ -107,7 +105,7 @@ const ClinicDetail = () => {
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       setActionStatus("");
     } else {
-      window.scrollTop = 0;
+      headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [logList]);
   // this will be trigger when show log modal
@@ -155,7 +153,7 @@ const ClinicDetail = () => {
   }, [fetchClinicInfo]);
   return (
     <Fragment>
-      <div className="w-100 padding-RWD">
+      <div className="w-100 padding-RWD"  ref={headerRef}>
         <div className="py-2 w-100">
           <div className="w-100 bg-white  inform">
             <section className="clinicName">

@@ -32,7 +32,7 @@ const Home = () => {
   const [permutations, setPermutations] = useState(filterSlice.permutations);
   const [department, setDepartment] = useState(filterSlice.department);
   const [actionStatus, setActionStatus] = useState("");
-  
+  const headerRef = useRef(null);
   const divRef = useRef(null);
   useEffect(() => {
     setPage(filterSlice.page);
@@ -48,7 +48,8 @@ const Home = () => {
       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       setActionStatus("")
     }else{
-      window.scrollTop = 0;   
+      headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+
      }
   }, [clinicList]);
 
@@ -142,7 +143,7 @@ const Home = () => {
   ]);
   return (
     <Fragment>
-      <div className="w-100 mt-3 padding-RWD ">
+      <div className="w-100 mt-3 padding-RWD " ref={headerRef} >
         <SearchFilter
           onStatusChange={statusChangeHandler}
           onCityChange={cityChangeHangle}
