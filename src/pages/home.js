@@ -11,7 +11,7 @@ import { apiClinicList } from "../api/api-clinic-list";
 import { appAction } from "../store/app-slice";
 import { filterAction } from "../store/filter-slice";
 import { useRef } from "react";
-const Home = () => {
+const Home = (props) => {
   const modalSlice = useSelector((state) => state.modalSlice);
   const [modalIsShow, setModalIsShow] = useState(modalSlice.modalIsShow);
   const appSlice = useSelector((state) => state.appSlice);
@@ -106,6 +106,9 @@ const Home = () => {
     e.preventDefault();
     headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+  // const heightHandler=()=>{
+  //   props.onHeightControl()
+  // }
 
   useEffect(() => {
     if (appSlice.isLogin) {
@@ -132,6 +135,7 @@ const Home = () => {
           setClinicList(list);
         }
       );
+      props.onwqqwdqw()
     } else {
       navigate.push("/login");
     }

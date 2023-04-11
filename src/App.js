@@ -21,6 +21,7 @@ function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
+  const [heightControls, setHeightControls] = useState(false);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
   useEffect(() => {
@@ -58,7 +59,11 @@ function App() {
       window.removeEventListener("orientationchange", handleResize);
     };
     
-  }, [innerWidth, innerHeight]);
+  }, [innerWidth, innerHeight,heightControls]);
+  const heightControl =()=>{
+    setHeightControls(!heightControls)
+    console.log("觸發一次")
+  }
   return (
     <Fragment>
       {!isLogin ? (
@@ -105,7 +110,7 @@ function App() {
           <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
             <Switch>
               <Route path="/login" component={UserLogin} />
-              <Route exact path="/" component={Home}></Route>
+              <Route exact path="/"  > <Home onwqqwdqw={heightControl}></Home> </Route>
               <Route path="/clinic/:id" component={ClinicDetail} />
               <Route path="/approved" component={Approved} />
               <Route path="/approved/:id" component={Approved} />
