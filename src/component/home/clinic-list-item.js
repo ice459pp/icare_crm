@@ -35,19 +35,17 @@ const ClinicListItem = (props) => {
   };
 
   const closeAddLogModalHandler = () => {
-   
     setShowAddLogModal(false);
   };
   const showLogListModalHandler = () => {
-    dispatch(modalAction.showModal())
+    dispatch(modalAction.showModal());
     setShowLogListModal(true);
   };
 
   const closeLogListModalHandler = () => {
-    dispatch(modalAction.closeModal())
+    dispatch(modalAction.closeModal());
     setShowLogListModal(false);
   };
-
   const refreshMoadlHandler = () => {
     setShowAddLogModal(false);
     setRefreshLog(true);
@@ -161,6 +159,9 @@ const ClinicListItem = (props) => {
           showMoadl={showAddLogModal}
           onClose={closeAddLogModalHandler}
           onRefresh={refreshMoadlHandler}
+          onActionStatus={() => {
+            return;
+          }}
         />
       )}
     </Fragment>
