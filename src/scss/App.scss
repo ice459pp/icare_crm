@@ -4,6 +4,11 @@
 body {
   height: 100vh;
   overflow: hidden !important;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+html {
+  height: -webkit-fill-available;
 }
 .header-title{
   position: sticky;
