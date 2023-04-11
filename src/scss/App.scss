@@ -4,15 +4,18 @@
 body {
   height: 100vh;
   overflow: hidden !important;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  // min-height: 100vh;
+  // min-height: -webkit-fill-available;
 }
-html {
-  height: -webkit-fill-available;
-}
+// html {
+//   height: -webkit-fill-available;
+// }
 .header-title{
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2048;
 }
 
 /* 在iOS Safari上，您需要使用下面的CSS規則 */

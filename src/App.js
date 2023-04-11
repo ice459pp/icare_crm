@@ -31,8 +31,9 @@ function App() {
 
   let headNavbarRef = useRef() || "";
   const style = {
-    height: `calc(100% - 45px)`,
+    height: `calc(100%)`,
     position: `relative`,
+    paddingTop:`45px`
   };
   const menuHandler = () => {
     setMenuIsShow(!menuIsShow);
