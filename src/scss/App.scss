@@ -3,6 +3,7 @@
 @import "./modal";
 body {
   height: 100vh;
+  overflow: hidden !important;
 }
 
 /* 在iOS Safari上，您需要使用下面的CSS規則 */
