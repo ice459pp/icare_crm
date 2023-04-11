@@ -46,13 +46,16 @@ function App() {
       const vh = window.innerHeight * 0.01;
       document.documentElement.style.setProperty("--vh", `${vh}px`);
     };
-
     setBodyHeight();
+    const handleResize = () => {
+      setBodyHeight();
+    }; 
 
-    window.addEventListener("resize", setBodyHeight);
-
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
     return () => {
-      window.removeEventListener("resize", setBodyHeight);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
     };
   }, [innerWidth, innerHeight]);
   const location = useLocation();
