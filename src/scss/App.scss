@@ -11,11 +11,13 @@ body {
 //   height: -webkit-fill-available;
 // }
 .header-title{
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2048;
+  // position: sticky;
+  // top: 0;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // z-index: 2048;
 }
 
 /* 在iOS Safari上，您需要使用下面的CSS規則 */

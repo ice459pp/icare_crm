@@ -6,7 +6,6 @@ import {
   Route,
   Redirect,
   useHistory,
-  useLocation,
 } from "react-router-dom";
 import ClinicDetail from "./component/home/clinic-detail";
 import Approved from "./pages/approved";
@@ -31,9 +30,8 @@ function App() {
 
   let headNavbarRef = useRef() || "";
   const style = {
-    height: `calc(100%)`,
+    height: `calc(100% - 45px )`,
     position: `relative`,
-    paddingTop:`45px`
   };
   const menuHandler = () => {
     setMenuIsShow(!menuIsShow);
@@ -51,6 +49,7 @@ function App() {
     const handleResize = () => {
       setBodyHeight();
     }; 
+    console.log("innerWidth, innerHeight")
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
@@ -58,18 +57,8 @@ function App() {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("orientationchange", handleResize);
     };
+    
   }, [innerWidth, innerHeight]);
-  const location = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
-  useEffect(() => {
-    if (window.screen.orientation && window.screen.orientation.lock) {
-      window.screen.orientation.lock("portrait").catch(function () {
-        console.log("Orientation lock failed.");
-      });
-    }
-  }, []);
   return (
     <Fragment>
       {!isLogin ? (
