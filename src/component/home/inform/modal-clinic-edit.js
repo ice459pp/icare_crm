@@ -65,8 +65,6 @@ const ClinicEditModal = (props) => {
     item.his === "展望" || item.his === "耀聖" || item.his === "" ? false : true
   );
 
-  console.log(item.isVisit_datetime, "item.isVisit_datetime");
-  // console.log("careNetwork",careNetwork)
   const careNetworkHandler = (data) => {
     let preString = data.previous;
     let nowString = data.now.replace("$", "");
@@ -142,11 +140,6 @@ const ClinicEditModal = (props) => {
       setHis(value);
     }
   };
-
-  useEffect(() => {
-    console.log(isOtherHis, "isOtherHisisOtherHis");
-  }, [isOtherHis]);
-
   return (
     <Fragment>
       <div className="basicInform">
@@ -430,7 +423,7 @@ const ClinicEditModal = (props) => {
             </div>
           </div>
         </section>
-        <section className="d-flex  pt-2">
+        <section className="d-flex  pt-3 pb-2">
           <div className="w-100 d-flex inform-radio1">
             <div className="w-100 pe-4  ">
               <label className="form-label">
@@ -519,11 +512,6 @@ const ClinicEditModal = (props) => {
                   className=""
                   size="sm"
                   key={index}
-                  // variant={
-                  //   selectedCareNetworks.includes(item)
-                  //     ? "primary"
-                  //     : "outline-primary"
-                  // }
                   onClick={() => addCare_network(item)}
                 >
                   {item}

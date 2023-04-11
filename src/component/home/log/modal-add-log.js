@@ -111,6 +111,7 @@ const ModalAddLog = (props) => {
   };
 
   const createLogHandler = () => {
+    props.onActionStatus("add")
     setApiStart(true);
   };
 

@@ -11,8 +11,9 @@ import { apiClinicList } from "../api/api-clinic-list";
 import { appAction } from "../store/app-slice";
 import { filterAction } from "../store/filter-slice";
 import { useRef } from "react";
-
 const Home = () => {
+  const modalSlice = useSelector((state) => state.modalSlice);
+  const [modalIsShow, setModalIsShow] = useState(modalSlice.modalIsShow);
   const appSlice = useSelector((state) => state.appSlice);
   const filterSlice = useSelector((state) => state.filterSlice);
   const dispatch = useDispatch();
@@ -30,6 +31,10 @@ const Home = () => {
   const [actionStatus, setActionStatus] = useState("");
   const headerRef = useRef(null);
   const divRef = useRef(null);
+  useEffect(() => {
+    setModalIsShow(modalSlice.modalIsShow);
+  }, [modalSlice.modalIsShow]);
+  
   useEffect(() => {
     setPage(filterSlice.page);
   }, [filterSlice.page]);
@@ -228,11 +233,13 @@ const Home = () => {
           </tbody>
         </table>
       </div>
-      <FontAwesomeIcon
-        onClick={scrollTopHandler}
-        className="text-secondary top-icon"
-        icon="fa-solid fa-circle-arrow-up"
-      />
+      {!modalIsShow && (
+        <FontAwesomeIcon
+          onClick={scrollTopHandler}
+          className="text-secondary top-icon"
+          icon="fa-solid fa-circle-arrow-up"
+        />
+      )}
       {totalPage > 0 && (
         <div className="d-flex justify-content-center w-100">
           <Pagination

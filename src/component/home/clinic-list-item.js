@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Modal  } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import ModalAddLog from "./log/modal-add-log";
 import ClinicDetailLog from "./clinic-detail-log";
-
-import {  useSelector } from "react-redux";
+import { modalAction } from "../../store/modal-slice";
+import { useDispatch, useSelector } from "react-redux";
 import { apiLogList } from "../../api/api-clinic-log";
 const phoneFixHandler = (item) => {
   const phoneNumberArray = item.replace(/ /g, "").split("-");
@@ -19,7 +19,7 @@ const ClinicListItem = (props) => {
   let { item } = props;
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
-
+  let dispatch = useDispatch();
   const moreDetailHandler = () => {
     navigate.push(`/clinic/${item.id}`);
   };
@@ -35,13 +35,16 @@ const ClinicListItem = (props) => {
   };
 
   const closeAddLogModalHandler = () => {
+   
     setShowAddLogModal(false);
   };
   const showLogListModalHandler = () => {
+    dispatch(modalAction.showModal())
     setShowLogListModal(true);
   };
 
   const closeLogListModalHandler = () => {
+    dispatch(modalAction.closeModal())
     setShowLogListModal(false);
   };
 

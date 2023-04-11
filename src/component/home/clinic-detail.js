@@ -10,10 +10,11 @@ import PhoneIcon from "../icon/Phone_icon";
 import InputGroup from "react-bootstrap/InputGroup";
 import Pagination from "./Pagination";
 import { apiClinicInfo } from "../../api/api-clinic-info";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalAddLog from "./log/modal-add-log";
 import { apiLogList } from "../../api/api-clinic-log";
 import { useRef } from "react";
+import { modalAction } from "../../store/modal-slice";
 let clinicData = {
   id: "", // clinic id
   name: "", // clinic name
@@ -38,7 +39,9 @@ const ClinicDetail = () => {
   const navigate = useHistory();
   const params = useParams();
   const id = params.id;
-
+  let dispatch = useDispatch();
+  const modalSlice = useSelector((state) => state.modalSlice);
+  const [modalIsShow, setModalIsShow] = useState(modalSlice.modalIsShow);
   const [logList, setlogList] = useState([]);
   const [refreshLog, setRefreshLog] = useState(false);
   const [page, setPage] = useState(1);
@@ -48,9 +51,6 @@ const ClinicDetail = () => {
   const divRef = useRef(null);
   const headerRef = useRef(null);
   const [editModalShow, setEditModalShow] = useState(false);
-  const closeEditModalHandler = () => setEditModalShow(false);
-  const showEditModalHandler = () => setEditModalShow(true);
-
   const [showAddLogModal, setShowAddLogModal] = useState(false);
 
   const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
@@ -58,23 +58,32 @@ const ClinicDetail = () => {
   const [logAction, setLogAction] = useState("add");
   const [actionStatus, setActionStatus] = useState("");
   const [log, setLog] = useState(null);
+  useEffect(() => {
+    setModalIsShow(modalSlice.modalIsShow);
+  }, [modalSlice.modalIsShow]);
   const pageChangeHandler = (value) => {
-    setActionStatus("page");
+    setActionStatus("goLog");
     setPage(value);
   };
-
+  const closeEditModalHandler = () => {
+    dispatch(modalAction.closeModal());
+    setEditModalShow(false);
+  };
+  const showEditModalHandler = () => {
+    dispatch(modalAction.showModal());
+    setEditModalShow(true);
+  };
   const logSearchHandler = (value) => {
-    setPage(1);
-    setActionStatus("page");
+    setActionStatus("goLog");
     setLogSearch(value.trim());
   };
   const clearSearchHandler = () => {
-    setPage(1);
-    setActionStatus("page");
+    setActionStatus("goLog");
     setLogSearch("");
   };
 
   const refreshHandler = () => {
+    dispatch(modalAction.closeModal());
     setEditModalShow(false);
     setShowAddLogModal(false);
     setFetchClinicInfo(true);
@@ -82,12 +91,14 @@ const ClinicDetail = () => {
   };
 
   const createLogClickHandler = (item, action) => {
+    dispatch(modalAction.showModal());
     setLogAction(action);
     setLog(item);
     setShowAddLogModal(true);
   };
 
   const closeAddLogModalHandler = () => {
+    dispatch(modalAction.closeModal());
     setLog(null);
     setShowAddLogModal(false);
   };
@@ -97,12 +108,19 @@ const ClinicDetail = () => {
   };
 
   const editLogClickHandler = (item, action) => {
+    dispatch(modalAction.showModal());
     setLogAction(action);
     setLog(item);
     setShowAddLogModal(true);
   };
+  const actionStatusHandler = (e) => {
+    setActionStatus(e);
+  };
   useEffect(() => {
-    if (actionStatus === "page") {
+    if (actionStatus === "add") {
+      return;
+    }
+    if (actionStatus === "goLog") {
       if (logList.length > 3) {
         divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
@@ -163,7 +181,7 @@ const ClinicDetail = () => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [logSearch,page]);
+  }, [logSearch, page]);
 
   useEffect(() => {
     if (appSlice.isLogin) {
@@ -397,11 +415,13 @@ const ClinicDetail = () => {
           )}
         </div>
       </div>
-      <FontAwesomeIcon
-        onClick={scrollTopHandler}
-        className="text-secondary top-icon"
-        icon="fa-solid fa-circle-arrow-up"
-      />{" "}
+      {!modalIsShow && (
+        <FontAwesomeIcon
+          onClick={scrollTopHandler}
+          className="text-secondary top-icon"
+          icon="fa-solid fa-circle-arrow-up"
+        />
+      )}
       <Modal
         show={editModalShow}
         onHide={closeEditModalHandler}
@@ -424,6 +444,7 @@ const ClinicDetail = () => {
       </Modal>
       {logAction === "add" && showAddLogModal && (
         <ModalAddLog
+          onActionStatus={actionStatusHandler}
           clinic_id={id}
           action={logAction}
           log={log}
@@ -434,6 +455,7 @@ const ClinicDetail = () => {
       )}
       {logAction === "edit" && showAddLogModal && (
         <ModalAddLog
+          onActionStatus={actionStatusHandler}
           clinic_id={id}
           action={logAction}
           log={log}

@@ -1,20 +1,16 @@
 import React, { Fragment, useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  InputGroup,
-  Form,
-  Button,
-  Modal,
-} from "react-bootstrap";
+import { InputGroup, Form, Button, Modal } from "react-bootstrap";
 
 import jsonData from "../../twzipcode.json";
 import { filterAction } from "../../store/filter-slice";
+import { modalAction } from "../../store/modal-slice";
 import { useDispatch, useSelector } from "react-redux";
 
 let departmentArr = [
   "不分科",
-  "職業醫學科",
-  "臨床病理科",
+  "耳鼻喉科",
+  "皮膚科",
   "整形外科",
   "齒顎矯正科",
   "精神科",
@@ -26,9 +22,6 @@ let departmentArr = [
   "骨科",
   "神經科",
   "神經外科",
-  "病理科",
-  "特殊需求者口腔醫學科",
-  "核子醫學科",
   "家醫科",
   "家庭牙醫科",
   "洗腎科",
@@ -38,8 +31,6 @@ let departmentArr = [
   "放射診斷科",
   "兒童牙科",
   "兒科",
-  "耳鼻喉科",
-  "皮膚科",
   "外科",
   "牙髓病科",
   "牙科",
@@ -47,6 +38,11 @@ let departmentArr = [
   "內科",
   "中醫一般科",
   "口腔顎面外科",
+  "職業醫學科",
+  "臨床病理科",
+  "病理科",
+  "特殊需求者口腔醫學科",
+  "核子醫學科",
 ];
 
 const SearchFilter = (props) => {
@@ -132,9 +128,11 @@ const SearchFilter = (props) => {
   const [selected, setSelected] = useState({});
 
   const showDepartmentModal = () => {
-    setDepartmentIsShow(!departmentIsShow);
+    dispatch(modalAction.showModal())
+    setDepartmentIsShow(true);
   };
   const closeDepartmentModal = () => {
+    dispatch(modalAction.closeModal())
     setDepartmentIsShow(false);
   };
   const addDepartmentHandler = (item) => {
@@ -250,13 +248,12 @@ const SearchFilter = (props) => {
         show={departmentIsShow}
         onHide={closeDepartmentModal}
         centered
-        backdrop="static"
         keyboard={false}
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
       >
         <Modal.Header className="bg-secondary text-white" closeButton>
-          <Modal.Title>科別欄位</Modal.Title>
+          <Modal.Title>選擇科別欄位</Modal.Title>
         </Modal.Header>
         <Modal.Body className="departmentModal">
           <div className="title">科別:</div>
@@ -293,7 +290,7 @@ const SearchFilter = (props) => {
           <Button
             variant="success"
             className="text-white w-25"
-            onClick={showDepartmentModal}
+            onClick={closeDepartmentModal}
           >
             確定
           </Button>
