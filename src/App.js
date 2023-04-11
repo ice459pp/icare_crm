@@ -77,7 +77,7 @@ function App() {
         <div
           ref={headNavbarRef}
           style={{ height: "45px", borderBottom: "1px solid black" }}
-          className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center"
+          className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center header-title"
         >
           <div className="h4 m-0 cursor-pointer " onClick={goHome}>
             診所管理系統

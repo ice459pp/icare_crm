@@ -5,6 +5,10 @@ body {
   height: 100vh;
   overflow: hidden !important;
 }
+.header-title{
+  position: sticky;
+  top: 0;
+}
 
 /* 在iOS Safari上，您需要使用下面的CSS規則 */
 @media screen and (max-width: 996px) {
