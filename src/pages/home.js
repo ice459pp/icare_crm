@@ -11,7 +11,7 @@ import { apiClinicList } from "../api/api-clinic-list";
 import { appAction } from "../store/app-slice";
 import { filterAction } from "../store/filter-slice";
 import { useRef } from "react";
-const Home = (props) => {
+const Home = () => {
   const modalSlice = useSelector((state) => state.modalSlice);
   const [modalIsShow, setModalIsShow] = useState(modalSlice.modalIsShow);
   const appSlice = useSelector((state) => state.appSlice);
@@ -135,7 +135,6 @@ const Home = (props) => {
           setClinicList(list);
         }
       );
-      props.onwqqwdqw()
     } else {
       navigate.push("/login");
     }

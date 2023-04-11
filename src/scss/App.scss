@@ -21,6 +21,9 @@ body {
 }
 
 /* 在iOS Safari上，您需要使用下面的CSS規則 */
+body {
+  height: calc(var(--vh, 1vh) * 100) !important;
+}
 @media screen and (max-width: 996px) {
   body {
     height: calc(var(--vh, 1vh) * 100);

@@ -50,8 +50,6 @@ function App() {
     const handleResize = () => {
       setBodyHeight();
     }; 
-    console.log("innerWidth, innerHeight")
-
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
     return () => {
@@ -60,10 +58,6 @@ function App() {
     };
     
   }, [innerWidth, innerHeight,heightControls]);
-  const heightControl =()=>{
-    setHeightControls(!heightControls)
-    console.log("觸發一次")
-  }
   return (
     <Fragment>
       {!isLogin ? (
@@ -110,7 +104,7 @@ function App() {
           <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
             <Switch>
               <Route path="/login" component={UserLogin} />
-              <Route exact path="/"  > <Home onwqqwdqw={heightControl}></Home> </Route>
+              <Route exact path="/"  > <Home></Home> </Route>
               <Route path="/clinic/:id" component={ClinicDetail} />
               <Route path="/approved" component={Approved} />
               <Route path="/approved/:id" component={Approved} />
