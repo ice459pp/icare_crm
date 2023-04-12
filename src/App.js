@@ -38,11 +38,6 @@ function App() {
     goPath.push(`/`);
   };
   const elementRef = useRef(null);
-  // const setBodyHeight = () => {
-  //   const vh = window.innerHeight * 0.01;
-  //   document.documentElement.style.setProperty("--vh", `${vh}px`);
-  // };
-  // setBodyHeight();
   const setBodyHeight = () => {
     setHeight(window.innerHeight);
   };
@@ -60,11 +55,10 @@ function App() {
     };
   }, []);
   useEffect(() => {
-    const root = document.querySelector("body");
-    root.style.height = `${Math.max(root.clientHeight, root.scrollHeight, window.innerHeight)}px`;
-
-    // root.style.height = `${window.innerHeight}px`;
-  }, []);
+    const root = document.querySelector("#root");
+    root.style.height=`${height}px`
+    // root.style.height = `${Math.max(root.clientHeight, root.scrollHeight, window.innerHeight)}px`;
+  }, [height]);
   return (
     <Fragment>
       {!isLogin ? (
@@ -76,7 +70,7 @@ function App() {
           className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center header-title"
         >
           <div className="h4 m-0 cursor-pointer " onClick={goHome}>
-            診所管理系統1
+            診所管理系統2
           </div>
           {!menuIsShow && (
             <div onClick={menuHandler} className="m-0 menu">
