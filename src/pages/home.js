@@ -45,11 +45,15 @@ const Home = () => {
     setDepartment(filterSlice.department);
   }, [filterSlice.department]);
   useEffect(() => {
-    if (clinicList.length > 2 && actionStatus === "page") {
-      divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    if ( actionStatus === "page") {
+      if (clinicList.length > 2) {
+        divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      }
       setActionStatus("");
-    } else {
+    }else{
       headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+
     }
   }, [clinicList]);
 

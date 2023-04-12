@@ -3,7 +3,7 @@
 @import "./modal";
 body {
   // height: 100vh;
-  overflow: hidden;
+  // overflow: hidden;
   // min-height: 100vh;
   // min-height: -webkit-fill-available;
 }
@@ -19,7 +19,24 @@ body {
   // right: 0;
   // z-index: 2048;
 }
+#root{
+  height: 100%;
+}
+html {
+  overflow: -moz-hidden-unscrollable;
+  height: 100%;
+}
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  height: 100%;
+width: calc(100vw + 18px);
+overflow: auto;
+}
 /* 在iOS Safari上，您需要使用下面的CSS規則 */
 // body {
 //   height: calc(var(--vh, 1vh) * 100) !important;

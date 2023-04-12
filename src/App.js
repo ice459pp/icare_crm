@@ -1,12 +1,7 @@
 import React, { Fragment, useState, useEffect, useRef } from "react";
 import Navbar from "./component/navbar";
 import Home from "./pages/home";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import ClinicDetail from "./component/home/clinic-detail";
 import Approved from "./pages/approved";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,7 +16,6 @@ function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
-
 
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
@@ -49,24 +43,27 @@ function App() {
   //   document.documentElement.style.setProperty("--vh", `${vh}px`);
   // };
   // setBodyHeight();
-  const setBodyHeight=()=>{
-    console.log("經過",window.innerHeight,"視窗高",height,"state的高")
-    setHeight(window.innerHeight)
-  }
+  const setBodyHeight = () => {
+    setHeight(window.innerHeight);
+  };
   useEffect(() => {
 
-    // setBodyHeight();
     const handleResize = () => {
       setBodyHeight();
-    }; 
-    console.log(innerHeight,"innerHeight")
+    };
+    console.log(innerHeight, "innerHeight");
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("orientationchange", handleResize);
     };
-    
+  }, []);
+  useEffect(() => {
+    const root = document.querySelector("body");
+    root.style.height = `${Math.max(root.clientHeight, root.scrollHeight, window.innerHeight)}px`;
+
+    // root.style.height = `${window.innerHeight}px`;
   }, []);
   return (
     <Fragment>
@@ -114,7 +111,10 @@ function App() {
           <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
             <Switch>
               <Route path="/login" component={UserLogin} />
-              <Route exact path="/"  > <Home></Home> </Route>
+              <Route exact path="/">
+                {" "}
+                <Home></Home>{" "}
+              </Route>
               <Route path="/clinic/:id" component={ClinicDetail} />
               <Route path="/approved" component={Approved} />
               <Route path="/approved/:id" component={Approved} />
