@@ -106,10 +106,6 @@ const Home = () => {
     e.preventDefault();
     headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  // const heightHandler=()=>{
-  //   props.onHeightControl()
-  // }
-
   useEffect(() => {
     if (appSlice.isLogin) {
       const token = appSlice.userToken;

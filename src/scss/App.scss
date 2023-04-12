@@ -29,9 +29,9 @@ body {
     height: calc(var(--vh, 1vh) * 100);
   }
 }
-@media (orientation: portrait) {
-  /* 設備固定為直向模式 */
-  body {
-      transform: rotate(0deg);
-  }
-}
+// @media (orientation: portrait) {
+//   /* 設備固定為直向模式 */
+//   body {
+//       transform: rotate(0deg);
+//   }
+// }

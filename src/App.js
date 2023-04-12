@@ -24,6 +24,7 @@ function App() {
   const [heightControls, setHeightControls] = useState(false);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
+
   useEffect(() => {
     setIsLogin(isLogin_store);
   }, [isLogin_store]);
@@ -31,7 +32,7 @@ function App() {
 
   let headNavbarRef = useRef() || "";
   const style = {
-    height: `calc(100% - 45px )`,
+    height: `calc( ${innerHeight}px  - 45px )`,
     position: `relative`,
   };
   const menuHandler = () => {
@@ -41,15 +42,18 @@ function App() {
     goPath.push(`/`);
   };
   const elementRef = useRef(null);
+  const setBodyHeight = () => {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
+  setBodyHeight();
   useEffect(() => {
-    const setBodyHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
-    };
+
     setBodyHeight();
     const handleResize = () => {
       setBodyHeight();
     }; 
+    console.log(innerHeight,"innerHeight")
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
     return () => {
@@ -65,7 +69,7 @@ function App() {
       ) : (
         <div
           ref={headNavbarRef}
-          style={{ height: "45px", borderBottom: "1px solid black" }}
+          style={{ height: "45px" }}
           className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center header-title"
         >
           <div className="h4 m-0 cursor-pointer " onClick={goHome}>
