@@ -21,7 +21,8 @@ function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
-  const [heightControls, setHeightControls] = useState(false);
+
+
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
 
@@ -31,8 +32,9 @@ function App() {
   const goPath = useHistory();
 
   let headNavbarRef = useRef() || "";
+  const [height, setHeight] = useState(innerHeight);
   const style = {
-    height: `calc( ${innerHeight}px  - 45px )`,
+    height: `calc( ${height}px - 45px )`,
     position: `relative`,
   };
   const menuHandler = () => {
@@ -42,14 +44,18 @@ function App() {
     goPath.push(`/`);
   };
   const elementRef = useRef(null);
-  const setBodyHeight = () => {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  };
-  setBodyHeight();
+  // const setBodyHeight = () => {
+  //   const vh = window.innerHeight * 0.01;
+  //   document.documentElement.style.setProperty("--vh", `${vh}px`);
+  // };
+  // setBodyHeight();
+  const setBodyHeight=()=>{
+    console.log("經過",window.innerHeight,"視窗高",height,"state的高")
+    setHeight(window.innerHeight)
+  }
   useEffect(() => {
 
-    setBodyHeight();
+    // setBodyHeight();
     const handleResize = () => {
       setBodyHeight();
     }; 
@@ -61,7 +67,7 @@ function App() {
       window.removeEventListener("orientationchange", handleResize);
     };
     
-  }, [innerWidth, innerHeight,heightControls]);
+  }, []);
   return (
     <Fragment>
       {!isLogin ? (

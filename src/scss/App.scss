@@ -2,8 +2,8 @@
 @import "./navbar";
 @import "./modal";
 body {
-  height: 100vh;
-  overflow: hidden !important;
+  // height: 100vh;
+  overflow: hidden;
   // min-height: 100vh;
   // min-height: -webkit-fill-available;
 }
@@ -21,14 +21,14 @@ body {
 }
 
 /* 在iOS Safari上，您需要使用下面的CSS規則 */
-body {
-  height: calc(var(--vh, 1vh) * 100) !important;
-}
-@media screen and (max-width: 996px) {
-  body {
-    height: calc(var(--vh, 1vh) * 100);
-  }
-}
+// body {
+//   height: calc(var(--vh, 1vh) * 100) !important;
+// }
+// @media screen and (max-width: 996px) {
+//   body {
+//     height: calc(var(--vh, 1vh) * 100);
+//   }
+// }
 // @media (orientation: portrait) {
 //   /* 設備固定為直向模式 */
 //   body {
