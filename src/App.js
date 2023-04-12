@@ -70,7 +70,7 @@ function App() {
           className="bg-dark text-white py-2 px-3 d-flex justify-content-between align-items-center header-title"
         >
           <div className="h4 m-0 cursor-pointer " onClick={goHome}>
-            診所管理系統2
+            診所管理系統
           </div>
           {!menuIsShow && (
             <div onClick={menuHandler} className="m-0 menu">
