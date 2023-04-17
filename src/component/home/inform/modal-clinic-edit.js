@@ -36,13 +36,12 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
-
   let networkRef = useRef();
   const appSlice = useSelector((state) => state.appSlice);
 
   const [name, setName] = useState(item.name);
   const [phone, setPhone] = useState(item.phone);
-  const [people, setPeople] = useState(item.people);
+  const [people, setPeople] = useState(item.people===0 && "");
   const [road, setRoad] = useState(item.road);
   const [id, setId] = useState(item.id);
   const [his, setHis] = useState(item.his);

@@ -442,6 +442,8 @@ const ClinicDetail = () => {
           ></ClinicEditModal>
         </Modal.Body>
       </Modal>
+
+      
       {logAction === "add" && showAddLogModal && (
         <ModalAddLog
           onActionStatus={actionStatusHandler}
