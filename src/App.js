@@ -9,7 +9,7 @@ import UserLogin from "./pages/login";
 import "./scss/App.scss";
 import { useSelector } from "react-redux";
 import { useViewport } from "./useViewport";
-import Statistics from "./pages/Statistics";
+import Counts from "./pages/counts";
 const NavbarWidth = {
   left: `0`,
 };
@@ -111,7 +111,7 @@ function App() {
                 <Home></Home>{" "}
               </Route>
               <Route path="/clinic/:id" component={ClinicDetail} />
-              <Route path="/statistics" component={Statistics} />
+              <Route path="/counts" component={Counts} />
               
               <Route path="/approved" component={Approved} />
               <Route path="/approved/:id" component={Approved} />

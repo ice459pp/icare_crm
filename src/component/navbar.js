@@ -34,7 +34,7 @@ const Navbar=(props)=>{
                 to="/approved"><FontAwesomeIcon className="pe-2" icon="far fa-check-circle" />核可</NavLink>
             <NavLink activeClassName="btn-info text-white" onClick={showMenuHandler}
                 className="btn btn-secondary text-white text-start w-100 mb-2 fw-bolder "
-                to="/Statistics"><FontAwesomeIcon className="pe-2" icon="far fa-check-circle" />統計</NavLink>
+                to="/Counts"><FontAwesomeIcon className="pe-2" icon="far fa-check-circle" />統計</NavLink>
 
             {appSlice.isLogin && <NavLink activeClassName="btn-info text-white" onClick={logoutHandler}
                 className="btn btn-secondary text-white text-start w-100 mb-2 fw-bolder "
