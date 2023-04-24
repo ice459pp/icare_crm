@@ -7,7 +7,7 @@ const Counts = () => {
   const appSlice = useSelector((state) => state.appSlice);
   const [clinic, setClinic] = useState(0);
   const [patient, setpatient] = useState(0);
-  const [reloadPage, setReloadPage] = useState(false);
+  // const [reloadPage, setReloadPage] = useState(false);
   
   useEffect(() => {
     if (appSlice.isLogin) {
@@ -24,9 +24,11 @@ const Counts = () => {
         }
       );
     }
-  }, [clinic, patient,reloadPage]);
+  }, [clinic, patient]);
   const reLoadHandler=()=>{
-    setReloadPage(!reloadPage)
+    // console.log("123")
+    window.location.reload()
+    // setReloadPage(!reloadPage)
   }
   return (
     <div className="px-3 py-3 text-dark fw-bolder bg-light fs-5">
