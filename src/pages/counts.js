@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { apiClinicCounts } from "../api/api-clinic-counts";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import "../scss/count.scss";
 const Counts = () => {
   const appSlice = useSelector((state) => state.appSlice);
   const [clinic, setClinic] = useState(0);
@@ -35,7 +36,7 @@ const Counts = () => {
       <div>
         病患數: <span className="px-1">{patient}</span>
       </div>
-      <button className="btn btn-outline-primary mt-3" onClick={reLoadHandler}>重新載入</button>
+      <button className="btn btn-outline-primary mt-3 reload_btn" onClick={reLoadHandler}>重新載入</button>
     </div>
   );
 };
