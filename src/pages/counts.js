@@ -6,6 +6,8 @@ const Counts = () => {
   const appSlice = useSelector((state) => state.appSlice);
   const [clinic, setClinic] = useState(0);
   const [patient, setpatient] = useState(0);
+  const [reloadPage, setReloadPage] = useState(false);
+  
   useEffect(() => {
     if (appSlice.isLogin) {
       // fetch log api
@@ -21,16 +23,19 @@ const Counts = () => {
         }
       );
     }
-  }, [clinic, patient]);
-
+  }, [clinic, patient,reloadPage]);
+  const reLoadHandler=()=>{
+    setReloadPage(!reloadPage)
+  }
   return (
     <div className="px-3 py-3 text-dark fw-bolder bg-light fs-5">
       <div>
         診所數: <span className="px-1">{clinic}</span>
       </div>
       <div>
-        病患人數: <span className="px-1">{patient}</span>
+        病患數: <span className="px-1">{patient}</span>
       </div>
+      <button className="btn btn-outline-primary mt-3" onClick={reLoadHandler}>重新載入</button>
     </div>
   );
 };
