@@ -3,7 +3,10 @@
 @import "./modal";
 body {
   // height: 100vh;
-  overflow: hidden;
+  // overflow: hidden;
+  // @media (max-width: 576px) {
+  //   overflow: auto;
+  // }
   // min-height: 100vh;
   // min-height: -webkit-fill-available;
 }
