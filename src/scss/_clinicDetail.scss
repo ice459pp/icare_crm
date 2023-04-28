@@ -409,8 +409,6 @@ textarea {
         }
         .table-button{
           margin-left: 1rem;
-          width: 5%;
-          // font-size: medium;
           @media (max-width: 996px) {
             margin: 0;
             width: auto;
@@ -468,7 +466,7 @@ textarea {
   position: absolute;
   bottom: 1%;
   right: 1%;
-  z-index: 1000000;
+  z-index: 1050;
   @media (max-width: 996px) {
     position: relative;
     width: 100%;

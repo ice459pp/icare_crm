@@ -248,16 +248,14 @@ const ClinicDetail = () => {
           alert(err);
         },
         (data) => {
-          console.log(data,"data")
-          // if (!data.length) {
-          //   return
-          // }
-          setRemoteList(data)
+          setRemoteList(data);
         }
       );
     }
-  }, [clinicInfo,remoteList.length]);
-
+  }, [clinicInfo]);
+  useEffect(() => {
+    console.log(remoteList, "更新列表");
+  }, [remoteList]);
   return (
     <Fragment>
       <div className="w-100 padding-RWD" ref={headerRef}>
