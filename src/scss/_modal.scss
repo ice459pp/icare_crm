@@ -114,7 +114,7 @@
     }
   }
 }
-.addRecord{
+.addRecord {
   width: 25%;
   @media (max-width: 996px) {
     width: auto;
@@ -141,9 +141,102 @@
     }
   }
 }
-@media (max-width: 576px){
+@media (max-width: 576px) {
   .modal .modal-content {
     width: 100%;
-    margin: 0
+    margin: 0;
+  }
 }
+.computer-list {
+  flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  overflow: hidden;
+  width: 100%;
+  @media (max-width: 576px) {
+    margin-top: 1rem;
+  }
+  .computer-item {
+    padding: 15px;
+    background-color: tan;
+    border: 1px solid rgba(255, 245, 238, 0.5);
+    width: 100%;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    display: flex;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    @media (max-width: 576px) {
+      flex-direction: column;
+    }
+    section {
+      width: 50%;
+      @media (max-width: 576px) {
+        width: 100%;
+        // display: flex;
+        // flex-wrap: nowrap;
+      }
+      &.item-btn {
+        text-align: end;
+        @media (max-width: 576px) {
+          text-align: start;
+          margin-top: 1rem;
+          display: flex;
+          justify-content: space-around;
+        }
+        button {
+          margin: 0 0.5rem;
+          @media (max-width: 576px) {
+            padding: 0;
+            width: 40%;
+            margin: 0;
+          }
+        }
+      }
+    }
+    .item {
+      display: flex;
+      align-items: center;
+    }
+    .item-title {
+      font-size: larger;
+      font-weight: 900;
+      color: darkslategray;
+      min-width: 100px;
+      @media (max-width: 576px) {
+        font-size: 1rem;
+        min-width: 70px;
+        // padding-right: 1rem;
+      }
+    }
+    .item-content {
+      font-size: 1rem;
+      color: rgb(52, 34, 11);
+    }
+  }
+}
+#remoteComputer-modal {
+  .modal-body {
+    padding: 15px;
+    section {
+      &.title {
+        .w-25 {
+          width: 100% !important;
+        }
+      }
+      &.inform-his {
+        margin: 1rem 0;
+        @media (max-width: 576px) {
+          margin: 0;
+        }
+      }
+    }
+    .footer-button {
+      padding-right: 1.5rem;
+      @media (max-width: 576px) {
+        padding-right: 0rem;
+      }
+    }
+  }
 }

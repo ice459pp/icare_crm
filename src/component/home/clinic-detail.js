@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useHistory, useParams } from "react-router-dom";
 import ClinicDetailLog from "./clinic-detail-log";
 import ClinicEditModal from "./inform/modal-clinic-edit";
+import ClinicCorrectInformModal from "./inform/modal-clinic-connect-inform";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import HomeIcon from "../icon/Home_icon";
@@ -10,6 +11,8 @@ import PhoneIcon from "../icon/Phone_icon";
 import InputGroup from "react-bootstrap/InputGroup";
 import Pagination from "./Pagination";
 import { apiClinicInfo } from "../../api/api-clinic-info";
+import { apiRemoteTypeList } from "../../api/remote/api-remote-typeList";
+import { apiRemoteInfoList } from "../../api/remote/api-remote-infoList";
 import { useDispatch, useSelector } from "react-redux";
 import ModalAddLog from "./log/modal-add-log";
 import { apiLogList } from "../../api/api-clinic-log";
@@ -51,13 +54,18 @@ const ClinicDetail = () => {
   const divRef = useRef(null);
   const headerRef = useRef(null);
   const [editModalShow, setEditModalShow] = useState(false);
+  const [connectInformModal, setConnectInformModal] = useState(false);
   const [showAddLogModal, setShowAddLogModal] = useState(false);
 
   const [fetchClinicInfo, setFetchClinicInfo] = useState(false);
   const [clinicInfo, setClinicInfo] = useState(clinicData);
+  const [clinicCorrectInfo, setClinicCorrectInfo] = useState({});
   const [logAction, setLogAction] = useState("add");
   const [actionStatus, setActionStatus] = useState("");
   const [log, setLog] = useState(null);
+
+  const [typeList, setTypeList] = useState([]);
+  const [remoteList, setRemoteList] = useState([]);
   useEffect(() => {
     setModalIsShow(modalSlice.modalIsShow);
   }, [modalSlice.modalIsShow]);
@@ -72,6 +80,14 @@ const ClinicDetail = () => {
   const showEditModalHandler = () => {
     dispatch(modalAction.showModal());
     setEditModalShow(true);
+  };
+  const showConnectInformModalHandler = () => {
+    dispatch(modalAction.showModal());
+    setConnectInformModal(true);
+  };
+  const closeConnectInformModalHandler = () => {
+    dispatch(modalAction.closeModal());
+    setConnectInformModal(false);
   };
   const logSearchHandler = (value) => {
     setActionStatus("goLog");
@@ -152,7 +168,21 @@ const ClinicDetail = () => {
       );
     }
   }, [refreshLog]);
-
+  useEffect(() => {
+    if (appSlice.isLogin) {
+      // fetch log api
+      const token = appSlice.userToken;
+      apiRemoteTypeList(
+        token,
+        (err) => {
+          alert(err);
+        },
+        (data) => {
+          setTypeList(data);
+        }
+      );
+    }
+  }, []);
   useEffect(() => {
     let timeoutId = "";
     clearTimeout(timeoutId);
@@ -201,6 +231,33 @@ const ClinicDetail = () => {
       navigate.push("/login");
     }
   }, [fetchClinicInfo]);
+
+  useEffect(() => {
+    let clinicId = clinicInfo.id;
+    if (!clinicId) {
+      return;
+    }
+    if (appSlice.isLogin) {
+      // fetch log api
+      const token = appSlice.userToken;
+
+      apiRemoteInfoList(
+        token,
+        clinicId,
+        (err) => {
+          alert(err);
+        },
+        (data) => {
+          console.log(data,"data")
+          // if (!data.length) {
+          //   return
+          // }
+          setRemoteList(data)
+        }
+      );
+    }
+  }, [clinicInfo,remoteList.length]);
+
   return (
     <Fragment>
       <div className="w-100 padding-RWD" ref={headerRef}>
@@ -348,6 +405,16 @@ const ClinicDetail = () => {
                   )}
                 </div>
               </div>
+              <div className="table-item">
+                <div className="table-item-title">診所連線資訊:</div>
+                <Button
+                  variant="primary"
+                  className="btn-sm table-button"
+                  onClick={showConnectInformModalHandler}
+                >
+                  open
+                </Button>
+              </div>
             </section>
             <section className="w-100 text-center  mt-4 mb-1">
               <Button
@@ -443,7 +510,29 @@ const ClinicDetail = () => {
         </Modal.Body>
       </Modal>
 
-      
+      <Modal
+        show={connectInformModal}
+        onHide={closeConnectInformModalHandler}
+        // backdrop="static"
+        keyboard={false}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        size="lg"
+      >
+        <Modal.Header className="bg-secondary text-white" closeButton>
+          <Modal.Title>診所連線資訊</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ClinicCorrectInformModal
+            typeList={typeList}
+            remoteList={remoteList}
+            onClose={closeConnectInformModalHandler}
+            onRefresh={refreshHandler}
+            clinicId={clinicInfo.id}
+          ></ClinicCorrectInformModal>
+        </Modal.Body>
+      </Modal>
+
       {logAction === "add" && showAddLogModal && (
         <ModalAddLog
           onActionStatus={actionStatusHandler}
