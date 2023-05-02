@@ -61,22 +61,6 @@ function App() {
     root.style.height = `${height}px`;
     // root.style.height = `${Math.max(root.clientHeight, root.scrollHeight, window.innerHeight)}px`;
   }, [height]);
-  useEffect(() => {
-    // if (scrollTopSlice.control) {
-
-    //   // dispatch(scrollTopAction.scrollControl(false));
-    //   //   window.scrollTo({
-    //   //     top:scrollTopSlice.scrollTop,
-    //   //     behavior: 'smooth',
-    //   // });
-    //   const dom=document.querySelector(".tttttt")
-    //   dom.scrollTop = 1500;
-    //   console.log("時間開始流動", scrollTopSlice.scrollTop,dom,"dooom");
-    // }
-    const dom=document.querySelector(".RouterWidth")
-    dom.scrollTop = scrollTopSlice.scrollTop;
-    console.log("時間開始流動", scrollTopSlice.scrollTop,dom,"dooom");
-  }, []);
   return (
     <Fragment>
       {!isLogin ? (

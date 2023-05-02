@@ -113,19 +113,19 @@ const Home = () => {
     e.preventDefault();
     headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  // useEffect(() => {
-  //   if (scrollTopSlice.control) {
-
-  //     // dispatch(scrollTopAction.scrollControl(false));
-  //     //   window.scrollTo({
-  //     //     top:scrollTopSlice.scrollTop,
-  //     //     behavior: 'smooth',
-  //     // });
-  //     const dom=document.querySelector(".tttttt")
-  //     dom.scrollTop = 1500;
-  //     console.log("時間開始流動", scrollTopSlice.scrollTop,dom,"dooom");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (scrollTopSlice.control) {
+      const dom=document.querySelector(".qq")
+      dispatch(scrollTopAction.scrollControl(false));
+      dom.scrollTo({
+          top:scrollTopSlice.scrollTop,
+          behavior: 'smooth',
+      });
+      
+      dom.scrollTop = 1500;
+      console.log("時間開始流動", scrollTopSlice.scrollTop,dom,"dooom");
+    }
+  }, []);
   useEffect(() => {
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
@@ -166,108 +166,110 @@ const Home = () => {
   ]);
   return (
     <Fragment>
-      <div className="w-100 mt-3 padding-RWD" ref={headerRef}>
-        <SearchFilter
-          onStatusChange={statusChangeHandler}
-          onCityChange={cityChangeHangle}
-          onDistrictChange={districtChangeHandler}
-          onSearchText={searchTextHandler}
-          onDepartmentChange={departmentHandler}
-          onMutationHandler={mutationHandler}
-        />
-      </div>
-      <div className="w-100 padding-RWD mt-3">
-        <h4 className="text-center fw-bolder " ref={divRef}>
-          診所列表
-        </h4>
-        <div className="d-flex align-items-end tableSort mb-2">
-          <div className="me-3 text-dark fw-bold">
-            {`${totalPage === 0 ? 0 : page} / ${totalPage}`} 頁 ，共{totalCount}
-            筆
+      <div className="qq">
+        <div className="w-100 mt-3 padding-RWD" ref={headerRef}>
+          <SearchFilter
+            onStatusChange={statusChangeHandler}
+            onCityChange={cityChangeHangle}
+            onDistrictChange={districtChangeHandler}
+            onSearchText={searchTextHandler}
+            onDepartmentChange={departmentHandler}
+            onMutationHandler={mutationHandler}
+          />
+        </div>
+        <div className="w-100 padding-RWD mt-3">
+          <h4 className="text-center fw-bolder " ref={divRef}>
+            診所列表
+          </h4>
+          <div className="d-flex align-items-end tableSort mb-2">
+            <div className="me-3 text-dark fw-bold">
+              {`${totalPage === 0 ? 0 : page} / ${totalPage}`} 頁 ，共
+              {totalCount}筆
+            </div>
+            <Dropdown>
+              <Dropdown.Toggle
+                size="sm"
+                variant="secondary"
+                className="text-white"
+                id="dropdown-basic"
+              >
+                <FontAwesomeIcon icon="fa-solid fa-arrow-up-short-wide" />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu className="text-center">
+                <Dropdown.Item
+                  as="button"
+                  className={permutations === "Dnew" ? "active" : ""}
+                  onClick={() => mutationHandler("Dnew")}
+                >
+                  日期排序
+                  <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-down" />
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  className={permutations === "Dold" ? "active" : ""}
+                  onClick={() => mutationHandler("Dold")}
+                >
+                  日期排序
+                  <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-up" />
+                </Dropdown.Item>
+
+                <Dropdown.Item
+                  as="button"
+                  className={permutations === "Asmall" ? "active" : ""}
+                  onClick={() => mutationHandler("Asmall")}
+                >
+                  地名排序
+                  <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-down" />
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  className={permutations === "Abig" ? "active" : ""}
+                  onClick={() => mutationHandler("Abig")}
+                >
+                  地名排序
+                  <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-up" />
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
-          <Dropdown>
-            <Dropdown.Toggle
-              size="sm"
-              variant="secondary"
-              className="text-white"
-              id="dropdown-basic"
-            >
-              <FontAwesomeIcon icon="fa-solid fa-arrow-up-short-wide" />
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu className="text-center">
-              <Dropdown.Item
-                as="button"
-                className={permutations === "Dnew" ? "active" : ""}
-                onClick={() => mutationHandler("Dnew")}
-              >
-                日期排序
-                <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-down" />
-              </Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                className={permutations === "Dold" ? "active" : ""}
-                onClick={() => mutationHandler("Dold")}
-              >
-                日期排序
-                <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-up" />
-              </Dropdown.Item>
-
-              <Dropdown.Item
-                as="button"
-                className={permutations === "Asmall" ? "active" : ""}
-                onClick={() => mutationHandler("Asmall")}
-              >
-                地名排序
-                <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-down" />
-              </Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                className={permutations === "Abig" ? "active" : ""}
-                onClick={() => mutationHandler("Abig")}
-              >
-                地名排序
-                <FontAwesomeIcon className="ms-1" icon="fas fa-arrow-up" />
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <table className="table table-striped table-hover table-bordered  border-dark table-rwd">
+            <thead>
+              <tr className="bg-secondary text-white tr-only-hide">
+                <th scope="col">診所名(機構代碼)</th>
+                <th scope="col">地址</th>
+                <th scope="col">電話</th>
+                <th scope="col">拜訪人</th>
+                <th scope="col">狀態</th>
+                <th scope="col">日期</th>
+                <th style={{ width: "10%" }}></th>
+                <th style={{ width: "10%" }}></th>
+              </tr>
+            </thead>
+            <tbody>
+              {clinicList.map((item) => (
+                <ClinicListItem key={item.id} item={item}></ClinicListItem>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <table className="table table-striped table-hover table-bordered  border-dark table-rwd">
-          <thead>
-            <tr className="bg-secondary text-white tr-only-hide">
-              <th scope="col">診所名(機構代碼)</th>
-              <th scope="col">地址</th>
-              <th scope="col">電話</th>
-              <th scope="col">拜訪人</th>
-              <th scope="col">狀態</th>
-              <th scope="col">日期</th>
-              <th style={{ width: "10%" }}></th>
-              <th style={{ width: "10%" }}></th>
-            </tr>
-          </thead>
-          <tbody>
-            {clinicList.map((item) => (
-              <ClinicListItem key={item.id} item={item}></ClinicListItem>
-            ))}
-          </tbody>
-        </table>
+        {!modalIsShow && (
+          <FontAwesomeIcon
+            onClick={scrollTopHandler}
+            className="text-secondary top-icon"
+            icon="fa-solid fa-circle-arrow-up"
+          />
+        )}
+        {totalPage > 0 && (
+          <div className="d-flex justify-content-center w-100">
+            <Pagination
+              page={page}
+              totalPage={totalPage}
+              onPageChange={pageChangeHandler}
+            ></Pagination>
+          </div>
+        )}
       </div>
-      {!modalIsShow && (
-        <FontAwesomeIcon
-          onClick={scrollTopHandler}
-          className="text-secondary top-icon"
-          icon="fa-solid fa-circle-arrow-up"
-        />
-      )}
-      {totalPage > 0 && (
-        <div className="d-flex justify-content-center w-100">
-          <Pagination
-            page={page}
-            totalPage={totalPage}
-            onPageChange={pageChangeHandler}
-          ></Pagination>
-        </div>
-      )}
     </Fragment>
   );
 };
