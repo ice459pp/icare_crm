@@ -6,6 +6,7 @@ import appSlice from "../../../store/app-slice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import InputCheckText from "./input-check-text";
+import { useHistory } from "react-router-dom";
 // call_number_way: "線上叫號";
 // care_group: "";
 // city: "台北市";
@@ -38,7 +39,7 @@ const ClinicEditModal = (props) => {
   let { item } = props;
   let networkRef = useRef();
   const appSlice = useSelector((state) => state.appSlice);
-
+  const navigate = useHistory();
   const [name, setName] = useState(item.name);
   const [phone, setPhone] = useState(item.phone);
   const [people, setPeople] = useState(item.people===0 && "");
@@ -122,7 +123,8 @@ const ClinicEditModal = (props) => {
         },
         () => {
           setApiUpdate(false);
-          props.onRefresh();
+          navigate.push(`/`);
+          // props.onRefresh();
         }
       );
     }
@@ -315,7 +317,7 @@ const ClinicEditModal = (props) => {
                 type="text"
                 className="form-control"
                 id="doctorNumber"
-                placeholder="1"
+                
                 defaultValue={people}
                 onChange={(e) => {
                   setPeople(e.target.value);
@@ -440,10 +442,6 @@ const ClinicEditModal = (props) => {
             <div className="d-flex align-items-center flex-wrap overflow-hidden ">
               <div className="form-check py-2 pe-5">
                 <input
-                  // onChange={(e) => {
-                  //   const date = new Date();
-                  //   setVisitDatetime(`${date.getHours()}:${date.getMinutes()}`);
-                  // }}
                   onChange={(e) => {
                     setVisitDatetime(visitDatetime);
                   }}
@@ -490,11 +488,6 @@ const ClinicEditModal = (props) => {
         <section className="pt-2  inform-care-network">
           <label className="form-label d-flex align-items-center">
             照護網項目:
-            {/* <FontAwesomeIcon
-              onClick={careNetworkCreate}
-              className="px-2 fs-4"
-              icon="fa-solid fa-circle-plus"
-            /> */}
           </label>
           <div className="d-flex align-items-center flex-wrap">
             <div className="form-check  care_network_block">

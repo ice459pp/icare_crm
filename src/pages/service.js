@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../scss/home.scss";
+import "../scss/service/service.scss"
 import { Dropdown } from "react-bootstrap";
-import SearchFilter from "../component/home/search-filter";
-import ClinicListItem from "../component/home/clinic-list-item";
+import SearchFilter from "../component/service/service-filter";
+import ServiceListItem from "../component/service/service-list-Item";
 import Pagination from "../component/home/Pagination";
 import { apiClinicList } from "../api/api-clinic-list";
 import { appAction } from "../store/app-slice";
 import { filterAction } from "../store/filter-slice";
-import { scrollTopAction } from "../store/scrollTop-slice";
 import { useRef } from "react";
 const Home = () => {
   const modalSlice = useSelector((state) => state.modalSlice);
@@ -32,13 +32,10 @@ const Home = () => {
   const [actionStatus, setActionStatus] = useState("");
   const headerRef = useRef(null);
   const divRef = useRef(null);
-  let scrollTopSlice = useSelector((state) => state.scrollTopSlice);
-  console.log(scrollTopSlice, "scrollTopSlice");
-
   useEffect(() => {
     setModalIsShow(modalSlice.modalIsShow);
   }, [modalSlice.modalIsShow]);
-
+  
   useEffect(() => {
     setPage(filterSlice.page);
   }, [filterSlice.page]);
@@ -48,18 +45,19 @@ const Home = () => {
   useEffect(() => {
     setDepartment(filterSlice.department);
   }, [filterSlice.department]);
-  // useEffect(() => {
-  //   if ( actionStatus === "page") {
-  //     if (clinicList.length > 2) {
-  //       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+  useEffect(() => {
+    if ( actionStatus === "page") {
+      if (clinicList.length > 2) {
+        divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  //     }
-  //     setActionStatus("");
-  //   }else{
-  //     // headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      setActionStatus("");
+    }else{
+      headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  //   }
-  // }, [clinicList]);
+    }
+  }, [clinicList]);
+
   const statusChangeHandler = (value) => {
     dispatch(filterAction.onClinicStatus(value));
     dispatch(filterAction.onPage(1));
@@ -113,19 +111,6 @@ const Home = () => {
     e.preventDefault();
     headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-  // useEffect(() => {
-  //   if (scrollTopSlice.control) {
-
-  //     // dispatch(scrollTopAction.scrollControl(false));
-  //     //   window.scrollTo({
-  //     //     top:scrollTopSlice.scrollTop,
-  //     //     behavior: 'smooth',
-  //     // });
-  //     const dom=document.querySelector(".tttttt")
-  //     dom.scrollTop = 1500;
-  //     console.log("時間開始流動", scrollTopSlice.scrollTop,dom,"dooom");
-  //   }
-  // }, []);
   useEffect(() => {
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
@@ -166,19 +151,14 @@ const Home = () => {
   ]);
   return (
     <Fragment>
-      <div className="w-100 mt-3 padding-RWD" ref={headerRef}>
+      <div className="w-100 mt-3 padding-RWD " ref={headerRef}>
         <SearchFilter
           onStatusChange={statusChangeHandler}
-          onCityChange={cityChangeHangle}
-          onDistrictChange={districtChangeHandler}
-          onSearchText={searchTextHandler}
-          onDepartmentChange={departmentHandler}
-          onMutationHandler={mutationHandler}
         />
       </div>
       <div className="w-100 padding-RWD mt-3">
         <h4 className="text-center fw-bolder " ref={divRef}>
-          診所列表
+          客戶服務列表
         </h4>
         <div className="d-flex align-items-end tableSort mb-2">
           <div className="me-3 text-dark fw-bold">
@@ -232,22 +212,23 @@ const Home = () => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        <table className="table table-striped table-hover table-bordered  border-dark table-rwd">
+        <table className="table table-striped table-hover table-bordered   border-dark table-rwd">
           <thead>
             <tr className="bg-secondary text-white tr-only-hide">
               <th scope="col">診所名(機構代碼)</th>
-              <th scope="col">地址</th>
-              <th scope="col">電話</th>
-              <th scope="col">拜訪人</th>
-              <th scope="col">狀態</th>
-              <th scope="col">日期</th>
+              <th scope="col">標題</th>
+              <th scope="col">填表人</th>
+              <th scope="col">填表日期</th>
+              <th scope="col">處理人</th>
+              <th scope="col">處理日期</th>
+              <th>處理狀態</th>
               <th style={{ width: "10%" }}></th>
               <th style={{ width: "10%" }}></th>
             </tr>
           </thead>
           <tbody>
             {clinicList.map((item) => (
-              <ClinicListItem key={item.id} item={item}></ClinicListItem>
+              <ServiceListItem key={item.id} item={item}></ServiceListItem>
             ))}
           </tbody>
         </table>

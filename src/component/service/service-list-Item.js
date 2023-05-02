@@ -1,12 +1,11 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
-import ModalAddLog from "./log/modal-add-log";
-import ClinicDetailLog from "./clinic-detail-log";
+import ModalAddLog from "../home/log/modal-add-log";
+import ClinicDetailLog from "../home/clinic-detail-log";
 import { modalAction } from "../../store/modal-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { apiLogList } from "../../api/api-clinic-log";
-import { scrollTopAction } from "../../store/scrollTop-slice";
 const phoneFixHandler = (item) => {
   const phoneNumberArray = item.replace(/ /g, "").split("-");
   phoneNumberArray[0] = phoneNumberArray[0].substring(1);
@@ -22,10 +21,7 @@ const ClinicListItem = (props) => {
   const navigate = useHistory();
   let dispatch = useDispatch();
   const moreDetailHandler = () => {
-    let scrollTop=document.querySelector(".RouterWidth").scrollTop
-    dispatch(scrollTopAction.scrollControl(true))
-    dispatch(scrollTopAction.scrollTopHandler(scrollTop))
-    navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
+    navigate.push(`/clinic/${item.id}`);
   };
 
   const [listData, setListData] = useState([]);
@@ -94,14 +90,15 @@ const ClinicListItem = (props) => {
             </section>
           </a>
         </td>
-        <td data-th="電話:">
+        <td data-th="標題:">
           <a href={`tel:+886-${phoneObj.areaCode}-${phoneObj.tel}`}>
             {item.phone}
           </a>
         </td>
-        <td data-th="拜訪人:">{item.visitor_name}</td>
-        <td data-th="狀態:">{item.clinic_status}</td>
-        <td data-th="日期:">{item.visit_datetime}</td>
+        <td data-th="填表人:">{item.visitor_name}</td>
+        <td data-th="填表日期:">{item.clinic_status}</td>
+        <td data-th="處理人:">{item.visit_datetime}</td>
+        <td data-th="處理狀態:">{item.visit_datetime}</td>
         <td data-th="" className="table-log">
           <Button
             onClick={showLogListModalHandler}

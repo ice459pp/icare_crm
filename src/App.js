@@ -10,11 +10,13 @@ import "./scss/App.scss";
 import { useSelector } from "react-redux";
 import { useViewport } from "./useViewport";
 import Counts from "./pages/counts";
+import Service from "./pages/service"
 const NavbarWidth = {
   left: `0`,
 };
 function App() {
   let appSlice = useSelector((state) => state.appSlice);
+  let scrollTopSlice = useSelector((state) => state.scrollTopSlice);
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
 
@@ -43,7 +45,6 @@ function App() {
     setHeight(window.innerHeight);
   };
   useEffect(() => {
-
     const handleResize = () => {
       setBodyHeight();
     };
@@ -57,9 +58,25 @@ function App() {
   }, []);
   useEffect(() => {
     const root = document.querySelector("#root");
-    root.style.height=`${height}px`
+    root.style.height = `${height}px`;
     // root.style.height = `${Math.max(root.clientHeight, root.scrollHeight, window.innerHeight)}px`;
   }, [height]);
+  useEffect(() => {
+    // if (scrollTopSlice.control) {
+
+    //   // dispatch(scrollTopAction.scrollControl(false));
+    //   //   window.scrollTo({
+    //   //     top:scrollTopSlice.scrollTop,
+    //   //     behavior: 'smooth',
+    //   // });
+    //   const dom=document.querySelector(".tttttt")
+    //   dom.scrollTop = 1500;
+    //   console.log("時間開始流動", scrollTopSlice.scrollTop,dom,"dooom");
+    // }
+    const dom=document.querySelector(".RouterWidth")
+    dom.scrollTop = scrollTopSlice.scrollTop;
+    console.log("時間開始流動", scrollTopSlice.scrollTop,dom,"dooom");
+  }, []);
   return (
     <Fragment>
       {!isLogin ? (
@@ -103,7 +120,7 @@ function App() {
             <Navbar showMenu={(e) => menuHandler()}></Navbar>
           </div>
 
-          <div className="bg-light h-100 w-100 flex-wrap  RouterWidth">
+          <div className="bg-light h-100 w-100 flex-wrap RouterWidth">
             <Switch>
               <Route path="/login" component={UserLogin} />
               <Route exact path="/">
@@ -112,7 +129,7 @@ function App() {
               </Route>
               <Route path="/clinic/:id" component={ClinicDetail} />
               <Route path="/counts" component={Counts} />
-              
+              <Route path="/service" component={Service} />
               <Route path="/approved" component={Approved} />
               <Route path="/approved/:id" component={Approved} />
             </Switch>
