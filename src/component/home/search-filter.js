@@ -46,7 +46,6 @@ let departmentArr = [
 ];
 
 const SearchFilter = (props) => {
-  console.log(props,"propssss")
   let dispatch = useDispatch();
   let filterSlice = useSelector((state) => state.filterSlice);
   let { clinic_status, department, city, district, searchText } = filterSlice;

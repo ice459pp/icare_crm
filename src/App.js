@@ -7,22 +7,39 @@ import Approved from "./pages/approved";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UserLogin from "./pages/login";
 import "./scss/App.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useViewport } from "./useViewport";
 import Counts from "./pages/counts";
-import Service from "./pages/service"
+import Service from "./pages/service";
+import { scrollTopAction } from "./store/scrollTop-slice";
 const NavbarWidth = {
   left: `0`,
 };
 function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let scrollTopSlice = useSelector((state) => state.scrollTopSlice);
+  // let dispatch = useDispatch();
+  // console.log(scrollTopSlice.control, "scrollll");
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
-
+  // const [scrollControl, setScrollControl] = useState(scrollTopSlice.control);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
-
+  // RouterWidth
+  // useEffect(() => {
+  //   if (scrollTopSlice.control) {
+  //     let dom = document.querySelector(".RouterWidth");
+  //     console.log("有經過", dom, scrollTopSlice.scrollTop, "scrollTop");
+  //     // dom.scrollTo({
+  //     //     top:scrollTopSlice.scrollTop,
+  //     //     behavior: 'smooth',
+  //     // });
+  //     dom.scrollTop = scrollTopSlice.scrollTop;
+  //     dispatch(scrollTopAction.reset());
+  //   } else {
+  //     return;
+  //   }
+  // }, [scrollTopSlice.control]);
   useEffect(() => {
     setIsLogin(isLogin_store);
   }, [isLogin_store]);
@@ -48,7 +65,6 @@ function App() {
     const handleResize = () => {
       setBodyHeight();
     };
-    console.log(innerHeight, "innerHeight");
     window.addEventListener("resize", handleResize);
     window.addEventListener("orientationchange", handleResize);
     return () => {
@@ -59,7 +75,6 @@ function App() {
   useEffect(() => {
     const root = document.querySelector("#root");
     root.style.height = `${height}px`;
-    // root.style.height = `${Math.max(root.clientHeight, root.scrollHeight, window.innerHeight)}px`;
   }, [height]);
   return (
     <Fragment>

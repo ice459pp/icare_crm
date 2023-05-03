@@ -140,7 +140,7 @@ const ClinicDetail = () => {
       if (logList.length > 3) {
         divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
       } else {
-        console.log("logSearch but length<3, no scroll");
+        // console.log("logSearch but length<3, no scroll");
       }
       setActionStatus("");
     } else {
@@ -253,9 +253,6 @@ const ClinicDetail = () => {
       );
     }
   }, [clinicInfo]);
-  useEffect(() => {
-    console.log(remoteList, "更新列表");
-  }, [remoteList]);
   return (
     <Fragment>
       <div className="w-100 padding-RWD" ref={headerRef}>

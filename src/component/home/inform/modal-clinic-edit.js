@@ -1,29 +1,13 @@
 import React, { Fragment, useState, useRef, useEffect } from "react";
 import { InputGroup, Form, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { apiClinicUpdate } from "../../../api/api-clinic-edit";
 import appSlice from "../../../store/app-slice";
+import { scrollTopAction } from "../../../store/scrollTop-slice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import InputCheckText from "./input-check-text";
 import { useHistory } from "react-router-dom";
-// call_number_way: "線上叫號";
-// care_group: "";
-// city: "台北市";
-// clinic_status: "可電訪";
-// district: "大安區";
-// experience: "";
-// his: "耀聖";
-// id: "c1";
-// isDecided: false;
-// isUse_video: false;
-// isVisit_datetime: "15:00~18:00";
-// join_group: "慢性病$BC肝$慢性腎臟病$ABCD其他資訊";
-// name: "cxxx診所";
-// people: 3;
-// phone: "0921231434";
-// road: "瑞光路4段18號5-5";
-
 const careNetworkArr = [
   "BC肝",
   "氣喘",
@@ -38,6 +22,7 @@ const optionTrim = (option) => {
 const ClinicEditModal = (props) => {
   let { item } = props;
   let networkRef = useRef();
+  let dispatch=useDispatch()
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
   const [name, setName] = useState(item.name);
@@ -123,6 +108,7 @@ const ClinicEditModal = (props) => {
         },
         () => {
           setApiUpdate(false);
+          dispatch(scrollTopAction.scrollControl(true))
           navigate.push(`/`);
           // props.onRefresh();
         }
@@ -267,8 +253,6 @@ const ClinicEditModal = (props) => {
                   type="text"
                   className="form-control mt-2"
                   id="otherHis"
-                  // required
-                  // size={"sm"}
                   placeholder="必填(His)"
                   defaultValue={his}
                   onChange={(e) => {

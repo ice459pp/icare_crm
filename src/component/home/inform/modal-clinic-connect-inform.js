@@ -19,7 +19,6 @@ const ClinicCorrectInformModal = (props) => {
   };
 
   const confirmHandler = () => {
-    console.log(editItem, "edittt");
     if (!editItem.remote.device || !editItem.remote.number) {
       alert("請確認必填欄位")
       setApiUpdate(false);

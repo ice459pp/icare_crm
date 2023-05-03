@@ -23,7 +23,7 @@ const ClinicListItem = (props) => {
   let dispatch = useDispatch();
   const moreDetailHandler = () => {
     let scrollTop=document.querySelector(".RouterWidth").scrollTop
-    dispatch(scrollTopAction.scrollControl(true))
+    // dispatch(scrollTopAction.scrollControl(true))
     dispatch(scrollTopAction.scrollTopHandler(scrollTop))
     navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
   };

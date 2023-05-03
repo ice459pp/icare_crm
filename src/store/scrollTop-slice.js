@@ -10,11 +10,14 @@ const scrollTopSlice = createSlice({
   initialState: initState,
   reducers: {
     scrollTopHandler(state,action){
-        console.log(action.payload,"aaadoklsosakfods")
         state.scrollTop=action.payload
     },
     scrollControl(state,action){
         state.control=action.payload
+    },
+    reset(state,action){
+      state.scrollTop=0
+      state.control=false
     }
   },
 });
