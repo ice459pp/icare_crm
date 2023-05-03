@@ -128,24 +128,28 @@ const Home = () => {
   //   }
   // }, []);
 
-  useEffect(() => {
-    console.log("e04")
-    if (scrollTopSlice.control) {
-      let dom = document.querySelector(".RouterWidth");
-      console.log("有經過", dom);
-      dom.scrollTo({
-        top: scrollTopSlice.scrollTop,
-        behavior: "smooth",
-      });
-      dispatch(scrollTopAction.reset());
-    }
-    // dom.scrollTop = scrollTopSlice.scrollTop;
+  // useEffect(() => {
+  //   if (scrollTopSlice.control) {
+  //     let dom = document.querySelector(".RouterWidth");
+  //     console.log("有經過", dom);
+  //     dom.scrollTo( 0, 1800 );
+  //     // dom.scrollTo({
+  //     //   top: scrollTopSlice.scrollTop,
+  //     //   behavior: "smooth",
+  //     // });
+  //     dispatch(scrollTopAction.reset());
+  //   }
+  //   // dom.scrollTop = scrollTopSlice.scrollTop;
 
-    // } else {
-    //   return;
-    // }
-    // dispatch(scrollTopAction.reset());
-  }, [scrollTopSlice.control]);
+  //   // } else {
+  //   //   return;
+  //   // }
+  //   // dispatch(scrollTopAction.reset());
+  // }, [scrollTopSlice.control]);
+  // useEffect(()=>{
+  //   let dom=document.querySelector(".test")
+  //   console.log(dom.offsetHeight,"offsetHeight")
+  // },[])
   useEffect(() => {
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
@@ -196,7 +200,7 @@ const Home = () => {
           onMutationHandler={mutationHandler}
         />
       </div>
-      <div className="w-100 padding-RWD mt-3">
+      <div className="w-100 padding-RWD mt-3 test">
         <h4 className="text-center fw-bolder " ref={divRef}>
           診所列表
         </h4>

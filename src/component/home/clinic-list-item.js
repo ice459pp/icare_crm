@@ -7,6 +7,8 @@ import { modalAction } from "../../store/modal-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { apiLogList } from "../../api/api-clinic-log";
 import { scrollTopAction } from "../../store/scrollTop-slice";
+import scrollTopSlice from "../../store/scrollTop-slice";
+import { useLayoutEffect } from "react";
 const phoneFixHandler = (item) => {
   const phoneNumberArray = item.replace(/ /g, "").split("-");
   phoneNumberArray[0] = phoneNumberArray[0].substring(1);
@@ -19,6 +21,7 @@ const phoneFixHandler = (item) => {
 const ClinicListItem = (props) => {
   let { item } = props;
   const appSlice = useSelector((state) => state.appSlice);
+  const scrollTopSlice = useSelector((state) => state.scrollTopSlice);
   const navigate = useHistory();
   let dispatch = useDispatch();
   const moreDetailHandler = () => {
@@ -72,6 +75,24 @@ const ClinicListItem = (props) => {
       );
     }
   }, [showLogListModal, refreshLog]);
+
+
+
+  useLayoutEffect(() => {
+    let bigdom=document.querySelector(".RouterWidth")
+    console.log(scrollTopSlice,"scrollTopSlice",bigdom,"bigdom")
+    if (bigdom && scrollTopSlice.control) {
+      // let dom = document.querySelector(".test");
+      // console.log(dom.offsetHeight, "offsetHeight");
+      console.log("走2", scrollTopSlice.control, scrollTopSlice.scrollTop, bigdom);
+      bigdom.scrollTo({
+        top: scrollTopSlice.scrollTop,
+        behavior: "smooth",
+      });
+      dispatch(scrollTopAction.reset());
+    }
+  }, [listData]);
+  
   return (
     <Fragment>
       <tr className="align-middle">

@@ -12,19 +12,37 @@ import { useViewport } from "./useViewport";
 import Counts from "./pages/counts";
 import Service from "./pages/service";
 import { scrollTopAction } from "./store/scrollTop-slice";
+import { useLayoutEffect } from "react";
 const NavbarWidth = {
   left: `0`,
 };
 function App() {
   let appSlice = useSelector((state) => state.appSlice);
   let scrollTopSlice = useSelector((state) => state.scrollTopSlice);
-  // let dispatch = useDispatch();
+  let dispatch = useDispatch();
+
+  let yyy = useRef(null);
   // console.log(scrollTopSlice.control, "scrollll");
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
   // const [scrollControl, setScrollControl] = useState(scrollTopSlice.control);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
+
+  // useLayoutEffect(() => {
+  //   console.log("走1");
+  //   if (yyy.current) {
+  //     let dom = document.querySelector(".test");
+  //     console.log(dom.offsetHeight, "offsetHeight");
+  //     console.log("走2", scrollTopSlice.control, scrollTopSlice.scrollTop, yyy);
+  //     yyy.current.scrollTo({
+  //       top: scrollTopSlice.scrollTop,
+  //       behavior: "smooth",
+  //     });
+  //     dispatch(scrollTopAction.reset());
+  //   }
+  //   console.log("走3");
+  // }, [scrollTopSlice.control]);
   // RouterWidth
   // useEffect(() => {
   //   if (scrollTopSlice.control) {
@@ -119,7 +137,7 @@ function App() {
             <Navbar showMenu={(e) => menuHandler()}></Navbar>
           </div>
 
-          <div className="bg-light h-100 w-100 flex-wrap RouterWidth">
+          <div className="bg-light h-100 w-100 flex-wrap RouterWidth" ref={yyy}>
             <Switch>
               <Route path="/login" component={UserLogin} />
               <Route exact path="/">
