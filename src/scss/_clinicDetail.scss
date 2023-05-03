@@ -461,8 +461,6 @@ textarea {
   }
 }
 .log_button {
-  // font-size: larger;
-  // font-weight: 900;
   position: absolute;
   bottom: 1%;
   right: 1%;
@@ -522,8 +520,6 @@ section {
       font-weight: 900;
       @media (max-width: 576px) {
         font-size: 1rem;
-        // font-size: larger;
-        // justify-content: flex-start;
       }
       .logCard_title_dateStatus_PC {
         display: flex;
@@ -533,18 +529,13 @@ section {
         }
         .date {
           padding: 0 15px;
-          // min-width: 50%;
-          // width: 100%;
           @media (max-width: 576px) {
-            // min-width:auto;
             padding: 0 5px;
           }
         }
         .status {
           border: none !important;
           color: #7dd1f0 !important ;
-          // padding-left: 35px;
-          // padding-right: 35px;
           max-width: 200px;
           min-width: 80px;
           text-align: end;
@@ -596,7 +587,7 @@ section {
 .log_title {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
   @media (max-width: 576px) {
     flex-direction: column;
   }

@@ -18,6 +18,8 @@ import ModalAddLog from "./log/modal-add-log";
 import { apiLogList } from "../../api/api-clinic-log";
 import { useRef } from "react";
 import { modalAction } from "../../store/modal-slice";
+import { Nav, Tab } from "react-bootstrap";
+
 let clinicData = {
   id: "", // clinic id
   name: "", // clinic name
@@ -38,6 +40,7 @@ let clinicData = {
 };
 
 const ClinicDetail = () => {
+  const [key, setKey] = useState("log");
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
   const params = useParams();
@@ -422,7 +425,11 @@ const ClinicDetail = () => {
             </section>
           </div>
         </div>
-        <div className="py-2 w-100">
+
+        {/* <div>123</div>
+
+<div>321</div> */}
+        {key === "log" && (
           <div className="log_button">
             <Button
               variant="warning"
@@ -433,49 +440,115 @@ const ClinicDetail = () => {
               建立紀錄
             </Button>{" "}
           </div>
-          <div className="h5 text-dark fw-bolder log_title">
-            <div className=" log_title_name" ref={divRef}>
-              Log:
-            </div>
-
-            <InputGroup size="sm" className="">
-              {logSearch !== "" && (
-                <FontAwesomeIcon
-                  onClick={clearSearchHandler}
-                  className="text-danger cursor-pointer fs-5 pe-1"
-                  icon="fa-solid fa-circle-xmark"
-                />
-              )}
-              查詢結果({totalCount}筆):
-              <input
-                type="text"
-                className="form-control ms-2"
-                placeholder="內容紀錄查詢"
-                value={logSearch}
-                onChange={(e) => {
-                  logSearchHandler(e.target.value);
-                }}
-              />
-            </InputGroup>
+        )}
+        {key === "service" && (
+          <div className="log_button">
+            <Button
+              variant="primary"
+              className="text-light addNewRecord"
+              size="lg"
+              onClick={() => createLogClickHandler(null, "add")}
+            >
+              建立問題
+            </Button>{" "}
           </div>
-          {logList.map((item) => (
-            <ClinicDetailLog
-              key={item.id}
-              item={item}
-              readonly={false}
-              onLogClick={() => editLogClickHandler(item, "edit")}
-            ></ClinicDetailLog>
-          ))}
-          {totalCount > 0 && (
-            <div className="d-flex justify-content-center ">
-              <Pagination
-                page={page}
-                totalPage={totalPage}
-                onPageChange={pageChangeHandler}
-              ></Pagination>
-            </div>
-          )}
-        </div>
+        )}
+        <Tab.Container activeKey={key} onSelect={(k) => setKey(k)}>
+          <Nav ref={divRef} variant="tabs" defaultActiveKey="log">
+            <Nav.Item>
+              <Nav.Link eventKey="log">拜訪紀錄</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="service">客戶服務</Nav.Link>
+            </Nav.Item>
+          </Nav>
+          <Tab.Content>
+            <Tab.Pane eventKey="log">
+              <div id="log-container" className="py-2 w-100">
+                <div className="h5 text-dark fw-bolder log_title">
+                  <InputGroup size="sm" className="">
+                    {logSearch !== "" && (
+                      <FontAwesomeIcon
+                        onClick={clearSearchHandler}
+                        className="text-danger cursor-pointer fs-5 pe-1"
+                        icon="fa-solid fa-circle-xmark"
+                      />
+                    )}
+                    查詢結果({totalCount}筆):
+                    <input
+                      type="text"
+                      className="form-control ms-2"
+                      placeholder="內容紀錄查詢"
+                      value={logSearch}
+                      onChange={(e) => {
+                        logSearchHandler(e.target.value);
+                      }}
+                    />
+                  </InputGroup>
+                </div>
+                {logList.map((item) => (
+                  <ClinicDetailLog
+                    key={item.id}
+                    item={item}
+                    readonly={false}
+                    onLogClick={() => editLogClickHandler(item, "edit")}
+                  ></ClinicDetailLog>
+                ))}
+                {totalCount > 0 && (
+                  <div className="d-flex justify-content-center ">
+                    <Pagination
+                      page={page}
+                      totalPage={totalPage}
+                      onPageChange={pageChangeHandler}
+                    ></Pagination>
+                  </div>
+                )}
+              </div>
+            </Tab.Pane>
+            <Tab.Pane eventKey="service">
+            <div id="service-container" className="py-2 w-100">
+                <div className="h5 text-dark fw-bolder log_title">
+                  <InputGroup size="sm" className="">
+                    {logSearch !== "" && (
+                      <FontAwesomeIcon
+                        onClick={clearSearchHandler}
+                        className="text-danger cursor-pointer fs-5 pe-1"
+                        icon="fa-solid fa-circle-xmark"
+                      />
+                    )}
+                    查詢結果({totalCount}+1筆):
+                    <input
+                      type="text"
+                      className="form-control ms-2"
+                      placeholder="問題紀錄查詢"
+                      value={logSearch}
+                      onChange={(e) => {
+                        logSearchHandler(e.target.value);
+                      }}
+                    />
+                  </InputGroup>
+                </div>
+                {logList.map((item) => (
+                  <ClinicDetailLog
+                    key={item.id}
+                    item={item}
+                    readonly={false}
+                    onLogClick={() => editLogClickHandler(item, "edit")}
+                  ></ClinicDetailLog>
+                ))}
+                {totalCount > 0 && (
+                  <div className="d-flex justify-content-center ">
+                    <Pagination
+                      page={page}
+                      totalPage={totalPage}
+                      onPageChange={pageChangeHandler}
+                    ></Pagination>
+                  </div>
+                )}
+              </div>
+            </Tab.Pane>
+          </Tab.Content>
+        </Tab.Container>
       </div>
       {!modalIsShow && (
         <FontAwesomeIcon
