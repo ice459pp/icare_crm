@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import InputRadio from "./input-radio";
 import ErrorText from "../error-text";
 import { apiLogCreate } from "../../../api/api-clinic-log";
+import { useHistory } from "react-router-dom";
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
 
@@ -67,7 +68,8 @@ const ModalAddLog = (props) => {
   const style = {
     height: `300px`,
   };
-
+  
+  const navigate = useHistory();
   const [errorText, setErrorText] = useState("");
   const [apiStart, setApiStart] = useState(false);
 
@@ -135,7 +137,8 @@ const ModalAddLog = (props) => {
         },
         () => {
           setApiStart(false);
-          props.onRefresh();
+          navigate.push(`/`);
+          
         }
       );
     }

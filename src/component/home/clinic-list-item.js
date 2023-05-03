@@ -79,15 +79,10 @@ const ClinicListItem = (props) => {
 
 
   useLayoutEffect(() => {
-    let bigdom=document.querySelector(".RouterWidth")
-    console.log(scrollTopSlice,"scrollTopSlice",bigdom,"bigdom")
-    if (bigdom && scrollTopSlice.control) {
-      // let dom = document.querySelector(".test");
-      // console.log(dom.offsetHeight, "offsetHeight");
-      console.log("走2", scrollTopSlice.control, scrollTopSlice.scrollTop, bigdom);
-      bigdom.scrollTo({
+    let dom=document.querySelector(".RouterWidth")
+    if (dom ) {
+      dom.scrollTo({
         top: scrollTopSlice.scrollTop,
-        behavior: "smooth",
       });
       dispatch(scrollTopAction.reset());
     }
