@@ -113,8 +113,11 @@ const ModalAddLog = (props) => {
   };
 
   const createLogHandler = () => {
+    console.log("送出了然後呢?",props)
     props.onActionStatus("add")
     setApiStart(true);
+    // props.onClose()
+    // closeModalHandler()
   };
 
   const closeModalHandler = () => {
@@ -136,6 +139,7 @@ const ModalAddLog = (props) => {
           setErrorText(err);
         },
         () => {
+          props.onRefresh() //modal close
           setApiStart(false);
           navigate.push(`/`);
           

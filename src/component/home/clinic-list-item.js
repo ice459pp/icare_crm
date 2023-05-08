@@ -30,7 +30,7 @@ const ClinicListItem = (props) => {
     dispatch(scrollTopAction.scrollTopHandler(scrollTop))
     navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
   };
-
+  const [actionStatus, setActionStatus] = useState("");
   const [listData, setListData] = useState([]);
   const [showAddLogModal, setShowAddLogModal] = useState(false);
   const [showLogListModal, setShowLogListModal] = useState(false);
@@ -179,9 +179,26 @@ const ClinicListItem = (props) => {
           showMoadl={showAddLogModal}
           onClose={closeAddLogModalHandler}
           onRefresh={refreshMoadlHandler}
-          onActionStatus={() => {
-            return;
+          onActionStatus={(e) => {
+            setActionStatus(e)
+            
           }}
+
+
+
+
+
+          // onActionStatus={actionStatusHandler}
+          // clinic_id={id}
+          // action={logAction}
+          // log={log}
+          // showMoadl={showAddLogModal}
+          // onClose={closeAddLogModalHandler}
+          // onRefresh={refreshHandler}
+
+
+
+
         />
       )}
     </Fragment>
