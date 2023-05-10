@@ -45,7 +45,7 @@ const ClinicListItem = (props) => {
     setShowAddLogModal(false);
   };
   const showLogListModalHandler = () => {
-    dispatch(modalAction.showModal());
+    // dispatch(modalAction.showModal());
     setShowLogListModal(true);
   };
 
@@ -79,13 +79,13 @@ const ClinicListItem = (props) => {
 
 
   useLayoutEffect(() => {
-    let dom=document.querySelector(".RouterWidth")
-    if (dom ) {
-      dom.scrollTo({
-        top: scrollTopSlice.scrollTop,
-      });
-      dispatch(scrollTopAction.reset());
-    }
+    // let dom=document.querySelector(".RouterWidth")
+    // if (dom ) {
+    //   dom.scrollTo({
+    //     top: scrollTopSlice.scrollTop,
+    //   });
+    //   dispatch(scrollTopAction.reset());
+    // }
   }, [listData]);
   
   return (
@@ -161,12 +161,12 @@ const ClinicListItem = (props) => {
         <Modal.Footer>
           <Button
             variant="warning"
-            className="text-white addRecord"
+            className="text-white addRecord w-100"
             onClick={() => showAddLogModalHandler(null, "add")}
           >
             新增紀錄
           </Button>
-          <Button variant="secondary" onClick={closeLogListModalHandler}>
+          <Button variant="secondary" className="w-100" onClick={closeLogListModalHandler}>
             關閉
           </Button>
         </Modal.Footer>
