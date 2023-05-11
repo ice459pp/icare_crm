@@ -33,9 +33,9 @@ const Home = () => {
   const headerRef = useRef(null);
   const divRef = useRef(null);
   let scrollTopSlice = useSelector((state) => state.scrollTopSlice);
-  // console.log(scrollTopSlice, "scrollTopSlice");
 
   useEffect(() => {
+    console.log("modal 有變化了",modalSlice.modalIsShow)
     setModalIsShow(modalSlice.modalIsShow);
   }, [modalSlice.modalIsShow]);
 

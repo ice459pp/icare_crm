@@ -25,9 +25,9 @@ const ClinicListItem = (props) => {
   const navigate = useHistory();
   let dispatch = useDispatch();
   const moreDetailHandler = () => {
-    let scrollTop=document.querySelector(".RouterWidth").scrollTop
+    let scrollTop = document.querySelector(".RouterWidth").scrollTop;
     // dispatch(scrollTopAction.scrollControl(true))
-    dispatch(scrollTopAction.scrollTopHandler(scrollTop))
+    dispatch(scrollTopAction.scrollTopHandler(scrollTop));
     navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
   };
   const [actionStatus, setActionStatus] = useState("");
@@ -45,7 +45,7 @@ const ClinicListItem = (props) => {
     setShowAddLogModal(false);
   };
   const showLogListModalHandler = () => {
-    // dispatch(modalAction.showModal());
+    dispatch(modalAction.showModal());
     setShowLogListModal(true);
   };
 
@@ -74,9 +74,7 @@ const ClinicListItem = (props) => {
         }
       );
     }
-  }, [showLogListModal, refreshLog]);
-
-
+  }, [showLogListModal,refreshLog]);
 
   useLayoutEffect(() => {
     // let dom=document.querySelector(".RouterWidth")
@@ -87,7 +85,7 @@ const ClinicListItem = (props) => {
     //   dispatch(scrollTopAction.reset());
     // }
   }, [listData]);
-  
+
   return (
     <Fragment>
       <tr className="align-middle">
@@ -166,7 +164,11 @@ const ClinicListItem = (props) => {
           >
             新增紀錄
           </Button>
-          <Button variant="secondary" className="w-100" onClick={closeLogListModalHandler}>
+          <Button
+            variant="secondary"
+            className="w-100"
+            onClick={closeLogListModalHandler}
+          >
             關閉
           </Button>
         </Modal.Footer>
@@ -180,25 +182,8 @@ const ClinicListItem = (props) => {
           onClose={closeAddLogModalHandler}
           onRefresh={refreshMoadlHandler}
           onActionStatus={(e) => {
-            setActionStatus(e)
-            
+            setActionStatus(e);
           }}
-
-
-
-
-
-          // onActionStatus={actionStatusHandler}
-          // clinic_id={id}
-          // action={logAction}
-          // log={log}
-          // showMoadl={showAddLogModal}
-          // onClose={closeAddLogModalHandler}
-          // onRefresh={refreshHandler}
-
-
-
-
         />
       )}
     </Fragment>
