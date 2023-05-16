@@ -7,7 +7,7 @@ import { modalAction } from "../../store/modal-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { apiLogList } from "../../api/api-clinic-log";
 import { scrollTopAction } from "../../store/scrollTop-slice";
-import scrollTopSlice from "../../store/scrollTop-slice";
+// import scrollTopSlice from "../../store/scrollTop-slice";
 import { useLayoutEffect } from "react";
 const phoneFixHandler = (item) => {
   const phoneNumberArray = item.replace(/ /g, "").split("-");
@@ -26,7 +26,7 @@ const ClinicListItem = (props) => {
   let dispatch = useDispatch();
   const moreDetailHandler = () => {
     let scrollTop = document.querySelector(".RouterWidth").scrollTop;
-    // dispatch(scrollTopAction.scrollControl(true))
+    dispatch(scrollTopAction.scrollControl(true))
     dispatch(scrollTopAction.scrollTopHandler(scrollTop));
     navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
   };
@@ -74,16 +74,17 @@ const ClinicListItem = (props) => {
         }
       );
     }
-  }, [showLogListModal,refreshLog]);
+  }, [showLogListModal, refreshLog]);
 
   useLayoutEffect(() => {
-    // let dom=document.querySelector(".RouterWidth")
-    // if (dom ) {
-    //   dom.scrollTo({
-    //     top: scrollTopSlice.scrollTop,
-    //   });
-    //   dispatch(scrollTopAction.reset());
-    // }
+    let bigdom=document.querySelector(".RouterWidth")
+    if (bigdom && scrollTopSlice.control) {
+      bigdom.scrollTo({
+        top: scrollTopSlice.scrollTop,
+        behavior: "smooth",
+      });
+      dispatch(scrollTopAction.reset());
+    }
   }, [listData]);
 
   return (

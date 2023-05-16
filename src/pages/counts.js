@@ -26,9 +26,7 @@ const Counts = () => {
     }
   }, [clinic, patient]);
   const reLoadHandler=()=>{
-    // console.log("123")
     window.location.reload()
-    // setReloadPage(!reloadPage)
   }
   return (
     <div className="px-3 py-3 text-dark fw-bolder bg-light fs-5">

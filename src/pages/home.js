@@ -34,8 +34,12 @@ const Home = () => {
   const divRef = useRef(null);
   let scrollTopSlice = useSelector((state) => state.scrollTopSlice);
 
+
+
+useEffect(() => {
+  console.log(clinicList,"clinicList",scrollTopSlice,"scrollTopSlice")
+}, [scrollTopSlice,clinicList]);
   useEffect(() => {
-    console.log("modal 有變化了",modalSlice.modalIsShow)
     setModalIsShow(modalSlice.modalIsShow);
   }, [modalSlice.modalIsShow]);
 
@@ -49,18 +53,6 @@ const Home = () => {
     setDepartment(filterSlice.department);
   }, [filterSlice.department]);
 
-  // useEffect(() => {
-  //   if ( actionStatus === "page") {
-  //     if (clinicList.length > 2) {
-  //       divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-
-  //     }
-  //     setActionStatus("");
-  //   }else{
-  //     // headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-
-  //   }
-  // }, [clinicList]);
   const statusChangeHandler = (value) => {
     dispatch(filterAction.onClinicStatus(value));
     dispatch(filterAction.onPage(1));
@@ -111,8 +103,8 @@ const Home = () => {
     dispatch(filterAction.onPage(1));
   };
   const scrollTopHandler = (e) => {
-    e.preventDefault();
-    headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    // e.preventDefault();
+    // headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
   };
   useEffect(() => {
     if (appSlice.isLogin) {
