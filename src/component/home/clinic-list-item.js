@@ -26,7 +26,6 @@ const ClinicListItem = (props) => {
   let dispatch = useDispatch();
   const moreDetailHandler = () => {
     let scrollTop = document.querySelector(".RouterWidth").scrollTop;
-    // dispatch(scrollTopAction.scrollControl(true))
     dispatch(scrollTopAction.scrollTopHandler(scrollTop));
     navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
   };
@@ -75,17 +74,6 @@ const ClinicListItem = (props) => {
       );
     }
   }, [showLogListModal,refreshLog]);
-
-  useLayoutEffect(() => {
-    // let dom=document.querySelector(".RouterWidth")
-    // if (dom ) {
-    //   dom.scrollTo({
-    //     top: scrollTopSlice.scrollTop,
-    //   });
-    //   dispatch(scrollTopAction.reset());
-    // }
-  }, [listData]);
-
   return (
     <Fragment>
       <tr className="align-middle">
