@@ -123,7 +123,7 @@ const ClinicDetail = () => {
   };
   const scrollTopHandler = (e) => {
     e.preventDefault();
-    headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    headerRef.current.scrollIntoView({ block: "start" });
   };
 
   const editLogClickHandler = (item, action) => {
@@ -141,13 +141,11 @@ const ClinicDetail = () => {
     }
     if (actionStatus === "goLog") {
       if (logList.length > 3) {
-        divRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else {
-        // console.log("logSearch but length<3, no scroll");
+        divRef.current.scrollIntoView({ block: "start" });
       }
       setActionStatus("");
     } else {
-      headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      headerRef.current.scrollIntoView({ block: "start" });
     }
   }, [logList]);
   useEffect(() => {

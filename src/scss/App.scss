@@ -1,6 +1,11 @@
 @import "./common";
 @import "./navbar";
 @import "./modal";
+
+textarea {
+  white-space: pre-line !important;
+}
+
 body {
   // height: 100vh;
   // overflow: hidden;

@@ -28,7 +28,9 @@ const ClinicListItem = (props) => {
     let scrollTop = document.querySelector(".RouterWidth").scrollTop;
     dispatch(scrollTopAction.scrollControl(true))
     dispatch(scrollTopAction.scrollTopHandler(scrollTop));
-    navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
+    // navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
+    
+    navigate.push(`/clinic/${item.id}`);
   };
   const [actionStatus, setActionStatus] = useState("");
   const [listData, setListData] = useState([]);
@@ -82,9 +84,9 @@ const ClinicListItem = (props) => {
     if (bigdom && scrollTopSlice.control) {
       bigdom.scrollTo({
         top: scrollTopSlice.scrollTop,
-        behavior: "smooth",
+        // behavior: "smooth",
       });
-      dispatch(scrollTopAction.reset());
+      // dispatch(scrollTopAction.reset());
     }
   }, [listData]);
 

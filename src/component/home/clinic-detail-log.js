@@ -1,6 +1,7 @@
 import React, { Fragment} from "react";
 const ClinicDetailLog = (props) => {
   let { item, readonly } = props;
+
   let isEditFormal = false;
   if (readonly) {
     isEditFormal = false;
@@ -35,7 +36,7 @@ const ClinicDetailLog = (props) => {
               </div>
             </div>
             <div className="date_PD">{item.visit_datetime}</div>
-            <div className="logCard_content">{item.content}</div>
+            <div className="logCard_content" dangerouslySetInnerHTML={{ __html: item.content }}></div>
             <div className="logCard_footer">{item.now_datetime} 新增 </div>
           </section>
         )}
@@ -58,7 +59,7 @@ const ClinicDetailLog = (props) => {
               </div>
             </div>
             <div className="date_PD">{item.visit_datetime}</div>
-            <div className="logCard_content">{item.content}</div>
+            <div className="logCard_content"  dangerouslySetInnerHTML={{ __html: item.content }}></div>
             <div className="logCard_footer">{item.now_datetime} 新增 </div>
           </section>
         )}

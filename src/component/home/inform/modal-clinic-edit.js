@@ -21,13 +21,14 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
+  console.log(item,"診所資料")
   let networkRef = useRef();
   let dispatch=useDispatch()
   const appSlice = useSelector((state) => state.appSlice);
   const navigate = useHistory();
   const [name, setName] = useState(item.name);
   const [phone, setPhone] = useState(item.phone);
-  const [people, setPeople] = useState(item.people===0 && "");
+  const [people, setPeople] = useState(item.people);
   const [road, setRoad] = useState(item.road);
   const [id, setId] = useState(item.id);
   const [his, setHis] = useState(item.his);

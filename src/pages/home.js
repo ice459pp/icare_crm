@@ -103,8 +103,8 @@ useEffect(() => {
     dispatch(filterAction.onPage(1));
   };
   const scrollTopHandler = (e) => {
-    // e.preventDefault();
-    // headerRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    e.preventDefault();
+    headerRef.current.scrollIntoView({ block: "start" });
   };
   useEffect(() => {
     if (appSlice.isLogin) {

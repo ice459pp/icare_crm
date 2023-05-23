@@ -84,7 +84,7 @@ const ModalAddLog = (props) => {
   );
 
   const [description, setDiscription] = useState(
-    action === "edit" ? log.content : ""
+    action === "edit" ? log.edit_content : ""
   );
 
   const [visitDate, setVisitDate] = useState(
