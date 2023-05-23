@@ -55,6 +55,7 @@ const SearchFilter = (props) => {
   const [selectedDistrict, setSelectedDistrict] = useState(district);
   const [districts, setDistricts] = useState([]);
   const [isSelect, setIsSelect] = useState(false);
+  const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
     if (searchText) {
@@ -128,19 +129,25 @@ const SearchFilter = (props) => {
   const [selected, setSelected] = useState({});
 
   const showDepartmentModal = () => {
-    dispatch(modalAction.showModal())
+    dispatch(modalAction.showModal());
     setDepartmentIsShow(true);
   };
   const closeDepartmentModal = () => {
-    dispatch(modalAction.closeModal())
+    dispatch(modalAction.closeModal());
     setDepartmentIsShow(false);
   };
   const addDepartmentHandler = (item) => {
+    console.log("prev",item);
     setSelected((prev) => ({
+      
       ...prev,
       [item]: !prev[item],
     }));
     props.onDepartmentChange(item);
+  };
+  const selectAllHandler = () => {
+    setSelectAll(!selectAll);
+    // setSelected((prev) => {console.log(prev,"prev")});
   };
   return (
     <Fragment>
@@ -256,7 +263,25 @@ const SearchFilter = (props) => {
           <Modal.Title>選擇科別欄位</Modal.Title>
         </Modal.Header>
         <Modal.Body className="departmentModal">
-          <div className="title">科別:</div>
+          <div className="title">
+            {" "}
+            <span> 科別: </span>{" "}
+            {selectAll ? (
+              <button
+                onClick={selectAllHandler}
+                className="btn btn-sm btn-outline-primary"
+              >
+                全選
+              </button>
+            ) : (
+              <button
+                onClick={selectAllHandler}
+                className="btn btn-sm btn-outline-danger"
+              >
+                取消全選
+              </button>
+            )}{" "}
+          </div>
           {departmentArr.map((item) => (
             <Button
               onClick={() => addDepartmentHandler(item)}

@@ -69,6 +69,7 @@ const ClinicListItem = (props) => {
         "",
         (err) => {},
         (list, total, totalPage) => {
+          console.log("list",list)
           setListData(list);
           setRefreshLog(false);
         }

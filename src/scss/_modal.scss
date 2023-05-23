@@ -127,6 +127,9 @@
     font-size: large;
     color: cadetblue;
     border-bottom: 1px gainsboro solid;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   button {
     position: relative;
