@@ -44,29 +44,38 @@ let departmentArr = [
   "特殊需求者口腔醫學科",
   "核子醫學科",
 ];
+let visitorArr = [{ id: "123", name: "Tom" }, { id: "333", name: "Jason" }, { id: "889", name: "QQA" }, { id: "qw3", name: "j6jj66j6" }]
 
 const SearchFilter = (props) => {
   let dispatch = useDispatch();
   let filterSlice = useSelector((state) => state.filterSlice);
-  let { clinic_status, department, city, district, searchText } = filterSlice;
+  let { clinic_status, department, city, district, searchText, visitor } = filterSlice;
   let clinicNameRef = useRef(null);
   const [clinicStatus, setClinicStatus] = useState(clinic_status);
   const [selectedCity, setSelectedCity] = useState(city);
   const [selectedDistrict, setSelectedDistrict] = useState(district);
   const [districts, setDistricts] = useState([]);
-  const [isSelect, setIsSelect] = useState(false);
-  const [selectAll, setSelectAll] = useState(false);
-
+  // const [isSelect, setIsSelect] = useState(false);
+  const [isKeyword, setIsKeyword] = useState(false);
+  // const [keywordValue, setKeywordValue] = useState(false);
+  const [selectAll, setSelectAll] = useState(true);
+  const [departmentIsShow, setDepartmentIsShow] = useState(false);
+  const [selected, setSelected] = useState({});
+  const [selectVisitor, setSelectVisitor] = useState(visitor);
   useEffect(() => {
+    // console.log(searchText, "searchText", clinicNameRef.current.value, "clinicNameRef.current.value ", isKeyword, "isKeyword")
     if (searchText) {
       clinicNameRef.current.value = searchText;
+      setIsKeyword(true)
+    } else {
+      setIsKeyword(false);
     }
-    if (department.length || searchText || clinic_status || city || district) {
-      setIsSelect(true);
-      return;
-    }
-    setIsSelect(false);
-  }, [department, searchText, city, clinic_status, district]);
+    // if (department.length || searchText || clinic_status || city || district) {
+    //   // setIsSelect(true);
+    //   return;
+    // }
+
+  }, [searchText]);
   useEffect(() => {
     if (selectedCity) {
       setDistricts(Object.keys(jsonData[selectedCity]));
@@ -81,7 +90,6 @@ const SearchFilter = (props) => {
     let value = e.target.value;
     props.onStatusChange(value);
     setClinicStatus(value);
-    setIsSelect(true);
   };
   const searchTextHandler = () => {
     if (!clinicNameRef.current.value) {
@@ -89,44 +97,42 @@ const SearchFilter = (props) => {
     }
     let value = clinicNameRef.current.value || "";
     props.onSearchText(value);
-    setIsSelect(true);
+    setIsKeyword(true);
   };
   const cityChangeHandler = (e) => {
     // 城市
     let value = e.target.value;
     setSelectedCity(value);
-    setIsSelect(true);
+    // setIsSelect(true);
     props.onCityChange(value);
   };
   const districtChangeHandler = (e) => {
     // 區域
     let value = e.target.value;
     setSelectedDistrict(value);
-    setIsSelect(true);
+    // setIsSelect(true);
     props.onDistrictChange(value);
   };
 
   const resetHandler = () => {
-    props.onStatusChange("");
-    setClinicStatus("");
+    // props.onStatusChange("");
+    // setClinicStatus("");
 
-    props.onDepartmentChange("reset");
+    // props.onDepartmentChange("reset");
+
+    // setSelectedCity("");
+    // props.onCityChange("");
+
+    // setSelectedDistrict("");
+    // props.onDistrictChange("");
 
     clinicNameRef.current.value = "";
     props.onSearchText("");
-
-    setSelectedCity("");
-    props.onCityChange("");
-
-    setSelectedDistrict("");
-    props.onDistrictChange("");
-
-    setIsSelect(false);
-    setSelected([]);
     dispatch(filterAction.resetState());
+    setIsKeyword(false);
+    setSelected([]);
   };
-  const [departmentIsShow, setDepartmentIsShow] = useState(false);
-  const [selected, setSelected] = useState({});
+
 
   const showDepartmentModal = () => {
     dispatch(modalAction.showModal());
@@ -137,45 +143,91 @@ const SearchFilter = (props) => {
     setDepartmentIsShow(false);
   };
   const addDepartmentHandler = (item) => {
-    console.log("prev",item);
+    console.log(item,"item",selected,"selected")
     setSelected((prev) => ({
-      
       ...prev,
       [item]: !prev[item],
     }));
     props.onDepartmentChange(item);
   };
   const selectAllHandler = () => {
+    console.log(selectAll,"selectAll")
     setSelectAll(!selectAll);
     // setSelected((prev) => {console.log(prev,"prev")});
   };
+  const visitorHandler = (e) => {
+    let value = e.target.value;
+    setSelectVisitor(value)
+
+    // setClinicStatus(value);
+    // setIsSelect(true);
+    props.onVisitorChange(value);
+  }
+  const handleInputKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      searchTextHandler()
+
+    }
+  }
   return (
     <Fragment>
       <form className="p-3 search">
-        <div className="d-flex align-items-center mb-2 search-clinicStatus">
-          <label className="">診所進度:</label>
-          <Form.Select
-            aria-label="Default select example"
-            onChange={(e) => clinicStatusHandler(e)}
-            value={clinicStatus}
-          >
-            <option value="">全部</option>
-            <option value="可回訪">可回訪</option>
-            <option value="可電訪">可電訪</option>
-            <option value="結案">結案</option>
-            <option value="成交">成交</option>
-            <option value="棄用">棄用</option>
-          </Form.Select>
+        <div className="d-flex align-items-center search-clinicStatus ">
+          <div className="clinicStatus">
+            {" "}
+            <label className="">
+              {" "}
+              <span className="name">診所進度</span>{" "}
+              <span className="bit">:</span>
+            </label>
+            <Form.Select
+              aria-label="Default select example"
+              onChange={(e) => clinicStatusHandler(e)}
+              value={clinicStatus}
+            >
+              <option value="">全部</option>
+              <option value="可回訪">可回訪</option>
+              <option value="可電訪">可電訪</option>
+              <option value="結案">結案</option>
+              <option value="成交">成交</option>
+              <option value="未使用">未使用</option>
+              <option value="已註冊">已註冊</option>
+            </Form.Select>
+          </div>
+
+          <div className="visitorSelect">
+            {" "}
+            <label className="">
+              {" "}
+              <span className="name">拜訪人</span>{" "}
+              <span className="bit">:</span>
+            </label>
+            <Form.Select
+              aria-label="Default select example"
+              onChange={(e) => visitorHandler(e)}
+              value={selectVisitor}
+            >
+              <option value="">無</option>
+              {visitorArr.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
+            </Form.Select>
+          </div>
         </div>
-        <div className="d-flex align-items-center mb-2 search-clinicStatus">
-          <label className="">選擇科別:</label>
-          <Button
-            onClick={showDepartmentModal}
-            className="btn-sm w-100 text-light"
-            variant="primary"
-          >
-            科別
-          </Button>
+        <div className="d-flex align-items-center search-clinicStatus">
+          <div className="departmentSelect">
+            <label className="">
+              {" "}
+              <span className="name">選擇科別</span>{" "}
+              <span className="bit">:</span>
+            </label>
+            <Button
+              onClick={showDepartmentModal}
+              className="btn-sm w-100 text-light"
+              variant="primary"
+            >
+              科別
+            </Button>
+          </div>
         </div>
         <div className="filter-department-zone">
           {department.map((item) => (
@@ -191,7 +243,7 @@ const SearchFilter = (props) => {
           ))}
         </div>
         <div className="d-flex align-items-center pb-2 filter-address ">
-          <div className="d-flex align-items-center widthRWD">
+          <div className="d-flex align-items-center widthRWD citySelect">
             <div>
               <select
                 className="county-sel"
@@ -228,6 +280,7 @@ const SearchFilter = (props) => {
             aria-describedby="basic-addon2"
             defaultValue={sessionStorage.getItem("searchText")}
             ref={clinicNameRef}
+            onKeyPress={handleInputKeyPress}
           />
           <button
             className="btn btn-secondary"
@@ -237,7 +290,7 @@ const SearchFilter = (props) => {
           >
             <FontAwesomeIcon icon="fas fa-search" />
           </button>
-          {isSelect && (
+          {isKeyword && (
             <button
               className="btn btn-danger text-white "
               type="button"
@@ -269,14 +322,14 @@ const SearchFilter = (props) => {
             {selectAll ? (
               <button
                 onClick={selectAllHandler}
-                className="btn btn-sm btn-outline-primary"
+                className="btn btn-sm  btn_changeAll primary"
               >
                 全選
               </button>
             ) : (
               <button
                 onClick={selectAllHandler}
-                className="btn btn-sm btn-outline-danger"
+                className="btn btn-sm  btn_changeAll danger"
               >
                 取消全選
               </button>
@@ -285,9 +338,8 @@ const SearchFilter = (props) => {
           {departmentArr.map((item) => (
             <Button
               onClick={() => addDepartmentHandler(item)}
-              className={`mx-1 mt-2 fs-6  border-0 ${
-                selected[item] ? "bg-warning" : "bg-primary"
-              }`}
+              className={`mx-1 mt-2 fs-6  border-0 ${selected[item] ? "bg-warning" : "bg-primary"
+                }`}
               key={item}
               size="sm"
             >

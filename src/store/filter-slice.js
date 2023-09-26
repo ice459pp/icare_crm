@@ -20,6 +20,7 @@ const initState = {
   searchText:  "",
   page: 1,
   permutations:"Dnew",
+  visitor:"",
 };
 const filterSlice = createSlice({
   name: "filter-slice",
@@ -29,6 +30,10 @@ const filterSlice = createSlice({
       let value = action.payload;
       state.clinic_status = value;
       // sessionStorage.setItem("clinic_status", value);
+    },
+    onVisitor(state,action){
+      let value = action.payload;
+      state.visitor=value
     },
     onDepartment(state, action) {
       let value = action.payload;
@@ -75,7 +80,8 @@ const filterSlice = createSlice({
       // sessionStorage.setItem("permutations", value);
     },
     resetState(state,action) {
-      state=initState
+      state.searchText = "";
+      // state=initState
       // sessionStorage.removeItem("clinic_status");
       // sessionStorage.removeItem("department");
       // sessionStorage.removeItem("city");

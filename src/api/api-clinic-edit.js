@@ -20,6 +20,7 @@ export const apiClinicUpdate = async (
   onComplete = () => {}
 ) => {
   try  {
+
     const apiUrl = `${appConfig.url}/clinic/info/edit/`
     let formData = new FormData()
     formData.append("id", id)

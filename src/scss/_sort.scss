@@ -3,15 +3,56 @@
   background-color: whitesmoke;
   border-radius: 10px;
   .search-clinicStatus {
-    width: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     @media (max-width: 996px) {
       width: 100%;
+      flex-direction: column;
     }
     label {
       min-width: 80px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      .name {
+        white-space: nowrap;
+      }
+      .bit {
+        // padding-left: 15px;
+        // padding-right: 15px;
+        // padding: 0 5px;
+        margin-right: 5px;
+      }
+      // text-align: center;
+    }
+    .clinicStatus,
+    .visitorSelect,
+    .departmentSelect {
+      width: calc(50% - 15px);
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      margin-bottom: 0.5rem;
+      @media (max-width: 996px) {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+    }
+    .visitorSelect {
+      width: 50%;
+      @media (max-width: 996px) {
+        // margin-bottom: 0.5rem;
+        width: 100%;
+      }
     }
   }
   .filter-department-zone {
+    width: calc(50% - 15px);
+    @media (max-width: 996px) {
+      // margin-bottom: 0.5rem;
+      width: 100%;
+    }
     button {
       position: relative;
       margin: 0.5rem 1rem 0.5rem 0;
@@ -39,6 +80,12 @@
     }
     .widthRWD {
       width: 50%;
+      &.citySelect {
+        width: calc(50% - 15px);
+        @media (max-width: 996px) {
+          width: 100%;
+        }
+      }
 
       @media (max-width: 996px) {
         width: 100%;
@@ -47,7 +94,7 @@
   }
 
   .input-group-textSearch {
-    width: 50%;
+    width: calc(50% - 15px);
 
     @media (max-width: 996px) {
       width: 100%;

@@ -29,6 +29,7 @@ const Home = () => {
   const [totalCount, setTotalCount] = useState(0);
   const [permutations, setPermutations] = useState(filterSlice.permutations);
   const [department, setDepartment] = useState(filterSlice.department);
+  const [visitor, setVisitor] = useState(filterSlice.visitor);
   const [actionStatus, setActionStatus] = useState("");
   const headerRef = useRef(null);
   const divRef = useRef(null);
@@ -37,8 +38,9 @@ const Home = () => {
 
 
 useEffect(() => {
-  console.log(clinicList,"clinicList",scrollTopSlice,"scrollTopSlice")
-}, [scrollTopSlice,clinicList]);
+  console.log(visitor,"visitor")
+  // console.log(clinicList,"clinicList",scrollTopSlice,"scrollTopSlice")
+}, [visitor]);
   useEffect(() => {
     setModalIsShow(modalSlice.modalIsShow);
   }, [modalSlice.modalIsShow]);
@@ -99,6 +101,7 @@ useEffect(() => {
     dispatch(filterAction.onPage(1));
   };
   const departmentHandler = (value) => {
+    console.log(value,"valuedepartmentHandler")
     dispatch(filterAction.onDepartment(value));
     dispatch(filterAction.onPage(1));
   };
@@ -106,6 +109,10 @@ useEffect(() => {
     e.preventDefault();
     headerRef.current.scrollIntoView({ block: "start" });
   };
+  const visitorHandler=(value)=>{
+    dispatch(filterAction.onVisitor(value));
+    setVisitor(value)
+  }
   useEffect(() => {
     if (appSlice.isLogin) {
       const token = appSlice.userToken;
@@ -154,6 +161,7 @@ useEffect(() => {
           onSearchText={searchTextHandler}
           onDepartmentChange={departmentHandler}
           onMutationHandler={mutationHandler}
+          onVisitorChange={visitorHandler}
         />
       </div>
       <div className="w-100 padding-RWD mt-3">

@@ -22,42 +22,11 @@ function App() {
   let dispatch = useDispatch();
 
   let yyy = useRef(null);
-  // console.log(scrollTopSlice.control, "scrollll");
+
   let isLogin_store = appSlice.isLogin;
   const { innerWidth, innerHeight } = useViewport();
-  // const [scrollControl, setScrollControl] = useState(scrollTopSlice.control);
   const [menuIsShow, setMenuIsShow] = useState(false);
   const [isLogin, setIsLogin] = useState(isLogin_store);
-
-  // useLayoutEffect(() => {
-  //   console.log("走1");
-  //   if (yyy.current) {
-  //     let dom = document.querySelector(".test");
-  //     console.log(dom.offsetHeight, "offsetHeight");
-  //     console.log("走2", scrollTopSlice.control, scrollTopSlice.scrollTop, yyy);
-  //     yyy.current.scrollTo({
-  //       top: scrollTopSlice.scrollTop,
-  //       behavior: "smooth",
-  //     });
-  //     dispatch(scrollTopAction.reset());
-  //   }
-  //   console.log("走3");
-  // }, [scrollTopSlice.control]);
-  // RouterWidth
-  // useEffect(() => {
-  //   if (scrollTopSlice.control) {
-  //     let dom = document.querySelector(".RouterWidth");
-  //     console.log("有經過", dom, scrollTopSlice.scrollTop, "scrollTop");
-  //     // dom.scrollTo({
-  //     //     top:scrollTopSlice.scrollTop,
-  //     //     behavior: 'smooth',
-  //     // });
-  //     dom.scrollTop = scrollTopSlice.scrollTop;
-  //     dispatch(scrollTopAction.reset());
-  //   } else {
-  //     return;
-  //   }
-  // }, [scrollTopSlice.control]);
   useEffect(() => {
     setIsLogin(isLogin_store);
   }, [isLogin_store]);
