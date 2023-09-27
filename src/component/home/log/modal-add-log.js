@@ -54,7 +54,12 @@ const statusArr = [
   },
   {
     id: 5,
-    text: "棄用",
+    text: "未使用",
+  },
+  
+  {
+    id: 6,
+    text: "已註冊",
   },
 ];
 const ModalAddLog = (props) => {
@@ -113,11 +118,8 @@ const ModalAddLog = (props) => {
   };
 
   const createLogHandler = () => {
-    console.log("送出了然後呢?",props)
     props.onActionStatus("add")
     setApiStart(true);
-    // props.onClose()
-    // closeModalHandler()
   };
 
   const closeModalHandler = () => {

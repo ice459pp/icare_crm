@@ -1,27 +1,38 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// const initState = {
-//   clinic_status: sessionStorage.getItem("clinic_status") || "",
-//   // department: sessionStorage.getItem("department") || [],
-//   department: [],
-//   city: sessionStorage.getItem("city") || "",
-//   district: sessionStorage.getItem("district") || "",
-//   searchText: sessionStorage.getItem("searchText") || "",
-//   page: sessionStorage.getItem("page") || 1,
-//   permutations: sessionStorage.getItem("permutations") || "Dnew",
-// };
-
 const initState = {
   clinic_status: "",
   // department: sessionStorage.getItem("department") || [],
   department: [],
-  city:"",
-  district:  "",
-  searchText:  "",
+  city: "",
+  district: "",
+  searchText: "",
   page: 1,
-  permutations:"Dnew",
-  visitor:"",
+  permutations: "Dnew",
+  visitor: "",
 };
+
+let departmentArr = [
+  "不分科",
+  "內科",
+  "兒科",
+  "骨科",
+  "耳鼻喉科",
+  "皮膚科",
+  "精神科",
+  "整形外科",
+  "家醫科",
+  "外科",
+  "婦產科",
+  "泌尿科",
+  "兒童牙科",
+  "眼科",
+  "神經科",
+  "復健科",
+  "牙科",
+  "中醫一般科"
+];
+
 const filterSlice = createSlice({
   name: "filter-slice",
   initialState: initState,
@@ -31,22 +42,27 @@ const filterSlice = createSlice({
       state.clinic_status = value;
       // sessionStorage.setItem("clinic_status", value);
     },
-    onVisitor(state,action){
+    onVisitor(state, action) {
       let value = action.payload;
-      state.visitor=value
+      state.visitor = value
     },
     onDepartment(state, action) {
+
       let value = action.payload;
       if (value === "reset") {
         state.department = [];
         return;
+      }
+      if (value === 'all') {
+        state.department = departmentArr
+        return
       }
       if (state.department.includes(value)) {
         state.department = state.department.filter((item) => item !== value);
       } else {
         state.department.push(value);
       }
-      
+
       // sessionStorage.setItem("department", state.department);
     },
     onCity(state, action) {
@@ -79,7 +95,7 @@ const filterSlice = createSlice({
 
       // sessionStorage.setItem("permutations", value);
     },
-    resetState(state,action) {
+    resetState(state, action) {
       state.searchText = "";
       // state=initState
       // sessionStorage.removeItem("clinic_status");

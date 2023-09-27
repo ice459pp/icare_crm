@@ -101,7 +101,7 @@ useEffect(() => {
     dispatch(filterAction.onPage(1));
   };
   const departmentHandler = (value) => {
-    console.log(value,"valuedepartmentHandler")
+    console.log(value,"departmentHandler in home js")
     dispatch(filterAction.onDepartment(value));
     dispatch(filterAction.onPage(1));
   };

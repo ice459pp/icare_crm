@@ -9,7 +9,7 @@ const PaginationUI = (props) => {
   const [pages, setPages] = useState([]);
   const [isRwd, setIsRwd] = useState(false);
   useEffect(() => {
-    if (innerWidth < 576) {
+    if (innerWidth < 996) {
       setIsRwd(true);
     } else {
       setIsRwd(false);
@@ -50,6 +50,7 @@ const PaginationUI = (props) => {
   }, [page, totalPage, isRwd]);
 
   const pageNumHandler = (pageNumber) => {
+    console.log(pageNumber,"pageNumber")
     props.onPageChange(pageNumber);
   };
 
