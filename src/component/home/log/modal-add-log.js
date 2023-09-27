@@ -16,7 +16,9 @@ const formatDate = (timestamp) => {
 
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };
-
+const starArr=[
+  0,1,2,3,4,5
+]
 const categoryArr = [
   {
     id: 1,
@@ -56,7 +58,7 @@ const statusArr = [
     id: 5,
     text: "未使用",
   },
-  
+
   {
     id: 6,
     text: "已註冊",
@@ -64,6 +66,7 @@ const statusArr = [
 ];
 const ModalAddLog = (props) => {
   let { action, clinic_id, log } = props;
+  console.log(action,log,"log in addLog")
   const appSlice = useSelector((state) => state.appSlice);
 
   const currentDateTime = () => {
@@ -73,11 +76,17 @@ const ModalAddLog = (props) => {
   const style = {
     height: `300px`,
   };
-  
+
   const navigate = useHistory();
   const [errorText, setErrorText] = useState("");
   const [apiStart, setApiStart] = useState(false);
 
+console.log(log,"loggg",appSlice,"appSlice")
+
+    // 星星
+    const [star, setStar] = useState(
+      action === "edit" ? log.star : 0
+    );
   // 初訪 回訪 電訪 教育訓練
   const [category, setCategory] = useState(
     action === "edit" ? log.visit_category : "初訪"
@@ -101,6 +110,10 @@ const ModalAddLog = (props) => {
     const value = event.target.value;
     setStatus(value);
   };
+  const starChangeHandler=(event)=>{
+    const value = event.target.value;
+    setStar(value)
+  }
 
   const categoryChangeHandler = (event) => {
     const value = event.target.value;
@@ -137,6 +150,8 @@ const ModalAddLog = (props) => {
         formatDate(visitDate),
         description,
         action,
+        star,
+
         (err) => {
           setErrorText(err);
         },
@@ -144,7 +159,7 @@ const ModalAddLog = (props) => {
           props.onRefresh() //modal close
           setApiStart(false);
           navigate.push(`/`);
-          
+
         }
       );
     }
@@ -185,7 +200,7 @@ const ModalAddLog = (props) => {
                 })}
               </div>
               <InputGroup className="mb-3">
-                <InputGroup.Text id="basic-addon1">拜訪時間:</InputGroup.Text>
+                <InputGroup.Text id="basic-addon1" className="input-label">拜訪時間:</InputGroup.Text>
                 <Form.Control
                   placeholder="20:00~07:00"
                   aria-label="拜訪時間"
@@ -195,6 +210,18 @@ const ModalAddLog = (props) => {
                   value={visitDate}
                 />
               </InputGroup>
+
+
+              <InputGroup className="mb-3">
+                <InputGroup.Text id="basic-addon2" className="input-label">星星:</InputGroup.Text>
+                <Form.Select onChange={(e) => starChangeHandler(e)} aria-label="Default select example">
+                  {/* <option value='disabled' disabled selected>請選擇</option> */}
+                  {starArr.map(s=><option key={s} value={s}>{s}</option>)}
+                </Form.Select>
+              </InputGroup>
+
+
+
 
               <textarea
                 style={style}

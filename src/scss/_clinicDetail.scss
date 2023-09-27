@@ -364,6 +364,7 @@ textarea {
         flex-direction: column;
         align-items: center;
         width: calc(100% / 5);
+        margin-bottom: 1rem;
         @media (max-width: 996px) {
           width: calc(100% / 3);
         }

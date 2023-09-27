@@ -56,6 +56,7 @@ export const apiLogCreate = async (
   visit_datetime = "", 
   description = "", 
   action = "add",
+  star=0,
   onError = () => {}, 
   onComplete = () => {}
 ) => {
@@ -69,9 +70,9 @@ export const apiLogCreate = async (
     formData.append("visit_category", visit_category)
     formData.append("clinic_status", clinic_status)
     formData.append("visit_datetime", visit_datetime)
+    formData.append("star", star)
     formData.append("description", description)
     formData.append("action", action)
-
     const response = await fetch(
       apiUrl, {
       method: 'POST', 
@@ -82,6 +83,7 @@ export const apiLogCreate = async (
     })
 
     const json = await response.json()
+   
     if (!response.ok) {
       throw new Error("Error Occur")
     }

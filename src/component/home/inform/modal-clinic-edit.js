@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import InputCheckText from "./input-check-text";
 import { useHistory } from "react-router-dom";
+// clinic_detail>ClinicEditModal
 const careNetworkArr = [
   "BC肝",
   "氣喘",
@@ -21,7 +22,7 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
-  console.log(item,"診所資料")
+  // console.log(item,"診所資料")
   let networkRef = useRef();
   let dispatch=useDispatch()
   const appSlice = useSelector((state) => state.appSlice);

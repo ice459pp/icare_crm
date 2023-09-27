@@ -28,6 +28,7 @@ let clinicData = {
   district: "", // district
   road: "", // address
   his: "", // 耀聖
+  star: '', //星星
   isUse_video: false, // streaming
   isDecided: false, //醫師能否做主
   people: 0, //醫師人數
@@ -69,6 +70,7 @@ const ClinicDetail = () => {
 
   const [typeList, setTypeList] = useState([]);
   const [remoteList, setRemoteList] = useState([]);
+  // console.log(clinicInfo, "clinicInfo")
   useEffect(() => {
     setModalIsShow(modalSlice.modalIsShow);
   }, [modalSlice.modalIsShow]);
@@ -286,9 +288,8 @@ const ClinicDetail = () => {
               <div className="card-item">
                 <div className="card-item-title">HIS系統</div>
                 <div
-                  className={`card-item-content ${
-                    clinicInfo.his ? "text-dark" : "text-danger"
-                  }`}
+                  className={`card-item-content ${clinicInfo.his ? "text-dark" : "text-danger"
+                    }`}
                 >
                   {clinicInfo.his ? clinicInfo.his : "無"}
                 </div>
@@ -296,9 +297,8 @@ const ClinicDetail = () => {
               <div className="card-item">
                 <div className="card-item-title">有無視訊</div>
                 <div
-                  className={`card-item-content ${
-                    clinicInfo.isUse_video ? "text-success" : "text-danger"
-                  }`}
+                  className={`card-item-content ${clinicInfo.isUse_video ? "text-success" : "text-danger"
+                    }`}
                 >
                   {clinicInfo.isUse_video ? "有" : "無"}
                 </div>
@@ -306,9 +306,8 @@ const ClinicDetail = () => {
               <div className="card-item">
                 <div className="card-item-title">診所狀態</div>
                 <div
-                  className={`card-item-content ${
-                    clinicInfo.clinic_status ? "text-dark" : "text-danger"
-                  }`}
+                  className={`card-item-content ${clinicInfo.clinic_status ? "text-dark" : "text-danger"
+                    }`}
                 >
                   {clinicInfo.clinic_status ? clinicInfo.clinic_status : "無"}
                 </div>
@@ -320,13 +319,22 @@ const ClinicDetail = () => {
               <div className="card-item">
                 <div className="card-item-title">叫號方式</div>
                 <div
-                  className={`card-item-content ${
-                    clinicInfo.call_number_way ? "text-dark" : "text-danger"
-                  }`}
+                  className={`card-item-content ${clinicInfo.call_number_way ? "text-dark" : "text-danger"
+                    }`}
                 >
                   {clinicInfo.call_number_way
                     ? clinicInfo.call_number_way
                     : "無"}
+                </div>
+              </div>
+
+              <div className="card-item">
+                <div className="card-item-title">星星</div>
+                <div
+                  className={`card-item-content ${clinicInfo.star===0 ? "text-dark" : "text-danger"
+                    }`}
+                >
+                  {clinicInfo.star }
                 </div>
               </div>
             </section>
@@ -349,9 +357,8 @@ const ClinicDetail = () => {
               <div className="table-item">
                 <div className="table-item-title">醫師能否作主:</div>
                 <div
-                  className={`table-item-content ${
-                    clinicInfo.isDecided ? "text-success" : "text-danger"
-                  }`}
+                  className={`table-item-content ${clinicInfo.isDecided ? "text-success" : "text-danger"
+                    }`}
                 >
                   {clinicInfo.isDecided ? "能" : "不能"}
                 </div>
@@ -359,9 +366,8 @@ const ClinicDetail = () => {
               <div className="table-item">
                 <div className="table-item-title">醫療群:</div>
                 <div
-                  className={`table-item-content ${
-                    clinicInfo.care_group ? "text-dark" : "text-danger"
-                  }`}
+                  className={`table-item-content ${clinicInfo.care_group ? "text-dark" : "text-danger"
+                    }`}
                 >
                   {clinicInfo.care_group ? `${clinicInfo.care_group}` : "無"}
                 </div>
@@ -369,9 +375,8 @@ const ClinicDetail = () => {
               <div className="table-item">
                 <div className="table-item-title">其他醫院執業:</div>
                 <div
-                  className={`table-item-content ${
-                    clinicInfo.experience ? "text-dark" : "text-danger"
-                  }`}
+                  className={`table-item-content ${clinicInfo.experience ? "text-dark" : "text-danger"
+                    }`}
                 >
                   {clinicInfo.experience ? `${clinicInfo.experience}` : "無"}
                 </div>
@@ -379,9 +384,8 @@ const ClinicDetail = () => {
               <div className="table-item">
                 <div className="table-item-title">有無加入照護網:</div>
                 <div
-                  className={`table-item-content ${
-                    clinicInfo.care_network ? "text-dark" : "text-danger"
-                  }`}
+                  className={`table-item-content ${clinicInfo.care_network ? "text-dark" : "text-danger"
+                    }`}
                 >
                   {!clinicInfo.care_network && `無`}
                   {clinicInfo.care_network && (
@@ -504,7 +508,7 @@ const ClinicDetail = () => {
               </div>
             </Tab.Pane>
             <Tab.Pane eventKey="service">
-            <div id="service-container" className="py-2 w-100">
+              <div id="service-container" className="py-2 w-100">
                 <div className="h5 text-dark fw-bolder log_title">
                   <InputGroup size="sm" className="">
                     {logSearch !== "" && (

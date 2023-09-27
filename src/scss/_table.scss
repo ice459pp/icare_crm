@@ -108,3 +108,14 @@ tr.tr-only-hide {
     }
   }
 }
+.th-title{
+  position: relative;
+  .th-star{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: rgb(226, 159, 13);
+    font-size: x-large;
+    transform: translate(-10px,-1px);
+  }
+}

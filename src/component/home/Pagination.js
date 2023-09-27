@@ -4,8 +4,9 @@ import "../../scss/pagination.scss"
 import { useViewport } from "../../useViewport";
 
 const PaginationUI = (props) => {
+
   const { page, totalPage } = props;
-  const { innerWidth} = useViewport();
+  const { innerWidth } = useViewport();
   const [pages, setPages] = useState([]);
   const [isRwd, setIsRwd] = useState(false);
   useEffect(() => {
@@ -50,7 +51,6 @@ const PaginationUI = (props) => {
   }, [page, totalPage, isRwd]);
 
   const pageNumHandler = (pageNumber) => {
-    console.log(pageNumber,"pageNumber")
     props.onPageChange(pageNumber);
   };
 
@@ -70,26 +70,47 @@ const PaginationUI = (props) => {
     props.onPageChange(newPage);
   };
 
+  const pageSkip=(p,t)=>{
+    let newPage=0
+    if (t==="next") {
+      if (page===totalPage) {
+        return
+      }
+      newPage=(page+10>totalPage) ? totalPage: page+10
+    }else{
+      if (page===1) {
+        return
+      }
+      newPage=(page-10<1) ? 1 : page-10
+    }
+    props.onPageChange(newPage);
+  }
+
   return (
     <Fragment>
       <Pagination className="" variant="secondary">
-        {page - 4 >= 0 && (
+        {/* {page - 4 >= 0 && (
           <Pagination.First onClick={() => pageNumHandler(1)} />
-        )}
-        {isRwd ? null : <Pagination.Prev onClick={pagePrevHandler} />}{" "}
-        {pages.map((pageNum) => (
-          <Pagination.Item
-            active={pageNum === page}
-            key={pageNum}
-            onClick={() => pageNumHandler(pageNum)}
-          >
-            {pageNum}
-          </Pagination.Item>
-        ))}
-        {isRwd ? null : <Pagination.Next onClick={pageNextHandler} />}{" "}
-        {page + 4 < totalPage && (
+        )} */}
+        <Pagination.Item onClick={()=>pageSkip(10,"prev")}>{'前10'}</Pagination.Item>
+        {<Pagination.Prev onClick={pagePrevHandler} />}
+        {isRwd && <Pagination.Item active>{page}</Pagination.Item>}
+        {!isRwd &&
+          pages.map((pageNum) => (
+            <Pagination.Item
+              active={pageNum === page}
+              key={pageNum}
+              onClick={() => pageNumHandler(pageNum)}
+            >
+              {pageNum}
+            </Pagination.Item>
+          ))
+        }
+        {<Pagination.Next onClick={pageNextHandler} />}
+        <Pagination.Item onClick={()=>pageSkip(10,"next")}>{'後10'}</Pagination.Item>
+        {/* {page + 4 < totalPage && (
           <Pagination.Last onClick={() => pageNumHandler(totalPage)} />
-        )}
+        )} */}
       </Pagination>
     </Fragment>
   );

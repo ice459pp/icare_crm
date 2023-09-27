@@ -6,6 +6,8 @@ import jsonData from "../../twzipcode.json";
 import { filterAction } from "../../store/filter-slice";
 import { modalAction } from "../../store/modal-slice";
 import { useDispatch, useSelector } from "react-redux";
+import {apiUserList} from "../../api/api_userList"
+// import {appSlice} from "../../api/"
 
 let departmentArr = [
   "不分科",
@@ -27,14 +29,18 @@ let departmentArr = [
   "牙科",
   "中醫一般科"
 ];
-let visitorArr = [{ id: "123", name: "Tom" }, { id: "333", name: "Jason" }, { id: "889", name: "QQA" }, { id: "qw3", name: "j6jj66j6" }]
-let starArr = [{ id: 0, name: 0 }, { id: 1, name: 1 }, { id: 2, name: 2 }, { id: 3, name: 3 }, { id: 4, name: 4 }, { id: 5, name: 5 },]
+// let visitorArr = [{ id: "123", name: "Tom" }, { id: "333", name: "Jason" }, { id: "889", name: "QQA" }, { id: "qw3", name: "j6jj66j6" }]
+let starArr = [{ id: 1, name: 1 }, { id: 2, name: 2 }, { id: 3, name: 3 }, { id: 4, name: 4 }, { id: 5, name: 5 },]
 const SearchFilter = (props) => {
   let dispatch = useDispatch();
+  // let visitorArr=[]
+  const appSlice = useSelector((state) => state.appSlice);
   let filterSlice = useSelector((state) => state.filterSlice);
   let { clinic_status, department, city, district, searchText, visitor } = filterSlice;
   // console.log(department, "department")
   let clinicNameRef = useRef(null);
+  const [visitorArr, setVisitorArr] = useState([]);
+
   const [clinicStatus, setClinicStatus] = useState(clinic_status);
   const [selectedCity, setSelectedCity] = useState(city);
   const [selectedDistrict, setSelectedDistrict] = useState(district);
@@ -76,6 +82,21 @@ const SearchFilter = (props) => {
   useEffect(() => {
     setSelectedDistrict(district);
   }, [district]);
+
+  useEffect(()=>{
+    const token = appSlice.userToken;
+      apiUserList(
+        token,
+        (err) => {
+          alert(err);
+        },
+        (data) => {
+          // console.log(data,"data")
+          setVisitorArr(data)
+        }
+      );
+    
+  },[])
   const clinicStatusHandler = (e) => {
     let value = e.target.value;
     props.onStatusChange(value);
@@ -157,6 +178,15 @@ const SearchFilter = (props) => {
     // setIsSelect(true);
     props.onVisitorChange(value);
   }
+  const starChangeHandler=(e)=>{
+    // 星星改變 抓星星的值
+    let value = e.target.value;
+    // setSelectVisitor(value)
+
+    // setClinicStatus(value);
+    // setIsSelect(true);
+    props.onStarChange(value);
+  }
   const handleInputKeyPress = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -231,7 +261,7 @@ const SearchFilter = (props) => {
             </label>
             <Form.Select
               aria-label="Default select example"
-              onChange={(e) => visitorHandler(e)}
+              onChange={(e) => starChangeHandler(e)}
               value={selectVisitor}
             >
               <option value="">請選擇</option>

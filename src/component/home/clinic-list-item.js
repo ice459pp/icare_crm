@@ -20,6 +20,7 @@ const phoneFixHandler = (item) => {
 };
 const ClinicListItem = (props) => {
   let { item } = props;
+  console.log(item,"item")
   const appSlice = useSelector((state) => state.appSlice);
   const scrollTopSlice = useSelector((state) => state.scrollTopSlice);
   const navigate = useHistory();
@@ -93,9 +94,11 @@ const ClinicListItem = (props) => {
   return (
     <Fragment>
       <tr className="align-middle">
-        <th data-th="診所名(機構代碼):" scope="row">
+        <th data-th="診所名(機構代碼):" scope="row" className="th-title">
           <div>{item.name}</div>
           <div>{item.id}</div>
+          {item.star !==0 && <div className="th-star">{item.star}</div>}
+        
         </th>
         <td className="td-address" data-th="地址:">
           <a
