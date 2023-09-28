@@ -22,7 +22,6 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
-  // console.log(item,"診所資料")
   let networkRef = useRef();
   let dispatch=useDispatch()
   const appSlice = useSelector((state) => state.appSlice);

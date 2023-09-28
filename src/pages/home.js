@@ -35,13 +35,6 @@ const Home = () => {
   const headerRef = useRef(null);
   const divRef = useRef(null);
   let scrollTopSlice = useSelector((state) => state.scrollTopSlice);
-
-
-
-useEffect(() => {
-  console.log(visitor,"visitor")
-  // console.log(clinicList,"clinicList",scrollTopSlice,"scrollTopSlice")
-}, [visitor]);
   useEffect(() => {
     setModalIsShow(modalSlice.modalIsShow);
   }, [modalSlice.modalIsShow]);
@@ -111,8 +104,6 @@ useEffect(() => {
     headerRef.current.scrollIntoView({ block: "start" });
   };
   const visitorHandler=(value)=>{
-    // console.log(value,"visitor value")
-    // return
     dispatch(filterAction.onVisitor(value));
     dispatch(filterAction.onPage(1));
     setVisitor(value)
@@ -122,7 +113,6 @@ useEffect(() => {
     setStar(value)
     dispatch(filterAction.onStar(value));
     dispatch(filterAction.onPage(1));
-    // console.log(value,"value star")
   }
   useEffect(() => {
     if (appSlice.isLogin) {
@@ -147,7 +137,6 @@ useEffect(() => {
           }
         },
         (list, total, totalPage) => {
-          console.log(list,"list in api data")
           setTotalCount(total);
           setTotalPage(totalPage);
           setClinicList(list);

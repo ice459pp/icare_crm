@@ -66,7 +66,6 @@ const statusArr = [
 ];
 const ModalAddLog = (props) => {
   let { action, clinic_id, log } = props;
-  console.log(action,log,"log in addLog")
   const appSlice = useSelector((state) => state.appSlice);
 
   const currentDateTime = () => {
@@ -80,9 +79,6 @@ const ModalAddLog = (props) => {
   const navigate = useHistory();
   const [errorText, setErrorText] = useState("");
   const [apiStart, setApiStart] = useState(false);
-
-console.log(log,"loggg",appSlice,"appSlice")
-
     // 星星
     const [star, setStar] = useState(
       action === "edit" ? log.star : 0

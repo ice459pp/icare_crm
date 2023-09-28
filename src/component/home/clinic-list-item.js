@@ -20,7 +20,6 @@ const phoneFixHandler = (item) => {
 };
 const ClinicListItem = (props) => {
   let { item } = props;
-  console.log(item,"item")
   const appSlice = useSelector((state) => state.appSlice);
   const scrollTopSlice = useSelector((state) => state.scrollTopSlice);
   const navigate = useHistory();
@@ -29,8 +28,6 @@ const ClinicListItem = (props) => {
     let scrollTop = document.querySelector(".RouterWidth").scrollTop;
     dispatch(scrollTopAction.scrollControl(true))
     dispatch(scrollTopAction.scrollTopHandler(scrollTop));
-    // navigate.push(`/clinic/${item.id}?scroll=${scrollTop}`);
-    
     navigate.push(`/clinic/${item.id}`);
   };
   const [actionStatus, setActionStatus] = useState("");
@@ -72,7 +69,6 @@ const ClinicListItem = (props) => {
         "",
         (err) => {},
         (list, total, totalPage) => {
-          console.log("list",list)
           setListData(list);
           setRefreshLog(false);
         }
