@@ -237,7 +237,7 @@ const SearchFilter = (props) => {
             </Form.Select>
           </div>
         </div>
-        <div className="d-flex align-items-center search-clinicStatus">
+        <div className="d-flex align-items-center search-clinicStatus  column-reverse-rwd">
           <div className="departmentSelect">
             <label className="">
               {" "}

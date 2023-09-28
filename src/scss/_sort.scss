@@ -9,7 +9,11 @@
     @media (max-width: 996px) {
       width: 100%;
       flex-direction: column;
+      &.column-reverse-rwd{
+        flex-direction: column-reverse;
+      }
     }
+    
     label {
       min-width: 80px;
       display: flex;
