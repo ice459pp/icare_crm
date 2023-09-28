@@ -9,6 +9,8 @@ export const apiClinicList = async (
   filter_permutations = "Dnew",
   filter_clinic_status = "",
   filter_department = [],
+  filter_visitor="",
+  filter_star=0,
   onError = () => {},
   onComplete = () => {}
 ) => {
@@ -36,6 +38,12 @@ export const apiClinicList = async (
 
     if (filter_department) {
       urlParams.append("Department", filter_department);
+    }
+    if (filter_star) {
+      urlParams.append("star", filter_star);
+    }
+    if (filter_visitor) {
+      urlParams.append("visitor", filter_visitor);
     }
     const queryString = urlParams.toString();
     const apiUrl = `${appConfig.url}/clinic/list/${page}?${queryString}`;

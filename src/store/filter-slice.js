@@ -10,6 +10,7 @@ const initState = {
   page: 1,
   permutations: "Dnew",
   visitor: "",
+  star:0
 };
 
 let departmentArr = [
@@ -94,6 +95,10 @@ const filterSlice = createSlice({
       state.permutations = value;
 
       // sessionStorage.setItem("permutations", value);
+    },
+    onStar(state,action){
+      let value = action.payload;
+      state.star=value
     },
     resetState(state, action) {
       state.searchText = "";

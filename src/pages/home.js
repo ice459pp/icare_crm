@@ -30,6 +30,7 @@ const Home = () => {
   const [permutations, setPermutations] = useState(filterSlice.permutations);
   const [department, setDepartment] = useState(filterSlice.department);
   const [visitor, setVisitor] = useState(filterSlice.visitor);
+  const [star, setStar] = useState(filterSlice.star);
   const [actionStatus, setActionStatus] = useState("");
   const headerRef = useRef(null);
   const divRef = useRef(null);
@@ -101,7 +102,7 @@ useEffect(() => {
     dispatch(filterAction.onPage(1));
   };
   const departmentHandler = (value) => {
-    console.log(value,"departmentHandler in home js")
+    // console.log(value,"departmentHandler in home js")
     dispatch(filterAction.onDepartment(value));
     dispatch(filterAction.onPage(1));
   };
@@ -110,8 +111,18 @@ useEffect(() => {
     headerRef.current.scrollIntoView({ block: "start" });
   };
   const visitorHandler=(value)=>{
+    // console.log(value,"visitor value")
+    // return
     dispatch(filterAction.onVisitor(value));
+    dispatch(filterAction.onPage(1));
     setVisitor(value)
+    
+  }
+  const starHandler=(value)=>{
+    setStar(value)
+    dispatch(filterAction.onStar(value));
+    dispatch(filterAction.onPage(1));
+    // console.log(value,"value star")
   }
   useEffect(() => {
     if (appSlice.isLogin) {
@@ -125,6 +136,9 @@ useEffect(() => {
         permutations,
         filterStatus,
         department,
+        visitor,
+        star,
+        
         (err, code) => {
           if (code === 601) {
             logoutHandler();
@@ -133,6 +147,7 @@ useEffect(() => {
           }
         },
         (list, total, totalPage) => {
+          console.log(list,"list in api data")
           setTotalCount(total);
           setTotalPage(totalPage);
           setClinicList(list);
@@ -150,6 +165,8 @@ useEffect(() => {
     permutations,
     filterStatus,
     department,
+    visitor,
+    star,
   ]);
   return (
     <Fragment>
@@ -162,6 +179,7 @@ useEffect(() => {
           onDepartmentChange={departmentHandler}
           onMutationHandler={mutationHandler}
           onVisitorChange={visitorHandler}
+          onStarChange={starHandler}
         />
       </div>
       <div className="w-100 padding-RWD mt-3">

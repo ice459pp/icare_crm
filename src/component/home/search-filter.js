@@ -172,7 +172,7 @@ const SearchFilter = (props) => {
   };
   const visitorHandler = (e) => {
     let value = e.target.value;
-    setSelectVisitor(value)
+    // setSelectVisitor(value)
 
     // setClinicStatus(value);
     // setIsSelect(true);
@@ -230,7 +230,7 @@ const SearchFilter = (props) => {
             <Form.Select
               aria-label="Default select example"
               onChange={(e) => visitorHandler(e)}
-              value={selectVisitor}
+              // value={selectVisitor}
             >
               <option value="">無</option>
               {visitorArr.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
@@ -262,7 +262,7 @@ const SearchFilter = (props) => {
             <Form.Select
               aria-label="Default select example"
               onChange={(e) => starChangeHandler(e)}
-              value={selectVisitor}
+              // value={selectVisitor}
             >
               <option value="">請選擇</option>
               {starArr.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
