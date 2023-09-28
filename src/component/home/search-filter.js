@@ -37,7 +37,13 @@ const SearchFilter = (props) => {
   const appSlice = useSelector((state) => state.appSlice);
   let filterSlice = useSelector((state) => state.filterSlice);
   let { clinic_status, department, city, district, searchText, visitor } = filterSlice;
-  // console.log(department, "department")
+  let department_selected={}
+  if (department.length>0) {
+    department_selected= department.reduce((obj, item) => {
+      obj[item] = true;
+      return obj;
+    }, {});
+  }
   let clinicNameRef = useRef(null);
   const [visitorArr, setVisitorArr] = useState([]);
 
@@ -50,9 +56,9 @@ const SearchFilter = (props) => {
   // const [keywordValue, setKeywordValue] = useState(false);
   const [selectAll, setSelectAll] = useState(true);
   const [departmentIsShow, setDepartmentIsShow] = useState(false);
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState(department_selected);
   const [selectVisitor, setSelectVisitor] = useState(visitor);
-
+  console.log(department, "department",selected,"selected")
   useEffect(() => {
     let departmentArr_length=departmentArr.length
 
