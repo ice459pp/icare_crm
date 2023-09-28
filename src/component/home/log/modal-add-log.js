@@ -214,7 +214,7 @@ console.log(log,"loggg",appSlice,"appSlice")
 
               <InputGroup className="mb-3">
                 <InputGroup.Text id="basic-addon2" className="input-label">星星:</InputGroup.Text>
-                <Form.Select onChange={(e) => starChangeHandler(e)} aria-label="Default select example">
+                <Form.Select value={star} onChange={(e) => starChangeHandler(e)} aria-label="Default select example">
                   {/* <option value='disabled' disabled selected>請選擇</option> */}
                   {starArr.map(s=><option key={s} value={s}>{s}</option>)}
                 </Form.Select>
