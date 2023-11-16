@@ -6,7 +6,7 @@ import jsonData from "../../twzipcode.json";
 import { filterAction } from "../../store/filter-slice";
 import { modalAction } from "../../store/modal-slice";
 import { useDispatch, useSelector } from "react-redux";
-import {apiUserList} from "../../api/api_userList"
+import { apiUserList } from "../../api/api_userList"
 // import {appSlice} from "../../api/"
 
 let departmentArr = [
@@ -29,7 +29,6 @@ let departmentArr = [
   "牙科",
   "中醫一般科"
 ];
-// let visitorArr = [{ id: "123", name: "Tom" }, { id: "333", name: "Jason" }, { id: "889", name: "QQA" }, { id: "qw3", name: "j6jj66j6" }]
 let starArr = [{ id: 1, name: 1 }, { id: 2, name: 2 }, { id: 3, name: 3 }, { id: 4, name: 4 }, { id: 5, name: 5 },]
 const SearchFilter = (props) => {
   let dispatch = useDispatch();
@@ -37,9 +36,9 @@ const SearchFilter = (props) => {
   const appSlice = useSelector((state) => state.appSlice);
   let filterSlice = useSelector((state) => state.filterSlice);
   let { clinic_status, department, city, district, searchText, visitor } = filterSlice;
-  let department_selected={}
-  if (department.length>0) {
-    department_selected= department.reduce((obj, item) => {
+  let department_selected = {}
+  if (department.length > 0) {
+    department_selected = department.reduce((obj, item) => {
       obj[item] = true;
       return obj;
     }, {});
@@ -58,13 +57,13 @@ const SearchFilter = (props) => {
   const [departmentIsShow, setDepartmentIsShow] = useState(false);
   const [selected, setSelected] = useState(department_selected);
   const [selectVisitor, setSelectVisitor] = useState(visitor);
-  console.log(department, "department",selected,"selected")
+  console.log(department, "department", selected, "selected")
   useEffect(() => {
-    let departmentArr_length=departmentArr.length
+    let departmentArr_length = departmentArr.length
 
-    if (department.length===departmentArr_length) {
+    if (department.length === departmentArr_length) {
       setSelectAll(false)
-    }else{
+    } else {
       setSelectAll(true)
     }
 
@@ -89,20 +88,20 @@ const SearchFilter = (props) => {
     setSelectedDistrict(district);
   }, [district]);
 
-  useEffect(()=>{
+  useEffect(() => {
     const token = appSlice.userToken;
-      apiUserList(
-        token,
-        (err) => {
-          alert(err);
-        },
-        (data) => {
-          // console.log(data,"data")
-          setVisitorArr(data)
-        }
-      );
-    
-  },[])
+    apiUserList(
+      token,
+      (err) => {
+        alert(err);
+      },
+      (data) => {
+        // console.log(data,"data")
+        setVisitorArr(data)
+      }
+    );
+
+  }, [])
   const clinicStatusHandler = (e) => {
     let value = e.target.value;
     props.onStatusChange(value);
@@ -184,7 +183,7 @@ const SearchFilter = (props) => {
     // setIsSelect(true);
     props.onVisitorChange(value);
   }
-  const starChangeHandler=(e)=>{
+  const starChangeHandler = (e) => {
     // 星星改變 抓星星的值
     let value = e.target.value;
     // setSelectVisitor(value)
@@ -236,7 +235,7 @@ const SearchFilter = (props) => {
             <Form.Select
               aria-label="Default select example"
               onChange={(e) => visitorHandler(e)}
-              // value={selectVisitor}
+            // value={selectVisitor}
             >
               <option value="">無</option>
               {visitorArr.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
@@ -268,7 +267,7 @@ const SearchFilter = (props) => {
             <Form.Select
               aria-label="Default select example"
               onChange={(e) => starChangeHandler(e)}
-              // value={selectVisitor}
+            // value={selectVisitor}
             >
               <option value="">請選擇</option>
               {starArr.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
