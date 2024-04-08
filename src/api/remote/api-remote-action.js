@@ -8,6 +8,7 @@ export const apiRemoteAction = async (
   type,
   number,
   pwd,
+  ip,
   onError = () => {}, 
   onComplete = () => {}
 ) => {
@@ -21,6 +22,7 @@ export const apiRemoteAction = async (
     formData.append("type", type)
     formData.append("number", number)
     formData.append("pwd", pwd)
+    formData.append("ip", ip)
 
     const response = await fetch(
       apiUrl, {

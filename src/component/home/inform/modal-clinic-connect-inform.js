@@ -6,11 +6,15 @@ import { apiRemoteAction } from "../../../api/remote/api-remote-action";
 const ClinicCorrectInformModal = (props) => {
   const appSlice = useSelector((state) => state.appSlice);
   let { typeList, remoteList, clinicId } = props;
+
   const [editItem, setEditItem] = useState(null);
+
   const [apiUpdate, setApiUpdate] = useState(false);
+
   const closeRemoteModalHandler = () => {
     setEditItem(null);
   };
+
   const remoteStatusHandler = (action, remote) => {
     setEditItem({
       remote: remote,
@@ -19,7 +23,9 @@ const ClinicCorrectInformModal = (props) => {
   };
 
   const confirmHandler = () => {
+
     if (!editItem.remote.device || !editItem.remote.number) {
+
       alert("請確認必填欄位")
       setApiUpdate(false);
       return;
@@ -37,10 +43,11 @@ const ClinicCorrectInformModal = (props) => {
       editItem.remote.id,
       clinicId,
       editItem.action,
-      editItem.remote.device,
-      editItem.remote.type="AnyDesk",
-      editItem.remote.number,
-      editItem.remote.pwd="",
+      editItem.remote.device ? editItem.remote.device : "",
+      editItem.remote.type ? editItem.remote.type : "AnyDesk",
+      editItem.remote.number ? editItem.remote.number : "",
+      editItem.remote.pwd ? editItem.remote.pwd : "",
+      editItem.remote.ip ? editItem.remote.ip : "",
       (err) => {
         alert(err);
       },
@@ -59,6 +66,7 @@ const ClinicCorrectInformModal = (props) => {
           <div className="fw-bolder text-dark mb-2 fs-5">暫無內容</div>
         ) : (
           remoteList.map((item) => (
+
             <div key={item.id} data-id={item.id} className="computer-item">
               <section>
                 <div className="item item-computerName">
@@ -76,6 +84,10 @@ const ClinicCorrectInformModal = (props) => {
                 <div className="item item-computerName">
                   <div className="item-title">密碼:</div>
                   <div className="item-content">{item.pwd || ""}</div>
+                </div>
+                <div className="item item-computerName">
+                  <div className="item-title">IP:</div>
+                  <div className="item-content">{item.ip || ""}</div>
                 </div>
               </section>
               <section className="item-btn">
@@ -129,13 +141,12 @@ const ClinicCorrectInformModal = (props) => {
               <Fragment>
                 <div className="basicInform" data-id={editItem.remote.id}>
                   <section className="title">
-                    <div className="w-25 ">
+                    <div className="inform-his-item ">
                       <label htmlFor="clinicName" className="form-label">
                         診所電腦:
                       </label>
                       <input
                         type="text"
-                        // className={`form-control ${!editItem.remote.device ? "bg-danger" : ""}`}
                         className="form-control"
                         id="clinicName"
                         placeholder="輸入名稱...(必填)"
@@ -145,13 +156,13 @@ const ClinicCorrectInformModal = (props) => {
                             ...editItem,
                             remote: {
                               ...editItem.remote,
-                              device: e.target.value,
+                              device: e.target.value.trim(),
                             },
                           });
                         }}
                       />
                     </div>
-                    <div className="w-25 ">
+                    <div className="inform-his-item ">
                       <label htmlFor="clinicTelephone" className="form-label">
                         連線ID:
                       </label>
@@ -166,13 +177,13 @@ const ClinicCorrectInformModal = (props) => {
                             ...editItem,
                             remote: {
                               ...editItem.remote,
-                              number: e.target.value,
+                              number: e.target.value.trim(),
                             },
                           });
                         }}
                       />
                     </div>
-                    <div className="w-25 ">
+                    <div className="inform-his-item ">
                       <label htmlFor="clinicName" className="form-label">
                         密碼:
                       </label>
@@ -187,7 +198,7 @@ const ClinicCorrectInformModal = (props) => {
                             ...editItem,
                             remote: {
                               ...editItem.remote,
-                              pwd: e.target.value,
+                              pwd: e.target.value.trim(),
                             },
                           });
                         }}
@@ -196,32 +207,52 @@ const ClinicCorrectInformModal = (props) => {
                   </section>
                   <section className="inform-his">
                     <div className="inform-his-item">
-                      <div className="w-100  ">
-                        <label htmlFor="HIS-system" className="form-label">
-                          連線類別:
-                        </label>
-                        <select
-                          id="HIS-system"
-                          className="form-select"
-                          aria-label="Default select example"
-                          defaultValue={"AnyDesk"}
-                          onChange={(e) => {
-                            setEditItem({
-                              ...editItem,
-                              remote: {
-                                ...editItem.remote,
-                                type: e.target.value,
-                              },
-                            });
-                          }}
-                        >
-                          {typeList.map((item) => (
-                            <option key={item.id} value={item.type}>
-                              {item.type}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                      <label htmlFor="HIS-system" className="form-label">
+                        連線類別:
+                      </label>
+                      <select
+                        id="HIS-system"
+                        className="form-select"
+                        aria-label="Default select example"
+                        onChange={(e) => {
+                          setEditItem({
+                            ...editItem,
+                            remote: {
+                              ...editItem.remote,
+                              type: e.target.value || "AnyDesk",
+                            },
+                          });
+                        }}
+                      >
+                        {typeList.map((item) => (
+                          <option key={item.id} value={item.type}>
+                            {item.type}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="inform-his-item ">
+                      <label htmlFor="clinicName" className="form-label">
+                        連線IP:
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="clinicName"
+                        placeholder="輸入IP...(必填)"
+                        defaultValue={editItem.remote.ip}
+                        onChange={(e) => {
+                          setEditItem({
+                            ...editItem,
+                            remote: {
+                              ...editItem.remote,
+                              ip: e.target.value.trim(),
+                            },
+                          });
+                        }}
+                      />
+                    </div>
+                    <div className="inform-his-item">
                     </div>
                   </section>
                   <div className="footer-button mt-2 w-100">

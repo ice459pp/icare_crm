@@ -10,7 +10,9 @@
   padding: 15px;
   border-radius: 10px;
   background: whitesmoke;
-
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
   .form-check {
     margin: 0;
   }
@@ -52,24 +54,25 @@
 
   section {
     display: flex;
+    gap: 1rem;
 
     @media (max-width: 576px) {
       flex-direction: column;
     }
 
     div {
-      &.w-25 {
-        padding-right: 1.5rem;
+      // &.w-25 {
+      //   // padding-right: 1.5rem;
 
-        @media (max-width: 996px) {
-          width: 100% !important;
-        }
+      //   @media (max-width: 996px) {
+      //     width: 100% !important;
+      //   }
 
-        @media (max-width: 576px) {
-          padding: 0;
-          margin-bottom: 0.5rem;
-        }
-      }
+      //   @media (max-width: 576px) {
+      //     padding: 0;
+      //     margin-bottom: 0.5rem;
+      //   }
+      // }
 
       label {
         @media (max-width: 576px) {
@@ -106,36 +109,42 @@
         }
       }
     }
-
-    &.inform-his {
-      display: flex;
-
-      .inform-his-item {
-        width: 50%;
-        display: flex;
-
-        @media (max-width: 996px) {
-          flex-direction: column;
-        }
-
-        @media (max-width: 576px) {
-          width: 100%;
-        }
-
-        div {
-          padding-right: 1.5rem;
-
-          @media (max-width: 996px) {
-            // padding-right: 0;
-            margin-bottom: 0.5rem;
-          }
-
-          @media (max-width: 576px) {
-            padding-right: 0;
-            margin-bottom: 0.5rem;
-          }
-        }
+    .inform-his-item {
+      width: 100%;
+      max-width: calc(100% / 3);
+      @media (max-width: 576px) {
+        max-width: none
       }
+    }
+    &.inform-his {
+      // display: flex;
+
+      // .inform-his-item {
+      //   width: 100%;
+      //   display: flex;
+      //   gap: 1rem;
+      //   @media (max-width: 996px) {
+      //     flex-direction: column;
+      //   }
+
+      //   @media (max-width: 576px) {
+      //     width: 100%;
+      //   }
+
+      //   div {
+      //     // padding-right: 1.5rem;
+
+      //     @media (max-width: 996px) {
+      //       // padding-right: 0;
+      //       margin-bottom: 0.5rem;
+      //     }
+
+      //     @media (max-width: 576px) {
+      //       padding-right: 0;
+      //       margin-bottom: 0.5rem;
+      //     }
+      //   }
+      // }
     }
 
     .inform-radio1 {
@@ -278,7 +287,6 @@
     .radio-custom {
       width: 50%;
       @media (max-width: 996px) {
-        
         width: 100%;
       }
     }
@@ -299,7 +307,8 @@
     }
     &.inputRadio-ClinicStatus {
       background-color: aliceblue;
-      box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+      box-shadow:
+        rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
         rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
       margin-top: 0.75rem;
     }
@@ -409,7 +418,7 @@ textarea {
           font-size: large;
           min-width: 200px;
         }
-        .table-button{
+        .table-button {
           margin-left: 1rem;
           @media (max-width: 996px) {
             margin: 0;
@@ -502,9 +511,12 @@ section {
     border-radius: 8px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     &:hover {
-      box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px,
-        rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px,
-        rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px,
+      box-shadow:
+        rgba(0, 0, 0, 0.07) 0px 1px 2px,
+        rgba(0, 0, 0, 0.07) 0px 2px 4px,
+        rgba(0, 0, 0, 0.07) 0px 4px 8px,
+        rgba(0, 0, 0, 0.07) 0px 8px 16px,
+        rgba(0, 0, 0, 0.07) 0px 16px 32px,
         rgba(0, 0, 0, 0.07) 0px 32px 64px;
     }
     @media (max-width: 576px) {
@@ -557,7 +569,7 @@ section {
           color: #7dd1f0 !important;
           padding: 2px 15px;
           @media (max-width: 576px) {
-           padding: 0;
+            padding: 0;
           }
         }
       }
@@ -593,7 +605,7 @@ section {
   @media (max-width: 576px) {
     flex-direction: column;
   }
-  .log_title_name{
+  .log_title_name {
     @media (max-width: 576px) {
       margin-bottom: 0.5rem;
       width: 100%;
@@ -613,7 +625,7 @@ section {
       width: 100%;
     }
     .form-control {
-      margin: 0 0 0 1rem ;
+      margin: 0 0 0 1rem;
       @media (max-width: 576px) {
         margin: 0 0.25rem 0 1rem;
         border-radius: 10px;
