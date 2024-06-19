@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useViewport } from "./useViewport";
 import Counts from "./pages/counts";
 import Service from "./pages/service";
+import Qanda from "./pages/qanda";
 import { scrollTopAction } from "./store/scrollTop-slice";
 import { useLayoutEffect } from "react";
 const NavbarWidth = {
@@ -117,6 +118,7 @@ function App() {
               <Route path="/counts" component={Counts} />
               <Route path="/service" component={Service} />
               <Route path="/approved" component={Approved} />
+              <Route path="/qanda" component={Qanda} />
               <Route path="/approved/:id" component={Approved} />
             </Switch>
           </div>
