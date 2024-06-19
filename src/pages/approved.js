@@ -4,6 +4,7 @@ import "../scss/approved.scss";
 import ApprovedItem from "../component/approved/approved-item";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
+import MyCKEditor from '../component/ckeditor/MyCKEditor';
 
 let arrayLog = [
   {
@@ -30,6 +31,11 @@ let arrayLog = [
 const Approved = () => {
   const navigate = useHistory();
   const appSlice = useSelector((state) => state.appSlice);
+
+  const handlerEditorChange = (value) => {
+    console.log(value)
+  }
+
   useEffect(() => {
     if (!appSlice.isLogin) {
       navigate.push("/login");
@@ -41,6 +47,9 @@ const Approved = () => {
       {arrayLog.map((item, index) => (
         <ApprovedItem item={item} key={item.id} index={index}></ApprovedItem>
       ))}
+
+      <h4>CKEditor Hello</h4>
+      <MyCKEditor onValueChange={handlerEditorChange} />
     </div>
   );
 };
