@@ -62,7 +62,15 @@ const Navbar = (props) => {
           <FontAwesomeIcon className="pe-2" icon="far fa-check-circle" />
           統計
         </NavLink>
-
+        <NavLink
+          activeClassName="btn-info text-white"
+          onClick={showMenuHandler}
+          className="btn btn-secondary text-white text-start w-100 mb-2 fw-bolder "
+          to="/Qanda"
+        >
+          <FontAwesomeIcon className="pe-2" icon="far fa-check-circle" />
+          Q&A
+        </NavLink>
         {appSlice.isLogin && (
           <NavLink
             activeClassName="btn-info text-white"
