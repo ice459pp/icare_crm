@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const MyCKEditor = (props) => {
+const CKEditor = (props) => {
     const editorRef = useRef(null);
 
     useEffect(() => {
@@ -8,11 +8,10 @@ const MyCKEditor = (props) => {
         const loadCKEditor = () => {
             if (window.CKEDITOR) {
                 const editor = window.CKEDITOR.replace(editorRef.current);
-                editor.on('change', () => {
+                editor.on('blur', () => {
                     const data = editor.getData();
                     props.onValueChange(data)
                 })
-                
             }
         };
 
@@ -27,11 +26,11 @@ const MyCKEditor = (props) => {
         }
 
         // 清理函数，以防止内存泄漏
-        return () => {
-            if (window.CKEDITOR) {
-                window.CKEDITOR.instances[editorRef.current.id] && window.CKEDITOR.instances[editorRef.current.id].destroy();
-            }
-        };
+        // return () => {
+        //     if (window.CKEDITOR) {
+        //         window.CKEDITOR.instances[editorRef.current.id] && window.CKEDITOR.instances[editorRef.current.id].destroy();
+        //     }
+        // };
     }, []);
 
     return (
@@ -39,4 +38,4 @@ const MyCKEditor = (props) => {
     );
 };
 
-export default MyCKEditor;
+export default CKEditor;
