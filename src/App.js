@@ -12,6 +12,7 @@ import { useViewport } from "./useViewport";
 import Counts from "./pages/counts";
 import Service from "./pages/service";
 import Qanda from "./pages/qanda";
+import QandaEdite from "./component/home/qanda-edit"
 import { scrollTopAction } from "./store/scrollTop-slice";
 import { useLayoutEffect } from "react";
 const NavbarWidth = {
@@ -115,6 +116,7 @@ function App() {
                 <Home></Home>{" "}
               </Route>
               <Route path="/clinic/:id" component={ClinicDetail} />
+              <Route path="/qaedit" component={QandaEdite} />
               <Route path="/counts" component={Counts} />
               <Route path="/service" component={Service} />
               <Route path="/approved" component={Approved} />
