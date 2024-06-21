@@ -57,7 +57,7 @@ const SearchFilter = (props) => {
   const [departmentIsShow, setDepartmentIsShow] = useState(false);
   const [selected, setSelected] = useState(department_selected);
   const [selectVisitor, setSelectVisitor] = useState(visitor);
-  console.log(department, "department", selected, "selected")
+  //console.log(department, "department", selected, "selected")
   useEffect(() => {
     let departmentArr_length = departmentArr.length
 
