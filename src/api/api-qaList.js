@@ -8,14 +8,6 @@ export const apiQaList = async (
     onError = () => {},
     onComplete = () => {}
 ) => {
-    const data2 = {
-        list:[
-            {
-                id:'1',
-                content:'abc'
-            }
-        ]
-    }
     try {
         const urlParams = new URLSearchParams();
         if (category){
