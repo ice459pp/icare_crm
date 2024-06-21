@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, {  useEffect, useRef } from 'react';
 
 const CKEditor = (props) => {
     const editorRef = useRef(null);
-
+    const { content } = props;
+    console.log(typeof content.content);
+ 
     useEffect(() => {
         // 在componentDidMount时加载CKEditor
         const loadCKEditor = () => {
@@ -34,7 +36,9 @@ const CKEditor = (props) => {
     }, []);
 
     return (
+
         <textarea ref={editorRef} id="editor1"></textarea>
+  
     );
 };
 
