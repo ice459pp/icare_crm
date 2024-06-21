@@ -74,7 +74,7 @@ const Qanda = () => {
             <div className="w-100 padding-RWD mt-3">
                 <h4 className="text-center fw-bolder "> Q & A </h4>
                 <div className="d-flex align-items-end tableSort mb-2">
-                    <button className="btn btn-outline-primary mt-3 reload_btn">新增</button>
+                    <button className="btn btn-outline-primary mt-3 reload_btn">新增Q & A </button>
                 </div>
                 <div>
                     <Tabs
@@ -88,22 +88,22 @@ const Qanda = () => {
                                     <tr className="bg-secondary text-white tr-only-hide">
                                         <th >標題</th>
                                         <th >修改時間</th>
-                                        <th> 是否啟用</th>
+                                        <th > 是否啟用</th>
                                         <th >編輯</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {qaList.map((item) => (
-                                        <tr>
+                                        <tr key={item.id}>
                                             <td>{item.title}</td>
                                             <td>{item.edittime}</td>
-                                            <td>
+                                            <td>                                          
                                                 { item.open === true && <Form>
                                                     <Form.Check // prettier-ignore
                                                         type="switch"
                                                         id="custom-switch"
                                                         label="啟用"
-                                                        checked
+                                                        defaultChecked
                                                     />
                                                 </Form>}
                                                 { item.open === false && <Form>
@@ -113,13 +113,14 @@ const Qanda = () => {
                                                         label="未啟用"
                                                     />
                                                 </Form>}
+                                               
                                             </td>
                                             <td>
                                                 <Button
                                                     onClick={qandaEditHandler}
                                                     className="btn-sm w-100 text-light"
                                                 >
-                                                編輯內文
+                                                編輯
                                                 </Button>
                                             </td>
                                         </tr>))
