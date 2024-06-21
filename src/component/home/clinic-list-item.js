@@ -20,6 +20,7 @@ const phoneFixHandler = (item) => {
 };
 const ClinicListItem = (props) => {
   let { item } = props;
+  //console.log(item)
   const appSlice = useSelector((state) => state.appSlice);
   const scrollTopSlice = useSelector((state) => state.scrollTopSlice);
   const navigate = useHistory();
