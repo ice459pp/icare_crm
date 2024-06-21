@@ -1,18 +1,41 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-//import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { InputGroup, Form, Tab, Tabs, Table, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { apiQaList } from "../api/api-qaList";
 
 const Qanda = () => {
+    const appSlice = useSelector((state) => state.appSlice);
     const navigate = useHistory();
-    //const dispatch = useDispatch();
-    //const [ qaList, setQaList] = useState([]);
-    //const { qaList } = useSelector((state) => state.qaSlice);
+    const [qaList, setQaList] = useState([]);
+    const [category, setcategory] = useState('');
+    const [keyword, setkeyword] = useState('');
+    useEffect(() => {
+        if (appSlice.isLogin) {
+            const token = appSlice.userToken;
+            apiQaList(
+                token,
+                category,
+                keyword,
+                "0",
+                (err) => {
+                    console.log("err: " + err)
+                },
+                (data) => {
+                    console.log("response: " + data)
+                    setQaList(data)
+                }
+            )
+        }
+    }, [
+        appSlice.isLogin
+    ])
 
     const qandaEditHandler = () => {
         navigate.push(`/qaedit`);
     }
+
     return (
         <Fragment>
             <form className="p-3 search m-3">
@@ -70,27 +93,37 @@ const Qanda = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td >1</td>
-                                        <td>Mark</td>
-                                        <td>
-                                            <Form>
-                                                <Form.Check // prettier-ignore
-                                                    type="switch"
-                                                    id="custom-switch"
-                                                    label=""
-                                                />
-                                            </Form>
-                                        </td>
-                                        <td>
-                                        <Button
-                                                onClick={qandaEditHandler}
-                                                className="btn-sm w-100 text-light"
-                                            >
-                                                查看內文
-                                            </Button>
-                                        </td>
-                                    </tr>
+                                    {qaList.map((item) => (
+                                        <tr>
+                                            <td>{item.title}</td>
+                                            <td>{item.edittime}</td>
+                                            <td>
+                                                { item.open === true && <Form>
+                                                    <Form.Check // prettier-ignore
+                                                        type="switch"
+                                                        id="custom-switch"
+                                                        label="啟用"
+                                                        checked
+                                                    />
+                                                </Form>}
+                                                { item.open === false && <Form>
+                                                    <Form.Check // prettier-ignore
+                                                        type="switch"
+                                                        id="custom-switch"
+                                                        label="未啟用"
+                                                    />
+                                                </Form>}
+                                            </td>
+                                            <td>
+                                                <Button
+                                                    onClick={qandaEditHandler}
+                                                    className="btn-sm w-100 text-light"
+                                                >
+                                                編輯內文
+                                                </Button>
+                                            </td>
+                                        </tr>))
+                                    }
                                 </tbody>
                             </Table>
                         </Tab>
@@ -106,7 +139,11 @@ const Qanda = () => {
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>1</td>
+                                        <td>
+                                            {/* {qaList.map((item) => (
+                                                <div>{item}</div>
+                                            ))} */}
+                                        </td>
                                         <td>Mark</td>
                                         <td>Otto</td>
                                         <td>
@@ -121,7 +158,7 @@ const Qanda = () => {
                                 </tbody>
                             </Table>
                         </Tab>
-                        <Tab eventKey="inactive" title="未啟用" disabled>
+                        <Tab eventKey="inactive" title="未啟用" >
                             未啟用
                         </Tab>
                     </Tabs>
