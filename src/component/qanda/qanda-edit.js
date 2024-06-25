@@ -1,9 +1,10 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { apiQaEdit } from "../../api/api-qa-info";
-import { apiQaUpdate } from "../../api/api-qa-edit"
+import { apiQaUpdate } from "../../api/api-qa-edit";
+import { scrollTopAction } from "../../store/scrollTop-slice";
 import CKEditor from "./CKEditor";
 
 let qaData = {
@@ -16,10 +17,11 @@ let qaData = {
 }
 
 const QandaEdit = () => {
+    let dispatch=useDispatch();
     const appSlice = useSelector((state) => state.appSlice);
     const navigate = useHistory();
-    //const params = useParams();
-    const id = 1;
+    const params = useParams();
+    const id = params.id;
     const [qaInfo, setQaInfo] = useState(qaData);
     const [apiUpdate, setApiUpdate] = useState(false);
     const [title, setTitle] = useState(qaData.title);

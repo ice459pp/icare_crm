@@ -116,7 +116,7 @@ function App() {
                 <Home></Home>{" "}
               </Route>
               <Route path="/clinic/:id" component={ClinicDetail} />
-              <Route path="/qaedit" component={QandaEdit} />
+              <Route path="/qaedit/:id" component={QandaEdit} />
               <Route path="/counts" component={Counts} />
               <Route path="/service" component={Service} />
               <Route path="/approved" component={Approved} />

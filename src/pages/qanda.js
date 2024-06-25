@@ -31,8 +31,8 @@ const Qanda = () => {
         appSlice.isLogin
     ])
 
-    const qandaEditHandler = () => {
-        navigate.push(`/qaedit`);
+    const qandaEditHandler = (item) => {
+        navigate.push(`/qaedit/${item.id}`);
     }
 
     return (
@@ -68,7 +68,7 @@ const Qanda = () => {
                                     <tr className="bg-secondary text-white tr-only-hide">
                                         <th >標題</th>
                                         <th >修改時間</th>
-                                        <th > 是否啟用</th>
+                                        <th >是否啟用</th>
                                         <th >編輯</th>
                                     </tr>
                                 </thead>
@@ -97,7 +97,7 @@ const Qanda = () => {
                                             </td>
                                             <td>
                                                 <Button
-                                                    onClick={qandaEditHandler}
+                                                    onClick={()=>qandaEditHandler(item)}
                                                     className="btn-sm w-100 text-light"
                                                 >
                                                 編輯
