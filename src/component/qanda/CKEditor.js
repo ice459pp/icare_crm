@@ -3,7 +3,7 @@ import React, {  useEffect, useRef } from 'react';
 const CKEditor = (props) => {
     const editorRef = useRef(null);
     const { content } = props;
-    console.log(typeof content.content);
+    console.log('ckEditor popout', content)
  
     useEffect(() => {
         // 在componentDidMount时加载CKEditor
@@ -37,7 +37,7 @@ const CKEditor = (props) => {
 
     return (
 
-        <textarea ref={editorRef} id="editor1"></textarea>
+        <textarea ref={editorRef} id="editor1" defaultValue={content}></textarea>
   
     );
 };
