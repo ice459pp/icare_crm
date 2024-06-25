@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { InputGroup, Form, Tab, Tabs, Table, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { apiQaList } from "../api/api-qaList";
+import { Form, Tab, Tabs, Table, Button } from "react-bootstrap";
+import  QaFilter  from "../component/qanda/qa-filter"
+import { apiQaList } from "../api/api-qa-list";
 
 const Qanda = () => {
     const appSlice = useSelector((state) => state.appSlice);
@@ -23,7 +23,6 @@ const Qanda = () => {
                     console.log("err: " + err)
                 },
                 (data) => {
-                    console.log("response: " + data)
                     setQaList(data)
                 }
             )
@@ -49,26 +48,7 @@ const Qanda = () => {
                             <option value="3">Three</option>
                         </Form.Select>
                     </div>
-                    <div className="d-flex align-items-end visitorSelect">
-                        <InputGroup className="input-group-textSearch" size="">
-                            <Form.Control
-                                placeholder="標題搜尋"
-                                aria-label="Recipient's username"
-                                aria-describedby="basic-addon2"
-                            // defaultValue={sessionStorage.getItem("searchText")}
-                            // ref={clinicNameRef}
-                            // onKeyPress={handleInputKeyPress}
-                            />
-                            <button
-                                className="btn btn-secondary"
-                                type="button"
-                                id="button-addon2"
-                            //onClick={searchTextHandler}
-                            >
-                                <FontAwesomeIcon icon="fas fa-search" />
-                            </button>
-                        </InputGroup>
-                    </div>
+                    <QaFilter/>
                 </div>
             </form>
             <div className="w-100 padding-RWD mt-3">
@@ -131,31 +111,14 @@ const Qanda = () => {
                         <Tab eventKey="active" title="已啟用">
                             <Table striped bordered hover>
                                 <thead>
-                                    <tr className="bg-secondary text-white tr-only-hide">
-                                        <th>#</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Username</th>
+                                <tr className="bg-secondary text-white tr-only-hide">
+                                        <th >標題</th>
+                                        <th >修改時間</th>
+                                        <th > 是否啟用</th>
+                                        <th >編輯</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            {/* {qaList.map((item) => (
-                                                <div>{item}</div>
-                                            ))} */}
-                                        </td>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>
-                                            <Button
-                                                onClick={qandaEditHandler}
-                                                className="btn-sm w-100 text-light"
-                                            >
-                                                查看紀錄
-                                            </Button>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </Table>
                         </Tab>
