@@ -23,7 +23,7 @@ export const apiQaList = async (
         }
         const queryString = urlParams.toString();
         const apiUrl = `${appConfig.url}/qa/list?${queryString}`;
-        console.log("url : " + apiUrl);
+        //console.log("url : " + apiUrl);
         const response = await fetch (apiUrl, {
             method: "GET",
             headers: {
@@ -36,7 +36,7 @@ export const apiQaList = async (
         }
         if (json.status) {
             const data = json.data;
-            console.log(data)
+            //console.log(data)
             onComplete(data);
         }
     }catch (error) {
