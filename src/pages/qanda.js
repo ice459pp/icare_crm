@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Form, Tab, Tabs, Table, Button } from "react-bootstrap";
-import  QaFilter  from "../component/qanda/qa-filter"
+import QaFilter from "../component/qanda/qa-filter";
 import { apiQaList } from "../api/api-qa-list";
 
 const Qanda = () => {
@@ -11,6 +11,8 @@ const Qanda = () => {
     const [qaList, setQaList] = useState([]);
     const [category, setcategory] = useState('');
     const [keyword, setkeyword] = useState('');
+    const [key, setKey] = useState('open');
+
     useEffect(() => {
         if (appSlice.isLogin) {
             const token = appSlice.userToken;
@@ -24,6 +26,7 @@ const Qanda = () => {
                 },
                 (data) => {
                     setQaList(data)
+                    console.log(qaList)
                 }
             )
         }
@@ -33,7 +36,37 @@ const Qanda = () => {
 
     const qandaEditHandler = (item) => {
         navigate.push(`/qaedit/${item.id}`);
-    }
+    };
+
+    const renderTableRows = (filterItems) => (
+        filterItems.map((item) => (
+            <tr key={item.id}>
+                <td>{item.title}</td>
+                <td>{item.edittime}</td>
+                <td>
+                    <Form>
+                        <Form.Check
+                            type="switch"
+                            id={`custom-switch-${item.id}`}
+                            label={item.open ? "啟用" : "未啟用"}
+                            defaultChecked={item.open}
+                        />
+                    </Form>
+                </td>
+                <td>
+                    <Button
+                        onClick={() => qandaEditHandler(item)}
+                        className="btn-sm w-100 text-light"
+                    >
+                        編輯
+                    </Button>
+                </td>
+            </tr>
+        ))
+    );
+
+    const openItems = qaList.filter(item => item.open);
+    const closedItems = qaList.filter(item => !item.open);
 
     return (
         <Fragment>
@@ -48,7 +81,7 @@ const Qanda = () => {
                             <option value="3">Three</option>
                         </Form.Select>
                     </div>
-                    <QaFilter/>
+                    <QaFilter />
                 </div>
             </form>
             <div className="w-100 padding-RWD mt-3">
@@ -58,72 +91,55 @@ const Qanda = () => {
                 </div>
                 <div>
                     <Tabs
-                        defaultActiveKey="all"
-                        id="uncontrolled-tab-example"
+                        id="controlled-tab-example"
+                        activeKey={key}
+                        onSelect={(k) => setKey(k)}
                         className="mb-3"
                     >
                         <Tab eventKey="all" title="全部">
                             <Table striped bordered hover>
                                 <thead>
-                                    <tr className="bg-secondary text-white tr-only-hide">
-                                        <th >標題</th>
-                                        <th >修改時間</th>
-                                        <th >是否啟用</th>
-                                        <th >編輯</th>
+                                    <tr>
+                                        <th>標題</th>
+                                        <th>編輯時間</th>
+                                        <th>狀態</th>
+                                        <th>操作</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {qaList.map((item) => (
-                                        <tr key={item.id}>
-                                            <td>{item.title}</td>
-                                            <td>{item.edittime}</td>
-                                            <td>                                          
-                                                { item.open === true && <Form>
-                                                    <Form.Check // prettier-ignore
-                                                        type="switch"
-                                                        id="custom-switch"
-                                                        label="啟用"
-                                                        defaultChecked
-                                                    />
-                                                </Form>}
-                                                { item.open === false && <Form>
-                                                    <Form.Check // prettier-ignore
-                                                        type="switch"
-                                                        id="custom-switch"
-                                                        label="未啟用"
-                                                    />
-                                                </Form>}
-                                               
-                                            </td>
-                                            <td>
-                                                <Button
-                                                    onClick={()=>qandaEditHandler(item)}
-                                                    className="btn-sm w-100 text-light"
-                                                >
-                                                編輯
-                                                </Button>
-                                            </td>
-                                        </tr>))
-                                    }
+                                    {renderTableRows(qaList)}
                                 </tbody>
                             </Table>
                         </Tab>
-                        <Tab eventKey="active" title="已啟用">
+                        <Tab eventKey="open" title="啟用">
                             <Table striped bordered hover>
                                 <thead>
-                                <tr className="bg-secondary text-white tr-only-hide">
-                                        <th >標題</th>
-                                        <th >修改時間</th>
-                                        <th > 是否啟用</th>
-                                        <th >編輯</th>
+                                    <tr>
+                                        <th>標題</th>
+                                        <th>編輯時間</th>
+                                        <th>是否啟用</th>
+                                        <th>編輯</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {renderTableRows(openItems)}
                                 </tbody>
                             </Table>
                         </Tab>
-                        <Tab eventKey="inactive" title="未啟用" >
-                            未啟用
+                        <Tab eventKey="closed" title="未啟用">
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                        <th>標題</th>
+                                        <th>編輯時間</th>
+                                        <th>是否啟用</th>
+                                        <th>編輯</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {renderTableRows(closedItems)}
+                                </tbody>
+                            </Table>
                         </Tab>
                     </Tabs>
                 </div>
