@@ -9,6 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
 	config.extraPlugins = 'richcombo';
 	config.extraPlugins = 'letterspacing';
+	config.removePlugins = 'exportpdf';
   // config.line_height="1em;1.1em;1.2em;1.3em;1.4em;1.5em";
 	// config.extraPlugins = "lineheight"
 	// config.toolbarGroups = [
