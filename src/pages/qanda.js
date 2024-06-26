@@ -1,17 +1,25 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Form, Tab, Tabs, Table, Button } from "react-bootstrap";
 import QaFilter from "../component/qanda/qa-filter";
+import { qaFilterAction } from "../store/qa-filter-slice";
 import { apiQaList } from "../api/api-qa-list";
 
 const Qanda = () => {
+    const dispatch = useDispatch();
     const appSlice = useSelector((state) => state.appSlice);
     const navigate = useHistory();
+    const qaFilterSlice = useSelector((state) => state.filterSlice);
     const [qaList, setQaList] = useState([]);
+    const [keyword, setKeyword] = useState(qaFilterSlice.searchText);
     const [category, setcategory] = useState('');
-    const [keyword, setkeyword] = useState('');
-    const [key, setKey] = useState('open');
+    const [key, setKey] = useState('all');
+
+    const searchTextHandler = (value) => {
+        dispatch(qaFilterAction.onSearchText(value));
+        setKeyword(value);
+    };
 
     useEffect(() => {
         if (appSlice.isLogin) {
@@ -26,12 +34,11 @@ const Qanda = () => {
                 },
                 (data) => {
                     setQaList(data)
-                    console.log(qaList)
                 }
             )
         }
     }, [
-        appSlice.isLogin
+        appSlice.isLogin, category, keyword
     ])
 
     const qandaEditHandler = (item) => {
@@ -81,7 +88,9 @@ const Qanda = () => {
                             <option value="3">Three</option>
                         </Form.Select>
                     </div>
-                    <QaFilter />
+                    <QaFilter
+                        onSearchText={searchTextHandler}
+                    />
                 </div>
             </form>
             <div className="w-100 padding-RWD mt-3">
