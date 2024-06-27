@@ -41,6 +41,10 @@ const Qanda = () => {
         appSlice.isLogin, category, keyword
     ])
 
+    const qandaAddHandler = () => {
+        navigate.push(`/qaadd`)
+    };
+
     const qandaEditHandler = (item) => {
         navigate.push(`/qaedit/${item.id}`);
     };
@@ -96,7 +100,7 @@ const Qanda = () => {
             <div className="w-100 padding-RWD mt-3">
                 <h4 className="text-center fw-bolder "> Q & A </h4>
                 <div className="d-flex align-items-end tableSort mb-2">
-                    <button className="btn btn-outline-primary mt-3 reload_btn">新增Q & A </button>
+                    <button className="btn btn-outline-primary mt-3 reload_btn" onClick={qandaAddHandler}>新增Q & A </button>
                 </div>
                 <div>
                     <Tabs
