@@ -8,7 +8,7 @@ const CKEditor = (props) => {
         const loadCKEditor = () => {
             if (window.CKEDITOR) {
                 const editor = window.CKEDITOR.replace(editorRef.current);
-                editor.on('blur', () => {
+                editor.on('change', () => {
                     const data = editor.getData();
                     props.onValueChange(data);
                 });
