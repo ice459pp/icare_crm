@@ -1,10 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { apiQaEdit } from "../../api/api-qa-info";
 import { apiQaUpdate } from "../../api/api-qa-edit";
-import { scrollTopAction } from "../../store/scrollTop-slice";
 import CKEditor from "./CKEditor";
 
 let qaData = {
@@ -17,28 +16,18 @@ let qaData = {
 }
 
 const QandaEdit = () => {
-    let dispatch=useDispatch();
-    const appSlice = useSelector((state) => state.appSlice);
     const navigate = useHistory();
     const params = useParams();
     const id = params.id;
+    const appSlice = useSelector((state) => state.appSlice);
     const [qaInfo, setQaInfo] = useState(qaData);
     const [apiUpdate, setApiUpdate] = useState(false);
     const [title, setTitle] = useState(qaData.title);
     const [content, setContent] = useState(qaData.content);
     const [edittime, setEdittime] = useState(qaData.edittime);
     const [open, setOpen] = useState();
-    
-    console.log('QaEdit', title, content, edittime ) //SUCCESS
 
-    const handlerEditorChange = (value) => {
-        console.log(value);
-        setContent(value);
-    };
-
-    const closeHandler = () => {
-        navigate.push(`/qanda`);
-    };
+    //console.log('QaEdit', title, content, edittime )
 
     // GET API-Info
     useEffect(() => {
@@ -62,6 +51,7 @@ const QandaEdit = () => {
     useEffect(() => {
         if (apiUpdate) {
             const token = appSlice.userToken;
+            console.log({ id, title, content, edittime, open })
             apiQaUpdate(
                 token,
                 id,
@@ -69,10 +59,10 @@ const QandaEdit = () => {
                 content,
                 edittime,
                 open,
-                (err) =>{
+                (err) => {
                     alert(err);
                 },
-                () =>{
+                () => {
                     setApiUpdate(false);
                     navigate.push('/qanda')
                 }
@@ -84,6 +74,15 @@ const QandaEdit = () => {
         const newDate = new Date();
         setEdittime(newDate);
         setApiUpdate(true)
+    };
+
+    const handlerEditorChange = (value) => {
+        console.log(value);
+        setContent(value);
+    };
+
+    const closeHandler = () => {
+        navigate.push(`/qanda`);
     };
 
     return (
