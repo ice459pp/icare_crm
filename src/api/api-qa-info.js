@@ -1,6 +1,6 @@
 import appConfig from "../app-config.json";
 
-export const apiQaEdit = async (
+export const apiQaInfo = async (
     token = "",
     id ="",
     onError =  () => {},

@@ -44,7 +44,7 @@ const CKEditor = (props) => {
                 instance.setData(content);
             }
         }
-    }, [content]);
+    }, []);
 
     return (
         <textarea ref={editorRef} id="editor1"></textarea>

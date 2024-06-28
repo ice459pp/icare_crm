@@ -2,30 +2,25 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { apiQaEdit } from "../../api/api-qa-info";
+import { apiQaInfo } from "../../api/api-qa-info";
 import { apiQaUpdate } from "../../api/api-qa-edit";
 import CKEditor from "./CKEditor";
 
-let qaData = {
-    id: "",
-    title: "",
-    content: "",
-    click: "",
-    edittime: "",
-    open: ""
-}
 
 const QandaEdit = () => {
     const navigate = useHistory();
     const params = useParams();
     const id = params.id;
     const appSlice = useSelector((state) => state.appSlice);
-    const [qaInfo, setQaInfo] = useState(qaData);
     const [apiUpdate, setApiUpdate] = useState(false);
-    const [title, setTitle] = useState(qaData.title);
-    const [content, setContent] = useState(qaData.content);
-    const [edittime, setEdittime] = useState(qaData.edittime);
+    // qaData.title
+    const [title, setTitle] = useState("");
+    // qaData.content
+    const [content, setContent] = useState("");
+    // qaData.edittime
+    const [edittime, setEdittime] = useState("");
     const [open, setOpen] = useState();
+    const [showCKEditor, setShowCKEditor] = useState(false);
 
     //console.log('QaEdit', title, content, edittime )
 
@@ -33,15 +28,18 @@ const QandaEdit = () => {
     useEffect(() => {
         if (appSlice.isLogin) {
             const token = appSlice.userToken;
-            apiQaEdit(
+            apiQaInfo(
                 token,
                 id,
                 (err) => {
                     console.log("err: " + err)
                 },
                 (data) => {
-                    console.log("response: " + data)
-                    setQaInfo(data)
+                    console.log(data)
+                    setTitle(data.title)
+                    setContent(data.content)
+                    setEdittime(data.edittime)
+                    setShowCKEditor(true)
                 }
             )
         }
@@ -77,7 +75,6 @@ const QandaEdit = () => {
     };
 
     const handlerEditorChange = (value) => {
-        console.log(value);
         setContent(value);
     };
 
@@ -97,7 +94,7 @@ const QandaEdit = () => {
                     <div className="w-50">
                         <InputGroup >
                             <Form.Control
-                                defaultValue={qaInfo.title}
+                                defaultValue={title}
                                 aria-label="Title"
                                 aria-describedby="basic-addon1"
                                 onChange={(e) => {
@@ -107,9 +104,12 @@ const QandaEdit = () => {
                         </InputGroup>
                     </div>
                 </div>
-                <div className="p-3">
-                    <CKEditor onValueChange={handlerEditorChange} content={qaInfo.content} />
-                </div>
+
+                {showCKEditor && (
+                    <div className="p-3">
+                        <CKEditor onValueChange={handlerEditorChange} content={content} />
+                    </div>
+                )}
             </div>
         </Fragment>
     )
