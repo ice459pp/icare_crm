@@ -5,8 +5,7 @@ export const apiQaUpdate = async (
     id,
     title,
     content,
-    click,
-    edittime,
+    category,
     open,
     onError = () => {},
     onComplete = () => {}
@@ -17,8 +16,7 @@ export const apiQaUpdate = async (
         formData.append("id", id)
         formData.append("title", title)
         formData.append("content", content)
-        formData.append("click", click)
-        formData.append("edittime", edittime)
+        formData.append("category", category)
         formData.append("open", open)
 
         const response = await fetch(
@@ -30,7 +28,7 @@ export const apiQaUpdate = async (
             }
           })
 
-        const json = await Response.json()
+        const json = await response.json()
         if (!response.ok) {
             throw new Error("Error Occur")
           }
