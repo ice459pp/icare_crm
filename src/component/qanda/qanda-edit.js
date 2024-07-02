@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Form, InputGroup, Row, Col } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { apiQaInfo } from "../../api/api-qa-info";
@@ -76,6 +76,10 @@ const QandaEdit = () => {
         setContent(value);
     };
 
+    const fileUploadHandler = () => {
+        console.log('ok')
+    };
+
     const closeHandler = () => {
         navigate.push(`/qanda`);
     };
@@ -87,13 +91,13 @@ const QandaEdit = () => {
                 <Button className="btn btn-lg  m-3" variant="secondary"  onClick={closeHandler}>取消</Button>
             </div>
             <div className="search m-3">
-                <div className="m-3 search-clinicStatus ">
-                    <div className=" w-50  d-flex  align-items-center ">
-                        <label className="">
+                <Row className="m-3 search-clinicStatus ">
+                    <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0 px-0">
+                        <label className="me-2">
                             <span className="name">標題</span>
                             <span className="bit">:</span>
                         </label>
-                        <InputGroup >
+                        <InputGroup className="" >
                             <Form.Control
                                 defaultValue={title}
                                 aria-label="Title"
@@ -103,23 +107,23 @@ const QandaEdit = () => {
                                 }}
                             />
                         </InputGroup>
-                    </div>
-                    <div className="switch  w-50 d-flex  align-items-center justify-content-center ">
-                        <label className=" d-flex align-items-center ">
+                    </Col>
+                    <Col  xs={12} md={6} className="d-flex align-items-center justify-content-md-end px-md-5">
+                        <label className="me-2 d-flex align-items-center">
                             <span className="name">是否啟用</span>
                             <span className="bit">:</span>
                         </label>
                         <Form.Check
-                            type="switch"
+                        type="switch"
                         id={`custom-switch-${id}`}                       
                         checked={open}
                         onChange={(e) => setOpen(e.target.checked)}
                         />
-                    </div>
-                </div>
+                    </Col>
+                </Row>
                 <div className="m-3 search-clinicStatus ">
-                    <div className="title w-50  d-flex  align-items-center ">
-                        <label className="">
+                    <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0">
+                        <label className="me-2">
                             <span className="name">分類</span>
                             <span className="bit">:</span>
                         </label>
@@ -131,7 +135,10 @@ const QandaEdit = () => {
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                         </Form.Select>
-                    </div>
+                    </Col>
+                    <Col xs={12} md={6} className="d-flex align-items-center justify-content-md-end px-md-5">
+                    <button className="btn btn-outline-warning" onClick={fileUploadHandler}>照片上傳</button>
+                    </Col>
                 </div>
                 
                 {showCKEditor && (
