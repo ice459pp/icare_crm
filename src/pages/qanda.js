@@ -6,6 +6,7 @@ import QaFilter from "../component/qanda/qa-filter";
 import { qaFilterAction } from "../store/qa-filter-slice";
 import { apiQaList } from "../api/api-qa-list";
 import { apiQaUpdate } from "../api/api-qa-edit";
+import { apiQaDelete } from "../api/api-qa-delete";
 
 const Qanda = () => {
     const dispatch = useDispatch();
@@ -91,8 +92,19 @@ const Qanda = () => {
         navigate.push(`/qaedit/${item.id}`);
     };
 
-    const qandaDeleteHandler = () =>{
-
+    // Delete Item
+    const qandaDeleteHandler = (id) =>{
+        const token = appSlice.userToken;
+        apiQaDelete(
+            token,
+            id,
+            (err) => {
+                alert(err);
+            },
+            () => {
+                fetchQaList();
+            }
+        );
     };
 
     const renderTableRows = (filterItems) => (
@@ -124,7 +136,7 @@ const Qanda = () => {
                     <Button
                         className="btn-sm btn-dark w-100 text-light"
                         variant="secondary"
-                        onClick={() => qandaDeleteHandler(item)}
+                        onClick={() => qandaDeleteHandler(item.id)}
                     >
                         刪除
                     </Button>
@@ -157,7 +169,7 @@ const Qanda = () => {
             <div className="w-100 padding-RWD mt-3">
                 <h4 className="text-center fw-bolder "> Q & A </h4>
                 <div className="d-flex align-items-end tableSort mb-2">
-                    <button className="btn btn-outline-warning mt-3 reload_btn" onClick={qandaAddHandler}>新增Q & A </button>
+                    <button className="btn btn-outline-warning  reload_btn" onClick={qandaAddHandler}>新增Q & A </button>
                 </div>
                 <div>
                     <Tabs
@@ -168,7 +180,7 @@ const Qanda = () => {
                     >
                         <Tab eventKey="all" title="全部">
                             <Table striped bordered hover>
-                                <thead>
+                                <thead className="d-none d-sm-table-header-group">
                                     <tr>
                                         <th>標題</th>
                                         <th>編輯時間</th>
@@ -184,7 +196,7 @@ const Qanda = () => {
                         </Tab>
                         <Tab eventKey="open" title="啟用">
                             <Table striped bordered hover>
-                                <thead>
+                                <thead className="d-none d-sm-table-header-group">
                                     <tr>
                                         <th>標題</th>
                                         <th>編輯時間</th>
@@ -200,7 +212,7 @@ const Qanda = () => {
                         </Tab>
                         <Tab eventKey="closed" title="未啟用">
                             <Table striped bordered hover>
-                                <thead>
+                                <thead className="d-none d-sm-table-header-group">
                                     <tr>
                                         <th>標題</th>
                                         <th>編輯時間</th>
