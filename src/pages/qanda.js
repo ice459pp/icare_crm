@@ -10,8 +10,8 @@ import { apiQaDelete } from "../api/api-qa-delete";
 
 const Qanda = () => {
     const dispatch = useDispatch();
-    const appSlice = useSelector((state) => state.appSlice);
     const navigate = useHistory();
+    const appSlice = useSelector((state) => state.appSlice);
     const qaFilterSlice = useSelector((state) => state.filterSlice);
     const [qaList, setQaList] = useState([]);
     const [switchChange, setSwitchChange] = useState(null);
@@ -22,6 +22,12 @@ const Qanda = () => {
     const searchTextHandler = (value) => {
         dispatch(qaFilterAction.onSearchText(value));
         setKeyword(value);
+    };
+
+    const categoryHandler = (value) =>{
+        dispatch(qaFilterAction.onCategory(value));
+        console.log(value) //1
+        setCategory(value);
     };
 
     const fetchQaList = () => {
@@ -110,9 +116,10 @@ const Qanda = () => {
     const renderTableRows = (filterItems) => (
         filterItems.map((item) => (
             <tr key={item.id}>
-                <td>{item.title}</td>
-                <td>{item.edittime}</td>
-                <td>
+                <td data-th="標題:" className="data-th">{item.title}</td>
+                <td data-th="分類:">{item.category}</td>
+                <td data-th="編輯時間:">{item.edittime}</td>
+                <td  data-th="是否啟用:">
                     <Form>
                         <Form.Check
                             type="switch"
@@ -150,22 +157,13 @@ const Qanda = () => {
 
     return (
         <Fragment>
-            <form className="p-3 search m-3">
-                <div className="d-flex align-items-center search-clinicStatus ">
-                    {/* <div className="clinicStatus">
-                        <label className="">分類:</label>
-                        <Form.Select aria-label="Default select example">
-                            <option>Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </Form.Select>
-                    </div> */}
+                <div className="w-100 mt-3 padding-RWD">
                     <QaFilter
+                        onCategoryChange={categoryHandler}
                         onSearchText={searchTextHandler}
                     />
                 </div>
-            </form>
+
             <div className="w-100 padding-RWD mt-3">
                 <h4 className="text-center fw-bolder "> Q & A </h4>
                 <div className="d-flex align-items-end tableSort mb-2">
@@ -179,10 +177,11 @@ const Qanda = () => {
                         className="mb-3"
                     >
                         <Tab eventKey="all" title="全部">
-                            <Table striped bordered hover>
-                                <thead className="d-none d-sm-table-header-group">
-                                    <tr>
+                            <Table striped bordered hover className="table-rwd">
+                                <thead>
+                                    <tr className="bg-secondary text-white tr-only-hide">
                                         <th>標題</th>
+                                        <th>分類</th>
                                         <th>編輯時間</th>
                                         <th>狀態</th>
                                         <th>編輯</th>
@@ -195,10 +194,11 @@ const Qanda = () => {
                             </Table>
                         </Tab>
                         <Tab eventKey="open" title="啟用">
-                            <Table striped bordered hover>
-                                <thead className="d-none d-sm-table-header-group">
-                                    <tr>
+                            <Table striped bordered hover className="table-rwd">
+                                <thead>
+                                    <tr className="bg-secondary text-white tr-only-hide">
                                         <th>標題</th>
+                                        <th>分類</th>
                                         <th>編輯時間</th>
                                         <th>是否啟用</th>
                                         <th>編輯</th>
@@ -211,10 +211,11 @@ const Qanda = () => {
                             </Table>
                         </Tab>
                         <Tab eventKey="closed" title="未啟用">
-                            <Table striped bordered hover>
-                                <thead className="d-none d-sm-table-header-group">
-                                    <tr>
+                            <Table striped bordered hover className="table-rwd">
+                                <thead >
+                                    <tr className="bg-secondary text-white tr-only-hide">
                                         <th>標題</th>
+                                        <th>分類</th>
                                         <th>編輯時間</th>
                                         <th>是否啟用</th>
                                         <th>編輯</th>
