@@ -8,11 +8,11 @@ import { apiQaCategory } from "../../api/api-qa-category";
 const QaSearchFilter = (props) => {
   let dispatch = useDispatch();
   const appSlice = useSelector((state) => state.appSlice);
+  let qaFilterSlice = useSelector((state) => state.qaFilterSlice);
   let qaKeywordRef = useRef(null);
+  let { searchText } = qaFilterSlice;
   const [categoryArr, setCategoryArr] = useState([]);
   const [isKeyword, setIsKeyword] = useState(false);
-  let qaFilterSlice = useSelector((state) => state.qaFilterSlice);
-  let { searchText } = qaFilterSlice;
 
   useEffect(() => {
     if (searchText) {
@@ -55,32 +55,33 @@ const QaSearchFilter = (props) => {
       },
       (data) => {
         setCategoryArr(data)
-        console.log(data)
       }
     );
-  },[]);
+  }, []);
+
+  const categoryHandler = (e) => {
+    let value = e.target.value;
+    props.onCategoryChange(value);
+  };
 
   return (
     <Fragment>
-      <form className="p-3 search d-flex  align-items-center justify-content-between">
-        <div className=" search-clinicStatus">
-          <div className="visitorSelect">
-            <label className="">
+      <form className="p-3 search d-flex align-items-center ">
+        <div className="search-qaStatus mb-3 mb-md-0">
+          <div className="categoryStatus">
+            <label className="me-2">
               <span className="name">分類</span>{" "}
               <span className="bit">:</span>
             </label>
             <Form.Select
               aria-label="Default select example"
-            //onChange={(e) => visitorHandler(e)}
+              onChange={(e) => categoryHandler(e)}
             >
-              <option value="">無</option>
-              {categoryArr.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
+              <option value="">全部</option>
+              {categoryArr.map(item => <option key={item.id} value={item.name}>{item.name}</option>)}
             </Form.Select>
           </div>
-
-        </div>
-
-        <InputGroup className="input-group-textSearch" size="">
+        <InputGroup className="input-group-textSearch">
           <Form.Control
             placeholder="搜尋標題"
             aria-label="Recipient's username"
@@ -108,6 +109,8 @@ const QaSearchFilter = (props) => {
             </button>
           )}
         </InputGroup>
+
+        </div>
       </form>
     </Fragment>
   )
