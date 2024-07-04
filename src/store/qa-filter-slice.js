@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { resetState } from "./log-writing-slice";
 
 const initState = {
-    searchText:""
+    searchText:"",
+    category:""
 };
 
 const qaFilterSlice = createSlice ({
@@ -12,6 +12,10 @@ const qaFilterSlice = createSlice ({
         onSearchText(state, action){
             let value = action.payload;
             state.searchText = value;
+        },
+        onCategory(state, action){
+            let value = action.payload;
+            state.category = value;
         },
         resetState(state, action) {
             state.searchText = "";
