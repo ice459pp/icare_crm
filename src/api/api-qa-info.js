@@ -25,7 +25,6 @@ export const apiQaInfo = async (
         }
         if(json.status){
             const data = json.data;
-            console.log(data);
             onComplete(data);
         }
 

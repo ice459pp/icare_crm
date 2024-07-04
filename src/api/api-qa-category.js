@@ -19,7 +19,6 @@ export const apiQaCategory = async (
         }
         if (json.status) {
           const data = json.data;
-          console.log(json);
           onComplete(data);
         } else {
           onError(json.error);
