@@ -1,22 +1,29 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
-import { useSelector } from "react-redux"; 
+import { Button, Col, Form, InputGroup, Modal } from "react-bootstrap";
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { apiQaCategory } from "../../api/api-qa-category";
 import { apiQaCreate } from "../../api/api-qa-add";
+import { apiQaImage } from "../../api/api-qa-img";
 import CKEditor from "./CKEditor";
 
-const QandaAdd = () =>{
+const QandaAdd = () => {
     const navigate = useHistory();
     const [apiUpdate, setApiUpdate] = useState(false);
+    const [categoryArr, setCategoryArr] = useState([]);
+    //Image Upload
+    const [file, setSelectedFile] = useState(null);
+    const [showImgModal, setShowImgModal] = useState(false);
+    const [preview, setPreview] = useState(null);
     const appSlice = useSelector((state) => state.appSlice);
-    const [title, setTitle] = useState( "新增標題!!");
-    const [category, setCategory] = useState("IHealApp")
-    const [content, setContent] = useState( "新增內容!!!");
-    const [open, setOpen] = useState("");
+    const [title, setTitle] = useState("新增標題!!");
+    const [category, setCategory] = useState("")
+    const [content, setContent] = useState("");
+    const [open, setOpen] = useState(false);
 
     // POST API-Info
-    useEffect(() =>{
-        if(apiUpdate) {
+    useEffect(() => {
+        if (apiUpdate) {
             const token = appSlice.userToken;
             const encodedContent = encodeURIComponent(content);
             console.log(title, encodedContent, category, open)
@@ -26,27 +33,72 @@ const QandaAdd = () =>{
                 category,
                 encodedContent,
                 open,
-                (err) =>{
+                (err) => {
                     alert(err);
                 },
-                () =>{
+                () => {
                     setApiUpdate(false);
                     navigate.push('/qanda')
                 }
             )
         }
-    },[apiUpdate]);
+    }, [apiUpdate]);
 
-    const apiUpdateHandler = () =>{
+    const apiUpdateHandler = () => {
         setApiUpdate(true);
     }
+
+    useEffect(() => {
+        const token = appSlice.userToken;
+        apiQaCategory(
+            token,
+            (err) => {
+                alert(err);
+            },
+            (data) => {
+                setCategoryArr(data)
+            }
+        );
+    }, [])
 
     const handleCategoryChange = (event) => {
         setCategory(event.target.value);
     };
 
+    // POST ImgUpload
+    const handleUpload = () => {
+        if (!file) return;
+        const token = appSlice.userToken;
+        apiQaImage(
+            token,
+            file,
+            (err) => {
+                alert(err);
+            },
+            (data) => {
+                setPreview(data);
+                setShowImgModal(true);
+            }
+        );
+    };
+
+    const handleFileChange = (event) => {
+        setSelectedFile(event.target.files[0]);
+    };
+
+    const copyClipboard = () => {
+        navigator.clipboard.writeText(preview).then(() => {
+            alert('連結已複製')
+        }, (err) => {
+            console.error('Error: ', err);
+        });
+    };
+
+    const closeImgModal = () => {
+        setShowImgModal(false);
+    };
+
     const handlerEditorChange = (value) => {
-        //console.log(value);
         setContent(value);
     };
 
@@ -58,13 +110,13 @@ const QandaAdd = () =>{
     return (
         <Fragment>
             <div className="d-flex justify-content-end border-bottom ">
-                <Button className="btn btn-lg btn-success m-3" variant="success" onClick={apiUpdateHandler}>送出</Button>
-                <Button className="btn btn-lg btn-dark m-3" variant="secondary" onClick={closeHandler}>取消</Button>
+                <Button className="btn btn-lg m-3" variant="success" onClick={apiUpdateHandler}>送出</Button>
+                <Button className="btn btn-lg m-3" variant="secondary" onClick={closeHandler}>取消</Button>
             </div>
-            <div className="search m-3">
-                <div className="m-3 search-clinicStatus">
-                    <div className=" w-50  d-flex  align-items-center ">
-                    <label className="">
+            <div className="search qa-search-container p-3">
+                <div className="search-qaStatus">
+                    <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0 ">
+                        <label className="me-2">
                             <span className="name">標題</span>
                             <span className="bit">:</span>
                         </label>
@@ -78,39 +130,84 @@ const QandaAdd = () =>{
                                 }}
                             />
                         </InputGroup>
-                    </div>
-                    <div className="switch  w-50 d-flex  align-items-center justify-content-center ">
-                        <label className=" d-flex align-items-center ">
+                    </Col>
+                    <Col xs={12} md={6} className="d-flex align-items-center justify-content-md-end px-md-5">
+                        <label className="me-2 d-flex align-items-center ">
                             <span className="name">是否啟用</span>
                             <span className="bit">:</span>
                         </label>
                         <Form.Check
-                        type="switch"         
-                        checked={open}
-                        onChange={(e) => setOpen(e.target.checked)}
+                            type="switch"
+                            checked={open}
+                            onChange={(e) => setOpen(e.target.checked)}
                         />
-                    </div>
+                    </Col>
                 </div>
-                <div className="m-3 search-clinicStatus ">
-                    <div className="title w-50  d-flex  align-items-center ">
-                        <label className="">
+                <div className="mt-3 search-qaStatus ">
+                    <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0">
+                        <label className="me-2">
                             <span className="name">分類</span>
                             <span className="bit">:</span>
                         </label>
-                        <Form.Select 
+                        <Form.Select
                             aria-label="Default select example"
-                            value={category} 
-                            onChange={handleCategoryChange}>
-                            <option value="iHealAPP">iHealAPP</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            value={category}
+                            onChange={handleCategoryChange}
+                        >
+                            <option value="" hidden>請選擇分類</option>
+                            {categoryArr.map(item => <option key={item.id} value={item.name}>{item.name}</option>)}
                         </Form.Select>
-                    </div>
+                    </Col>
                 </div>
+                <div className="m-3 ">
+                    <Col xs={12} md={6} className="d-flex justify-content-between">
+                        <input type="file" accept="image/*" onChange={handleFileChange} />
+                        <button className="btn btn-outline-warning" onClick={handleUpload}>圖片上傳</button>
+                    </Col>
+                </div>
+
                 <div className="p-3">
                     <CKEditor onValueChange={handlerEditorChange} content={content} />
                 </div>
-            </div>       
+            </div>
+
+            <Modal
+                className="radio-custom"
+                show={showImgModal}
+                onHide={closeImgModal}
+                centered
+                backdrop="static"
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter">
+                <Modal.Header className="bg-secondary text-white" closeButton>
+                    <Modal.Title>圖片上傳</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-6">
+                                {preview && (
+                                    <div>
+                                        <img src={preview} alt="Preview" style={{ maxWidth: '100%', maxHeight: '300px' }} />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="col-md-6 ">
+                                <InputGroup className="mb-3">
+                                    <Form.Control
+                                        placeholder={preview}
+                                        aria-label="連結"
+                                        aria-describedby="basic-addon2"
+                                    />
+                                    <Button variant="outline-secondary" onClick={copyClipboard}>
+                                        複製連結
+                                    </Button>
+                                </InputGroup>
+                            </div>
+                        </div>
+                    </div>
+                </Modal.Body>
+            </Modal>
         </Fragment>
     )
 };
