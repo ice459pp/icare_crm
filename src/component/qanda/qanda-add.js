@@ -2,22 +2,23 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Col, Form, InputGroup, Modal } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { apiQaCategory } from "../../api/api-qa-category";
-import { apiQaCreate } from "../../api/api-qa-add";
-import { apiQaImage } from "../../api/api-qa-img";
+import { apiQaCategory } from "../../api/api-qa/api-qa-category";
+import { apiQaCreate } from "../../api/api-qa/api-qa-add";
+import { apiQaImage } from "../../api/api-qa/api-qa-img";
 import CKEditor from "./CKEditor";
 
 const QandaAdd = () => {
     const navigate = useHistory();
     const [apiUpdate, setApiUpdate] = useState(false);
     const [categoryArr, setCategoryArr] = useState([]);
-    //Image Upload
+    const [subcategoryArr, setSubcategoryArr] = useState([]);
     const [file, setSelectedFile] = useState(null);
     const [showImgModal, setShowImgModal] = useState(false);
     const [preview, setPreview] = useState(null);
     const appSlice = useSelector((state) => state.appSlice);
-    const [title, setTitle] = useState("新增標題!!");
-    const [category, setCategory] = useState("")
+    const [title, setTitle] = useState("");
+    const [category, setCategory] = useState("");
+    const [subCategory, setSubCategory] = useState("");
     const [content, setContent] = useState("");
     const [open, setOpen] = useState(false);
 
@@ -26,13 +27,14 @@ const QandaAdd = () => {
         if (apiUpdate) {
             const token = appSlice.userToken;
             const encodedContent = encodeURIComponent(content);
-            console.log(title, encodedContent, category, open)
+            console.log(title, encodedContent, category, open, subCategory)
             apiQaCreate(
                 token,
                 title,
                 category,
                 encodedContent,
                 open,
+                subCategory,
                 (err) => {
                     alert(err);
                 },
@@ -56,13 +58,21 @@ const QandaAdd = () => {
                 alert(err);
             },
             (data) => {
-                setCategoryArr(data)
+                setCategoryArr(data);
+                const subcategories = data
+                    .flatMap(item => item.subcategory)
+                    .filter((sub, index, self) => sub && self.indexOf(sub) === index); 
+                setSubcategoryArr(subcategories);
             }
         );
     }, [])
 
     const handleCategoryChange = (event) => {
         setCategory(event.target.value);
+    };
+
+    const handleSubCategoryChange = (event) => {
+        setSubCategory(event.target.value);
     };
 
     // POST ImgUpload
@@ -115,6 +125,33 @@ const QandaAdd = () => {
             </div>
             <div className="search qa-search-container p-3">
                 <div className="search-qaStatus">
+                <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0">
+                        <label className="me-2">
+                            <span className="name">系統分類</span>
+                            <span className="bit">:</span>
+                        </label>
+                        <Form.Select
+                            aria-label="Default select example"
+                            value={category}
+                            onChange={handleCategoryChange}
+                        >
+                            <option value="" hidden>請選擇分類</option>
+                            {categoryArr.map(item => <option key={item.id} value={item.name}>{item.name}</option>)}
+                        </Form.Select>
+                    </Col>
+                    <Col xs={12} md={6} className="d-flex align-items-center justify-content-md-end px-md-5">
+                        <label className="me-2 d-flex align-items-center ">
+                            <span className="name">是否啟用</span>
+                            <span className="bit">:</span>
+                        </label>
+                        <Form.Check
+                            type="switch"
+                            checked={open}
+                            onChange={(e) => setOpen(e.target.checked)}
+                        />
+                    </Col>
+                </div>
+                <div className="mt-3 search-qaStatus ">
                     <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0 ">
                         <label className="me-2">
                             <span className="name">標題</span>
@@ -131,31 +168,20 @@ const QandaAdd = () => {
                             />
                         </InputGroup>
                     </Col>
-                    <Col xs={12} md={6} className="d-flex align-items-center justify-content-md-end px-md-5">
-                        <label className="me-2 d-flex align-items-center ">
-                            <span className="name">是否啟用</span>
-                            <span className="bit">:</span>
-                        </label>
-                        <Form.Check
-                            type="switch"
-                            checked={open}
-                            onChange={(e) => setOpen(e.target.checked)}
-                        />
-                    </Col>
                 </div>
                 <div className="mt-3 search-qaStatus ">
-                    <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0">
+                <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0">
                         <label className="me-2">
-                            <span className="name">分類</span>
+                            <span className="name">問題分類</span>
                             <span className="bit">:</span>
                         </label>
                         <Form.Select
                             aria-label="Default select example"
-                            value={category}
-                            onChange={handleCategoryChange}
+                            value={subCategory}
+                            onChange={handleSubCategoryChange}
                         >
                             <option value="" hidden>請選擇分類</option>
-                            {categoryArr.map(item => <option key={item.id} value={item.name}>{item.name}</option>)}
+                            {subcategoryArr.map((item, index) => <option key={index} value={item}>{item}</option>)}
                         </Form.Select>
                     </Col>
                 </div>

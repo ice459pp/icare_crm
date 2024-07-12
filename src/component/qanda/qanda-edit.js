@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useState } from "react";
 import { Button, Col, Form, InputGroup, Modal } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { apiQaInfo } from "../../api/api-qa-info";
-import { apiQaUpdate } from "../../api/api-qa-edit";
-import { apiQaCategory } from "../../api/api-qa-category";
-import { apiQaImage } from "../../api/api-qa-img";
+import { apiQaInfo } from "../../api/api-qa/api-qa-info";
+import { apiQaUpdate } from "../../api/api-qa/api-qa-edit";
+import { apiQaCategory } from "../../api/api-qa/api-qa-category";
+import { apiQaImage } from "../../api/api-qa/api-qa-img";
 import CKEditor from "./CKEditor";
 
 const QandaEdit = () => {
@@ -15,12 +15,14 @@ const QandaEdit = () => {
     const appSlice = useSelector((state) => state.appSlice);
     const [apiUpdate, setApiUpdate] = useState(false);
     const [categoryArr, setCategoryArr] = useState([]);
+    const [subcategoryArr, setSubcategoryArr] = useState([]);
     const [file, setSelectedFile] = useState(null);
     const [showImgModal, setShowImgModal] = useState(false);
     const [preview, setPreview] = useState(null);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [category, setCategory] = useState("");
+    const [subCategory, setSubCategory] = useState("");
     const [open, setOpen] = useState("");
     const [showCKEditor, setShowCKEditor] = useState(false);
 
@@ -39,6 +41,7 @@ const QandaEdit = () => {
                     setContent(data.content)
                     setCategory(data.category)
                     setOpen(data.open)
+                    setSubCategory(data.subcategory)
                     setShowCKEditor(true)
                 }
             )
@@ -50,7 +53,7 @@ const QandaEdit = () => {
         if (apiUpdate) {
             const token = appSlice.userToken;
             const encodedContent = encodeURIComponent(content);
-            console.log(id, title, encodedContent, category, open)
+            console.log(id, title, encodedContent, category, open, subCategory)
             apiQaUpdate(
                 token,
                 id,
@@ -58,6 +61,7 @@ const QandaEdit = () => {
                 encodedContent,
                 category,
                 open,
+                subCategory,
                 (err) => {
                     alert(err);
                 },
@@ -81,7 +85,11 @@ const QandaEdit = () => {
                 alert(err);
             },
             (data) => {
-                setCategoryArr(data)
+                setCategoryArr(data);
+                const subcategories = data
+                    .flatMap(item => item.subcategory)
+                    .filter((sub, index, self) => sub && self.indexOf(sub) === index); 
+                setSubcategoryArr(subcategories);
             }
         );
     }, [])
@@ -89,7 +97,11 @@ const QandaEdit = () => {
     const handleCategoryChange = (event) => {
         setCategory(event.target.value);
     };
-   
+
+    const handleSubCategoryChange = (event) => {
+        setSubCategory(event.target.value);
+    };
+
     // POST ImgUpload
     const handleUpload = () => {
         if (!file) return;
@@ -106,7 +118,7 @@ const QandaEdit = () => {
             }
         );
     };
-    
+
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
     };
@@ -118,11 +130,11 @@ const QandaEdit = () => {
             console.error('Error: ', err);
         });
     };
-    
+
     const closeImgModal = () => {
         setShowImgModal(false);
     };
-    
+
     const handlerEditorChange = (value) => {
         setContent(value);
     };
@@ -141,19 +153,16 @@ const QandaEdit = () => {
                 <div className=" search-qaStatus ">
                     <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0">
                         <label className="me-2">
-                            <span className="name">標題</span>
+                            <span className="name">系統分類</span>
                             <span className="bit">:</span>
                         </label>
-                        <InputGroup className="" >
-                            <Form.Control
-                                defaultValue={title}
-                                aria-label="Title"
-                                aria-describedby="basic-addon1"
-                                onChange={(e) => {
-                                    setTitle(e.target.value);
-                                }}
-                            />
-                        </InputGroup>
+                        <Form.Select
+                            aria-label="Default select example"
+                            value={category}
+                            onChange={handleCategoryChange}>
+                            <option value={category} hidden>{category}</option>
+                            {categoryArr.map(item => <option key={item.id} value={item.name}>{item.name}</option>)}
+                        </Form.Select>
                     </Col>
                     <Col xs={12} md={6} className="d-flex align-items-center justify-content-md-end px-md-5">
                         <label className="me-2 d-flex align-items-center">
@@ -171,15 +180,33 @@ const QandaEdit = () => {
                 <div className="mt-3 search-qaStatus ">
                     <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0">
                         <label className="me-2">
-                            <span className="name">分類</span>
+                            <span className="name">標題</span>
+                            <span className="bit">:</span>
+                        </label>
+                        <InputGroup className="" >
+                            <Form.Control
+                                defaultValue={title}
+                                aria-label="Title"
+                                aria-describedby="basic-addon1"
+                                onChange={(e) => {
+                                    setTitle(e.target.value);
+                                }}
+                            />
+                        </InputGroup>
+                    </Col>
+                </div>
+                <div className="mt-3 search-qaStatus ">
+                    <Col xs={12} md={6} className="d-flex align-items-center mb-3 mb-md-0">
+                        <label className="me-2">
+                            <span className="name">問題分類</span>
                             <span className="bit">:</span>
                         </label>
                         <Form.Select
                             aria-label="Default select example"
-                            value={category}
-                            onChange={handleCategoryChange}>
-                            <option value={category} hidden>{category}</option>    
-                            {categoryArr.map(item => <option key={item.id} value={item.name}>{item.name}</option>)}
+                            value={subCategory}
+                            onChange={handleSubCategoryChange}>
+                            <option value={subCategory} hidden>{subCategory}</option>
+                            {subcategoryArr.map((item, index) => <option key={index} value={item}>{item}</option>)}
                         </Form.Select>
                     </Col>
                 </div>
