@@ -1,4 +1,4 @@
-import appConfig from "../app-config.json";
+import appConfig from "../../app-config.json"
 
 export const apiQaList = async (
     token ="",

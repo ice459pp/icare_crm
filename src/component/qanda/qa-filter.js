@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InputGroup, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { qaFilterAction } from "../../store/qa-filter-slice";
-import { apiQaCategory } from "../../api/api-qa-category";
+import { apiQaCategory } from "../../api/api-qa/api-qa-category";
 
 const QaSearchFilter = (props) => {
   let dispatch = useDispatch();

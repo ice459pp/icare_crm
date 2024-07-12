@@ -1,4 +1,5 @@
-import appConfig from "../app-config.json";
+import appConfig from "../../app-config.json"
+
 
 export const apiQaInfo = async (
     token = "",
@@ -25,6 +26,7 @@ export const apiQaInfo = async (
         }
         if(json.status){
             const data = json.data;
+            console.log(data)
             onComplete(data);
         }
 

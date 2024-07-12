@@ -1,4 +1,4 @@
-import appConfig from "../app-config.json"
+import appConfig from "../../app-config.json"
 
 export const apiQaCreate = async (
     token ="",
@@ -6,6 +6,7 @@ export const apiQaCreate = async (
     category,
     content,
     open,
+    subcategory,
     onError = () => {},
     onComplete = () => {}
 
@@ -17,6 +18,7 @@ export const apiQaCreate = async (
         formData.append("category", category)
         formData.append("content", content)
         formData.append("open", open)
+        formData.append("subcategory", subcategory)
         
         const response = await fetch(
             apiUrl, {

@@ -1,4 +1,4 @@
-import appConfig from "../app-config.json"
+import appConfig from "../../app-config.json"
 
 export const apiQaUpdate = async (
     token ="",
@@ -7,6 +7,7 @@ export const apiQaUpdate = async (
     content,
     category,
     open,
+    subcategory,
     onError = () => {},
     onComplete = () => {}
 ) =>{
@@ -18,6 +19,7 @@ export const apiQaUpdate = async (
         formData.append("content", content)
         formData.append("category", category)
         formData.append("open", open)
+        formData.append("subcategory", subcategory)
 
         const response = await fetch(
             apiUrl, {
@@ -34,6 +36,7 @@ export const apiQaUpdate = async (
           }
           if (json.status) {
             onComplete()
+
           } else {
             onError(json.error)
           }
