@@ -25,6 +25,7 @@ export const apiClinicInfo = async (
     }
     if (json.status) {
       const data = json.data
+      console.log('apiData', data)
       onComplete(data)
     } else {
       onError(json.error)

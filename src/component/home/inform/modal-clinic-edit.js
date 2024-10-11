@@ -22,6 +22,7 @@ const optionTrim = (option) => {
 };
 const ClinicEditModal = (props) => {
   let { item } = props;
+  console.log('item',item)
   let networkRef = useRef();
   let dispatch=useDispatch()
   const appSlice = useSelector((state) => state.appSlice);
@@ -38,7 +39,10 @@ const ClinicEditModal = (props) => {
   const [callNumberWay, setCallNumberWay] = useState(item.call_number_way);
   const [careGroup, setCareGroup] = useState(item.care_group);
   const [clinicStatus, setClinicStatus] = useState(item.clinic_status);
-
+  const [merchantId, setMerchantId] = useState(item.store.merchantId);
+  const [hashKey, setHashKey] = useState(item.store.hashKey);
+  const [hashIV, setHashIV] = useState(item.store.hashIV);
+  console.log('chkmerchantId', merchantId) //空值
   const [careNetwork, setCareNetwork] = useState(
     item.care_network === "" ? [] : item.care_network.split("$")
   );
@@ -87,6 +91,13 @@ const ClinicEditModal = (props) => {
           joinGroup += "$";
         }
       });
+
+      const store = {
+        merchantId: merchantId,
+        hashIV: hashIV, 
+        hashKey: hashKey
+      };
+
       apiClinicUpdate(
         token,
         id,
@@ -104,6 +115,7 @@ const ClinicEditModal = (props) => {
         careGroup,
         experience,
         joinGroup.trim(),
+        store,
         (err) => {
           alert(err);
         },
@@ -224,6 +236,61 @@ const ClinicEditModal = (props) => {
               }}
             />
           </div>
+        </section>
+        <section className="inform-his mt-3 border border-warning border-2 rounded-1 p-3 pt-4 position-relative">
+          <div className="inform-his-item">
+            <div className="w-100 ">
+              <label htmlFor="merchantId" className="form-label">
+                商店ID:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="merchantId"
+                placeholder="無"
+                //defaultValue={merchantId}
+                defaultValue={merchantId}
+                onChange={(e) => {
+                  setMerchantId(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <div className="inform-his-item">
+            <div className="w-100">
+              <label htmlFor="hashKey" className="form-label">
+                Hash Key:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="hashKey"
+                placeholder="無"
+                defaultValue={hashKey}
+                onChange={(e) => {
+                  setHashKey(e.target.value);
+                }}
+              />
+            </div>
+            <div className="w-100">
+              <label htmlFor="hashIV" className="form-label">
+                Hash IV:
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="hashIV"
+                placeholder="無"
+                defaultValue={hashIV}
+                onChange={(e) => {
+                  setHashIV(e.target.value);
+                }}
+              />
+            </div>
+          </div>
+          <span class="position-absolute top-0 start-10 translate-middle-y border-warning border-2 p-2 bg-warning rounded-1">
+              <span class="text-white">藍新交易資訊</span>
+          </span>
         </section>
         <section className="inform-his pt-2">
           <div className="inform-his-item">

@@ -38,6 +38,11 @@ let clinicData = {
   experience: "", // 其他醫院執業
   care_network: "", // 照護網
   clinic_status: "", // 可電訪 clinic status
+  store:{
+    merchantId:"", //商店ID
+    hashKey:"", //Hash Key
+    hashIV:"" //Hash IV
+  }
 };
 
 const ClinicDetail = () => {
@@ -70,7 +75,8 @@ const ClinicDetail = () => {
 
   const [typeList, setTypeList] = useState([]);
   const [remoteList, setRemoteList] = useState([]);
-  // console.log(clinicInfo, "clinicInfo")
+  console.log(clinicInfo, "clinicInfo")
+
   useEffect(() => {
     setModalIsShow(modalSlice.modalIsShow);
   }, [modalSlice.modalIsShow]);
@@ -415,6 +421,53 @@ const ClinicDetail = () => {
                   open
                 </Button>
               </div>
+              </section>
+              <section className="mt-5 table border border-warning border-2 rounded-1 p-3 pt-4 position-relative">
+              <div className="table-item">
+                <div className="table-item-title">商店ID:</div>
+                {clinicInfo.store.merchantId ? (
+                  <div className="table-item-content">
+                    <div className="p-0 px-2">
+                      {clinicInfo.store.merchantId}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="table-item-content">
+                    <span className="text-danger p-0">無</span>
+                  </div>
+                )}
+              </div>
+              <div className="table-item">
+                <div className="table-item-title">Hash Key:</div>
+                {clinicInfo.store.hashKey ? (
+                  <div className="table-item-content">
+                    <div className="p-0 px-2">
+                      {clinicInfo.store.hashKey}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="table-item-content">
+                    <span className="text-danger p-0">無</span>
+                  </div>
+                )}
+              </div>
+              <div className="table-item">
+                <div className="table-item-title">Hash IV:</div>
+                {clinicInfo.store.hashIV ? (
+                  <div className="table-item-content">
+                    <div className="p-0 px-2">
+                      {clinicInfo.store.hashIV}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="table-item-content">
+                    <span className="text-danger p-0">無</span>
+                  </div>
+                )}
+                </div>
+                <span class="position-absolute top-0 start-10 translate-middle-y border-warning border-2 p-2 bg-warning rounded-1">
+                  <span class="text-white">藍新交易資訊</span>
+                </span>
             </section>
             <section className="w-100 text-center  mt-4 mb-1">
               <Button
@@ -428,9 +481,6 @@ const ClinicDetail = () => {
           </div>
         </div>
 
-        {/* <div>123</div>
-
-<div>321</div> */}
         {key === "log" && (
           <div className="log_button">
             <Button

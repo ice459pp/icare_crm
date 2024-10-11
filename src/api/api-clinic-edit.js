@@ -16,9 +16,11 @@ export const apiClinicUpdate = async (
   careGroup, 
   experience, 
   joinGroup,
-  onError = () => {}, 
+  store,
+  onError = () => {},
   onComplete = () => {}
 ) => {
+  console.log('store', store)
   try  {
 
     const apiUrl = `${appConfig.url}/clinic/info/edit/`
@@ -36,6 +38,9 @@ export const apiClinicUpdate = async (
     formData.append("care_group", careGroup)
     formData.append("experience", experience)
     formData.append("care_network", joinGroup)
+    formData.append("merchantId", store.merchantId)
+    formData.append("hashKey", store.hashKey)
+    formData.append("hashIV",store.hashIV)
 
     const response = await fetch(
       apiUrl, {
