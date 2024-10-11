@@ -422,7 +422,7 @@ const ClinicDetail = () => {
                 </Button>
               </div>
               </section>
-              <section className="mt-5 table border border-warning border-2 rounded-1 p-3 pt-4 position-relative">
+              <section className="mt-5 table border border-2 rounded-1 p-3 pt-4 position-relative">
               <div className="table-item">
                 <div className="table-item-title">商店ID:</div>
                 {clinicInfo.store.merchantId ? (
@@ -465,7 +465,7 @@ const ClinicDetail = () => {
                   </div>
                 )}
                 </div>
-                <span class="position-absolute top-0 start-10 translate-middle-y border-warning border-2 p-2 bg-warning rounded-1">
+                <span class="position-absolute top-0 start-10 translate-middle-y p-2 bg-secondary rounded-1">
                   <span class="text-white">藍新交易資訊</span>
                 </span>
             </section>

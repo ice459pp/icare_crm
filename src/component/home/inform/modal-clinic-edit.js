@@ -237,7 +237,7 @@ const ClinicEditModal = (props) => {
             />
           </div>
         </section>
-        <section className="inform-his mt-3 border border-warning border-2 rounded-1 p-3 pt-4 position-relative">
+        <section className="inform-his mt-3 border rounded-1 p-3 pt-4 position-relative">
           <div className="inform-his-item">
             <div className="w-100 ">
               <label htmlFor="merchantId" className="form-label">
@@ -288,7 +288,7 @@ const ClinicEditModal = (props) => {
               />
             </div>
           </div>
-          <span class="position-absolute top-0 start-10 translate-middle-y border-warning border-2 p-2 bg-warning rounded-1">
+          <span class="position-absolute top-0 start-10 translate-middle-y p-2 bg-secondary rounded-1">
               <span class="text-white">藍新交易資訊</span>
           </span>
         </section>
