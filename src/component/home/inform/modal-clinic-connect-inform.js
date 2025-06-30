@@ -6,7 +6,7 @@ import { apiRemoteAction } from "../../../api/remote/api-remote-action";
 const ClinicCorrectInformModal = (props) => {
   const appSlice = useSelector((state) => state.appSlice);
   let { typeList, remoteList, clinicId } = props;
-
+  console.log(typeList, remoteList, clinicId)
   const [editItem, setEditItem] = useState(null);
 
   const [apiUpdate, setApiUpdate] = useState(false);
@@ -32,6 +32,7 @@ const ClinicCorrectInformModal = (props) => {
     }
     setApiUpdate(true);
   };
+
   useEffect(() => {
     if (!apiUpdate) {
       return;
@@ -79,7 +80,18 @@ const ClinicCorrectInformModal = (props) => {
                 </div>
                 <div className="item item-computerName">
                   <div className="item-title">連線ID:</div>
-                  <div className="item-content">{item.number || ""}</div>
+                  <div className="item-content">{item.number || ""}
+                    {item.number && (
+                      <button
+                        className="btn btn-secondary"
+                        size="sm"
+                        style={{ marginLeft: '8px' }}
+                        onClick={() => navigator.clipboard.writeText(item.number)}
+                      >
+                        複製
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div className="item item-computerName">
                   <div className="item-title">密碼:</div>
